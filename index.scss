@@ -1,0 +1,69 @@
+@import "mixins/typed";
+
+body {
+  display: grid;
+  height: 100vh;
+  place-items: center;
+  width: 100%;
+  background-color: #1a1a1a; // Dark background for contrast
+  margin: 0;
+  padding: 20px;
+}
+
+.input-wrapper {
+  display: block;
+  font-family: 'Courier New', monospace; // More modern monospace font
+  font-size: 2.5rem; // Much bigger text
+  width: 80%; // Wider container
+  max-width: 1200px; // Maximum width for readability
+  margin: 0 auto; // Center horizontally
+  color: #ffffff; // White text
+  text-align: center; // Center text
+
+  > input,
+  > .placeholder {
+    display: block;
+    appearance: none;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    text-align: center; // Center text
+  }
+
+  > .placeholder {
+    pointer-events: none;
+    line-height: 1.5; // Better line height for readability
+    @include typed(
+      "super pro skibid sigma sigma skibidi sigmas",
+      "skibidi sidja sodji skibid",
+      "super skibidi sigmas",
+      1.5,
+      (
+        caret-width: 4px, // Thicker caret for visibility
+        caret-space: 4px
+      )
+    );
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); // Subtle glow effect
+  }
+
+  > input {
+    &:focus,
+    &:active {
+      + .placeholder {
+        display: none;
+      }
+    }
+    &:focus {
+      outline: none; // Remove default focus outline
+    }
+  }
+}
+
+// Add responsive font size
+@media (max-width: 768px) {
+  .input-wrapper {
+    font-size: 1.8rem;
+    width: 90%;
+  }
+}
