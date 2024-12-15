@@ -1,24 +1,39 @@
 @import "mixins/typed";
 
+// Initial intro screen styles
 body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+}
+
+.intro-section {
   display: grid;
   height: 100vh;
   place-items: center;
   width: 100%;
-  background-color: #1a1a1a; // Dark background for contrast
-  margin: 0;
-  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: opacity 1s ease-out;
+
+  &.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .input-wrapper {
   display: block;
-  font-family: 'Courier New', monospace; // More modern monospace font
-  font-size: 2.5rem; // Much bigger text
-  width: 80%; // Wider container
-  max-width: 1200px; // Maximum width for readability
-  margin: 0 auto; // Center horizontally
-  color: #ffffff; // White text
-  text-align: center; // Center text
+  font-size: 2.5rem;
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  transform: translateY(-20%);
 
   > input,
   > .placeholder {
@@ -28,23 +43,23 @@ body {
     height: 100%;
     background-color: transparent;
     border: none;
-    text-align: center; // Center text
+    text-align: center;
+    white-space: pre-wrap;
+    overflow: hidden;
   }
 
   > .placeholder {
     pointer-events: none;
-    line-height: 1.5; // Better line height for readability
+    line-height: 1.5;
     @include typed(
-      "super pro skibid sigma sigma skibidi sigmas",
-      "skibidi sidja sodji skibid",
-      "super skibidi sigmas",
+      "Skibidi sigmas",
       1.5,
       (
-        caret-width: 4px, // Thicker caret for visibility
+        caret-width: 4px,
         caret-space: 4px
       )
     );
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); // Subtle glow effect
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   }
 
   > input {
@@ -55,15 +70,93 @@ body {
       }
     }
     &:focus {
-      outline: none; // Remove default focus outline
+      outline: none;
     }
   }
 }
 
-// Add responsive font size
+// Main content styles
+.main-content {
+  min-height: 100vh;
+  padding: 2rem;
+  display: block; // Add this
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(26, 26, 26, 0.9);
+  padding: 1rem 0;
+  z-index: 1000;
+
+  ul {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #64ffda;
+    }
+  }
+}
+
+header {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  h1 {
+    font-size: 4rem;
+    margin: 0;
+    animation: slideUp 1s ease-out;
+  }
+
+  .subtitle {
+    font-size: 2rem;
+    color: #64ffda;
+    margin-top: 1rem;
+    animation: slideUp 1s ease-out 0.2s;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .input-wrapper {
     font-size: 1.8rem;
     width: 90%;
+  }
+
+  header h1 {
+    font-size: 3rem;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
   }
 }

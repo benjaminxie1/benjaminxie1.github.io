@@ -1,23 +1,36 @@
 @charset "UTF-8";
 body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: "Courier New", monospace;
+}
+
+.intro-section {
   display: grid;
   height: 100vh;
   place-items: center;
   width: 100%;
-  background-color: #1a1a1a;
-  margin: 0;
-  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: opacity 1s ease-out;
+}
+.intro-section.fade-out {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .input-wrapper {
   display: block;
-  font-family: "Courier New", monospace;
   font-size: 2.5rem;
   width: 80%;
   max-width: 1200px;
   margin: 0 auto;
-  color: #ffffff;
   text-align: center;
+  transform: translateY(-20%);
 }
 .input-wrapper > input,
 .input-wrapper > .placeholder {
@@ -28,6 +41,8 @@ body {
   background-color: transparent;
   border: none;
   text-align: center;
+  white-space: pre-wrap;
+  overflow: hidden;
 }
 .input-wrapper > .placeholder {
   pointer-events: none;
@@ -36,11 +51,11 @@ body {
 }
 .input-wrapper > .placeholder::before {
   content: "​";
-  content: "​"/"super pro skibid sigma sigma skibidi sigmas";
-  alt: "super pro skibid sigma sigma skibidi sigmas";
+  content: "​"/"Skibidi sigmas";
+  alt: "Skibidi sigmas";
   white-space: break-spaces;
   will-change: content;
-  animation: typed-0 16.68s linear 1s infinite forwards;
+  animation: typed-0 3.68s linear 1s infinite forwards;
 }
 .input-wrapper > .placeholder::after {
   content: "​";
@@ -52,895 +67,145 @@ body {
   animation: typed-0-caret 0.75s linear 1s infinite forwards;
 }
 @keyframes typed-0 {
-  0%, 0.3986802558% {
-    content: "​s";
-    content: "​s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  0.3996802558%, 0.7983605116% {
-    content: "​su";
-    content: "​su"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  0.7993605116%, 1.1980407674% {
-    content: "​sup";
-    content: "​sup"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  1.1990407674%, 1.5977210232% {
-    content: "​supe";
-    content: "​supe"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  1.5987210232%, 1.997401279% {
-    content: "​super";
-    content: "​super"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  1.998401279%, 2.3970815348% {
-    content: "​super ";
-    content: "​super "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  2.3980815348%, 2.7967617906% {
-    content: "​super p";
-    content: "​super p"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  2.7977617906%, 3.1964420464% {
-    content: "​super pr";
-    content: "​super pr"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  3.1974420464%, 3.5961223022% {
-    content: "​super pro";
-    content: "​super pro"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  3.5971223022%, 3.995802558% {
-    content: "​super pro ";
-    content: "​super pro "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  3.996802558%, 4.3954828137% {
-    content: "​super pro s";
-    content: "​super pro s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  4.3964828137%, 4.7951630695% {
-    content: "​super pro sk";
-    content: "​super pro sk"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  4.7961630695%, 5.1948433253% {
-    content: "​super pro ski";
-    content: "​super pro ski"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  5.1958433253%, 5.5945235811% {
-    content: "​super pro skib";
-    content: "​super pro skib"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  5.5955235811%, 5.9942038369% {
-    content: "​super pro skibi";
-    content: "​super pro skibi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  5.9952038369%, 6.3938840927% {
-    content: "​super pro skibid";
-    content: "​super pro skibid"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  6.3948840927%, 6.7935643485% {
-    content: "​super pro skibid ";
-    content: "​super pro skibid "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  6.7945643485%, 7.1932446043% {
-    content: "​super pro skibid s";
-    content: "​super pro skibid s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  7.1942446043%, 7.5929248601% {
-    content: "​super pro skibid si";
-    content: "​super pro skibid si"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  7.5939248601%, 7.9926051159% {
-    content: "​super pro skibid sig";
-    content: "​super pro skibid sig"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  7.9936051159%, 8.3922853717% {
-    content: "​super pro skibid sigm";
-    content: "​super pro skibid sigm"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  8.3932853717%, 8.7919656275% {
-    content: "​super pro skibid sigma";
-    content: "​super pro skibid sigma"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  8.7929656275%, 9.1916458833% {
-    content: "​super pro skibid sigma ";
-    content: "​super pro skibid sigma "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  9.1926458833%, 9.5913261391% {
-    content: "​super pro skibid sigma s";
-    content: "​super pro skibid sigma s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  9.5923261391%, 9.9910063949% {
-    content: "​super pro skibid sigma si";
-    content: "​super pro skibid sigma si"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  9.9920063949%, 10.3906866507% {
-    content: "​super pro skibid sigma sig";
-    content: "​super pro skibid sigma sig"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  10.3916866507%, 10.7903669065% {
-    content: "​super pro skibid sigma sigm";
-    content: "​super pro skibid sigma sigm"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  10.7913669065%, 11.1900471623% {
-    content: "​super pro skibid sigma sigma";
-    content: "​super pro skibid sigma sigma"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  11.1910471623%, 11.5897274181% {
-    content: "​super pro skibid sigma sigma ";
-    content: "​super pro skibid sigma sigma "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  11.5907274181%, 11.9894076739% {
-    content: "​super pro skibid sigma sigma s";
-    content: "​super pro skibid sigma sigma s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  11.9904076739%, 12.3890879297% {
-    content: "​super pro skibid sigma sigma sk";
-    content: "​super pro skibid sigma sigma sk"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  12.3900879297%, 12.7887681855% {
-    content: "​super pro skibid sigma sigma ski";
-    content: "​super pro skibid sigma sigma ski"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  12.7897681855%, 13.1884484412% {
-    content: "​super pro skibid sigma sigma skib";
-    content: "​super pro skibid sigma sigma skib"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  13.1894484412%, 13.588128697% {
-    content: "​super pro skibid sigma sigma skibi";
-    content: "​super pro skibid sigma sigma skibi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  13.589128697%, 13.9878089528% {
-    content: "​super pro skibid sigma sigma skibid";
-    content: "​super pro skibid sigma sigma skibid"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  13.9888089528%, 14.3874892086% {
-    content: "​super pro skibid sigma sigma skibidi";
-    content: "​super pro skibid sigma sigma skibidi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  14.3884892086%, 14.7871694644% {
-    content: "​super pro skibid sigma sigma skibidi ";
-    content: "​super pro skibid sigma sigma skibidi "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  14.7881694644%, 15.1868497202% {
-    content: "​super pro skibid sigma sigma skibidi s";
-    content: "​super pro skibid sigma sigma skibidi s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  15.1878497202%, 15.586529976% {
-    content: "​super pro skibid sigma sigma skibidi si";
-    content: "​super pro skibid sigma sigma skibidi si"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  15.587529976%, 15.9862102318% {
-    content: "​super pro skibid sigma sigma skibidi sig";
-    content: "​super pro skibid sigma sigma skibidi sig"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  15.9872102318%, 16.3858904876% {
-    content: "​super pro skibid sigma sigma skibidi sigm";
-    content: "​super pro skibid sigma sigma skibidi sigm"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  16.3868904876%, 16.7855707434% {
-    content: "​super pro skibid sigma sigma skibidi sigma";
-    content: "​super pro skibid sigma sigma skibidi sigma"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  16.7865707434%, 25.4986003197% {
-    content: "​super pro skibid sigma sigma skibidi sigmas";
-    content: "​super pro skibid sigma sigma skibidi sigmas"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  25.4996003197%, 25.8183445244% {
-    content: "​super pro skibid sigma sigma skibidi sigma";
-    content: "​super pro skibid sigma sigma skibidi sigma"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  25.8193445244%, 26.138088729% {
-    content: "​super pro skibid sigma sigma skibidi sigm";
-    content: "​super pro skibid sigma sigma skibidi sigm"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  26.139088729%, 26.4578329337% {
-    content: "​super pro skibid sigma sigma skibidi sig";
-    content: "​super pro skibid sigma sigma skibidi sig"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  26.4588329337%, 26.7775771383% {
-    content: "​super pro skibid sigma sigma skibidi si";
-    content: "​super pro skibid sigma sigma skibidi si"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  26.7785771383%, 27.0973213429% {
-    content: "​super pro skibid sigma sigma skibidi s";
-    content: "​super pro skibid sigma sigma skibidi s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  27.0983213429%, 27.4170655476% {
-    content: "​super pro skibid sigma sigma skibidi ";
-    content: "​super pro skibid sigma sigma skibidi "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  27.4180655476%, 27.7368097522% {
-    content: "​super pro skibid sigma sigma skibidi";
-    content: "​super pro skibid sigma sigma skibidi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  27.7378097522%, 28.0565539568% {
-    content: "​super pro skibid sigma sigma skibid";
-    content: "​super pro skibid sigma sigma skibid"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  28.0575539568%, 28.3762981615% {
-    content: "​super pro skibid sigma sigma skibi";
-    content: "​super pro skibid sigma sigma skibi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  28.3772981615%, 28.6960423661% {
-    content: "​super pro skibid sigma sigma skib";
-    content: "​super pro skibid sigma sigma skib"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  28.6970423661%, 29.0157865707% {
-    content: "​super pro skibid sigma sigma ski";
-    content: "​super pro skibid sigma sigma ski"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  29.0167865707%, 29.3355307754% {
-    content: "​super pro skibid sigma sigma sk";
-    content: "​super pro skibid sigma sigma sk"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  29.3365307754%, 29.65527498% {
-    content: "​super pro skibid sigma sigma s";
-    content: "​super pro skibid sigma sigma s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  29.65627498%, 29.9750191847% {
-    content: "​super pro skibid sigma sigma ";
-    content: "​super pro skibid sigma sigma "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  29.9760191847%, 30.2947633893% {
-    content: "​super pro skibid sigma sigma";
-    content: "​super pro skibid sigma sigma"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  30.2957633893%, 30.6145075939% {
-    content: "​super pro skibid sigma sigm";
-    content: "​super pro skibid sigma sigm"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  30.6155075939%, 30.9342517986% {
-    content: "​super pro skibid sigma sig";
-    content: "​super pro skibid sigma sig"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  30.9352517986%, 31.2539960032% {
-    content: "​super pro skibid sigma si";
-    content: "​super pro skibid sigma si"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  31.2549960032%, 31.5737402078% {
-    content: "​super pro skibid sigma s";
-    content: "​super pro skibid sigma s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  31.5747402078%, 31.8934844125% {
-    content: "​super pro skibid sigma ";
-    content: "​super pro skibid sigma "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  31.8944844125%, 32.2132286171% {
-    content: "​super pro skibid sigma";
-    content: "​super pro skibid sigma"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  32.2142286171%, 32.5329728217% {
-    content: "​super pro skibid sigm";
-    content: "​super pro skibid sigm"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  32.5339728217%, 32.8527170264% {
-    content: "​super pro skibid sig";
-    content: "​super pro skibid sig"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  32.8537170264%, 33.172461231% {
-    content: "​super pro skibid si";
-    content: "​super pro skibid si"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  33.173461231%, 33.4922054357% {
-    content: "​super pro skibid s";
-    content: "​super pro skibid s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  33.4932054357%, 33.8119496403% {
-    content: "​super pro skibid ";
-    content: "​super pro skibid "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  33.8129496403%, 34.1316938449% {
-    content: "​super pro skibid";
-    content: "​super pro skibid"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  34.1326938449%, 34.4514380496% {
-    content: "​super pro skibi";
-    content: "​super pro skibi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  34.4524380496%, 34.7711822542% {
-    content: "​super pro skib";
-    content: "​super pro skib"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  34.7721822542%, 35.0909264588% {
-    content: "​super pro ski";
-    content: "​super pro ski"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  35.0919264588%, 35.4106706635% {
-    content: "​super pro sk";
-    content: "​super pro sk"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  35.4116706635%, 35.7304148681% {
-    content: "​super pro s";
-    content: "​super pro s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  35.7314148681%, 36.0501590727% {
-    content: "​super pro ";
-    content: "​super pro "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  36.0511590727%, 36.3699032774% {
-    content: "​super pro";
-    content: "​super pro"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  36.3709032774%, 36.689647482% {
-    content: "​super pr";
-    content: "​super pr"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  36.690647482%, 37.0093916867% {
-    content: "​super p";
-    content: "​super p"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  37.0103916867%, 37.3291358913% {
-    content: "​super ";
-    content: "​super "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  37.3301358913%, 37.6488800959% {
-    content: "​super";
-    content: "​super"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  37.6498800959%, 37.9686243006% {
-    content: "​supe";
-    content: "​supe"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  37.9696243006%, 38.2883685052% {
-    content: "​sup";
-    content: "​sup"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  38.2893685052%, 38.6081127098% {
-    content: "​su";
-    content: "​su"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  38.6091127098%, 38.9278569145% {
-    content: "​s";
-    content: "​s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  38.9288569145%, 42.9246594724% {
+  0%, 1.8105942029% {
+    content: "​S";
+    content: "​S"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  1.8115942029%, 3.6221884058% {
+    content: "​Sk";
+    content: "​Sk"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  3.6231884058%, 5.4337826087% {
+    content: "​Ski";
+    content: "​Ski"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  5.4347826087%, 7.2453768116% {
+    content: "​Skib";
+    content: "​Skib"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  7.2463768116%, 9.0569710145% {
+    content: "​Skibi";
+    content: "​Skibi"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  9.0579710145%, 10.8685652174% {
+    content: "​Skibid";
+    content: "​Skibid"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  10.8695652174%, 12.6801594203% {
+    content: "​Skibidi";
+    content: "​Skibidi"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  12.6811594203%, 14.4917536232% {
+    content: "​Skibidi ";
+    content: "​Skibidi "/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  14.4927536232%, 16.3033478261% {
+    content: "​Skibidi s";
+    content: "​Skibidi s"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  16.3043478261%, 18.114942029% {
+    content: "​Skibidi si";
+    content: "​Skibidi si"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  18.115942029%, 19.9265362319% {
+    content: "​Skibidi sig";
+    content: "​Skibidi sig"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  19.9275362319%, 21.7381304348% {
+    content: "​Skibidi sigm";
+    content: "​Skibidi sigm"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  21.7391304348%, 23.5497246377% {
+    content: "​Skibidi sigma";
+    content: "​Skibidi sigma"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  23.5507246377%, 63.0424782609% {
+    content: "​Skibidi sigmas";
+    content: "​Skibidi sigmas"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  63.0434782609%, 64.4917536232% {
+    content: "​Skibidi sigma";
+    content: "​Skibidi sigma"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  64.4927536232%, 65.9410289855% {
+    content: "​Skibidi sigm";
+    content: "​Skibidi sigm"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  65.9420289855%, 67.3903043478% {
+    content: "​Skibidi sig";
+    content: "​Skibidi sig"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  67.3913043478%, 68.8395797101% {
+    content: "​Skibidi si";
+    content: "​Skibidi si"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  68.8405797101%, 70.2888550725% {
+    content: "​Skibidi s";
+    content: "​Skibidi s"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  70.2898550725%, 71.7381304348% {
+    content: "​Skibidi ";
+    content: "​Skibidi "/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  71.7391304348%, 73.1874057971% {
+    content: "​Skibidi";
+    content: "​Skibidi"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  73.1884057971%, 74.6366811594% {
+    content: "​Skibid";
+    content: "​Skibid"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  74.6376811594%, 76.0859565217% {
+    content: "​Skibi";
+    content: "​Skibi"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  76.0869565217%, 77.5352318841% {
+    content: "​Skib";
+    content: "​Skib"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  77.5362318841%, 78.9845072464% {
+    content: "​Ski";
+    content: "​Ski"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  78.9855072464%, 80.4337826087% {
+    content: "​Sk";
+    content: "​Sk"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  80.4347826087%, 81.883057971% {
+    content: "​S";
+    content: "​S"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
+  }
+  81.884057971%, 100% {
     content: "​";
-    content: "​"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  42.9256594724%, 43.3243397282% {
-    content: "​s";
-    content: "​s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  43.3253397282%, 43.724019984% {
-    content: "​sk";
-    content: "​sk"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  43.725019984%, 44.1237002398% {
-    content: "​ski";
-    content: "​ski"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  44.1247002398%, 44.5233804956% {
-    content: "​skib";
-    content: "​skib"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  44.5243804956%, 44.9230607514% {
-    content: "​skibi";
-    content: "​skibi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  44.9240607514%, 45.3227410072% {
-    content: "​skibid";
-    content: "​skibid"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  45.3237410072%, 45.722421263% {
-    content: "​skibidi";
-    content: "​skibidi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  45.723421263%, 46.1221015188% {
-    content: "​skibidi ";
-    content: "​skibidi "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  46.1231015188%, 46.5217817746% {
-    content: "​skibidi s";
-    content: "​skibidi s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  46.5227817746%, 46.9214620304% {
-    content: "​skibidi si";
-    content: "​skibidi si"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  46.9224620304%, 47.3211422862% {
-    content: "​skibidi sid";
-    content: "​skibidi sid"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  47.3221422862%, 47.720822542% {
-    content: "​skibidi sidj";
-    content: "​skibidi sidj"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  47.721822542%, 48.1205027978% {
-    content: "​skibidi sidja";
-    content: "​skibidi sidja"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  48.1215027978%, 48.5201830536% {
-    content: "​skibidi sidja ";
-    content: "​skibidi sidja "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  48.5211830536%, 48.9198633094% {
-    content: "​skibidi sidja s";
-    content: "​skibidi sidja s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  48.9208633094%, 49.3195435651% {
-    content: "​skibidi sidja so";
-    content: "​skibidi sidja so"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  49.3205435651%, 49.7192238209% {
-    content: "​skibidi sidja sod";
-    content: "​skibidi sidja sod"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  49.7202238209%, 50.1189040767% {
-    content: "​skibidi sidja sodj";
-    content: "​skibidi sidja sodj"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  50.1199040767%, 50.5185843325% {
-    content: "​skibidi sidja sodji";
-    content: "​skibidi sidja sodji"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  50.5195843325%, 50.9182645883% {
-    content: "​skibidi sidja sodji ";
-    content: "​skibidi sidja sodji "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  50.9192645883%, 51.3179448441% {
-    content: "​skibidi sidja sodji s";
-    content: "​skibidi sidja sodji s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  51.3189448441%, 51.7176250999% {
-    content: "​skibidi sidja sodji sk";
-    content: "​skibidi sidja sodji sk"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  51.7186250999%, 52.1173053557% {
-    content: "​skibidi sidja sodji ski";
-    content: "​skibidi sidja sodji ski"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  52.1183053557%, 52.5169856115% {
-    content: "​skibidi sidja sodji skib";
-    content: "​skibidi sidja sodji skib"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  52.5179856115%, 52.9166658673% {
-    content: "​skibidi sidja sodji skibi";
-    content: "​skibidi sidja sodji skibi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  52.9176658673%, 61.6296954436% {
-    content: "​skibidi sidja sodji skibid";
-    content: "​skibidi sidja sodji skibid"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  61.6306954436%, 61.9494396483% {
-    content: "​skibidi sidja sodji skibi";
-    content: "​skibidi sidja sodji skibi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  61.9504396483%, 62.2691838529% {
-    content: "​skibidi sidja sodji skib";
-    content: "​skibidi sidja sodji skib"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  62.2701838529%, 62.5889280576% {
-    content: "​skibidi sidja sodji ski";
-    content: "​skibidi sidja sodji ski"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  62.5899280576%, 62.9086722622% {
-    content: "​skibidi sidja sodji sk";
-    content: "​skibidi sidja sodji sk"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  62.9096722622%, 63.2284164668% {
-    content: "​skibidi sidja sodji s";
-    content: "​skibidi sidja sodji s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  63.2294164668%, 63.5481606715% {
-    content: "​skibidi sidja sodji ";
-    content: "​skibidi sidja sodji "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  63.5491606715%, 63.8679048761% {
-    content: "​skibidi sidja sodji";
-    content: "​skibidi sidja sodji"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  63.8689048761%, 64.1876490807% {
-    content: "​skibidi sidja sodj";
-    content: "​skibidi sidja sodj"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  64.1886490807%, 64.5073932854% {
-    content: "​skibidi sidja sod";
-    content: "​skibidi sidja sod"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  64.5083932854%, 64.82713749% {
-    content: "​skibidi sidja so";
-    content: "​skibidi sidja so"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  64.82813749%, 65.1468816946% {
-    content: "​skibidi sidja s";
-    content: "​skibidi sidja s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  65.1478816946%, 65.4666258993% {
-    content: "​skibidi sidja ";
-    content: "​skibidi sidja "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  65.4676258993%, 65.7863701039% {
-    content: "​skibidi sidja";
-    content: "​skibidi sidja"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  65.7873701039%, 66.1061143086% {
-    content: "​skibidi sidj";
-    content: "​skibidi sidj"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  66.1071143086%, 66.4258585132% {
-    content: "​skibidi sid";
-    content: "​skibidi sid"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  66.4268585132%, 66.7456027178% {
-    content: "​skibidi si";
-    content: "​skibidi si"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  66.7466027178%, 67.0653469225% {
-    content: "​skibidi s";
-    content: "​skibidi s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  67.0663469225%, 67.3850911271% {
-    content: "​skibidi ";
-    content: "​skibidi "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  67.3860911271%, 67.7048353317% {
-    content: "​skibidi";
-    content: "​skibidi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  67.7058353317%, 68.0245795364% {
-    content: "​skibid";
-    content: "​skibid"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  68.0255795364%, 68.344323741% {
-    content: "​skibi";
-    content: "​skibi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  68.345323741%, 68.6640679456% {
-    content: "​skib";
-    content: "​skib"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  68.6650679456%, 68.9838121503% {
-    content: "​ski";
-    content: "​ski"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  68.9848121503%, 69.3035563549% {
-    content: "​sk";
-    content: "​sk"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  69.3045563549%, 69.6233005596% {
-    content: "​s";
-    content: "​s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  69.6243005596%, 73.6201031175% {
-    content: "​";
-    content: "​"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  73.6211031175%, 74.0197833733% {
-    content: "​s";
-    content: "​s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  74.0207833733%, 74.4194636291% {
-    content: "​su";
-    content: "​su"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  74.4204636291%, 74.8191438849% {
-    content: "​sup";
-    content: "​sup"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  74.8201438849%, 75.2188241407% {
-    content: "​supe";
-    content: "​supe"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  75.2198241407%, 75.6185043965% {
-    content: "​super";
-    content: "​super"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  75.6195043965%, 76.0181846523% {
-    content: "​super ";
-    content: "​super "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  76.0191846523%, 76.4178649081% {
-    content: "​super s";
-    content: "​super s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  76.4188649081%, 76.8175451639% {
-    content: "​super sk";
-    content: "​super sk"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  76.8185451639%, 77.2172254197% {
-    content: "​super ski";
-    content: "​super ski"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  77.2182254197%, 77.6169056755% {
-    content: "​super skib";
-    content: "​super skib"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  77.6179056755%, 78.0165859313% {
-    content: "​super skibi";
-    content: "​super skibi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  78.0175859313%, 78.4162661871% {
-    content: "​super skibid";
-    content: "​super skibid"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  78.4172661871%, 78.8159464428% {
-    content: "​super skibidi";
-    content: "​super skibidi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  78.8169464428%, 79.2156266986% {
-    content: "​super skibidi ";
-    content: "​super skibidi "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  79.2166266986%, 79.6153069544% {
-    content: "​super skibidi s";
-    content: "​super skibidi s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  79.6163069544%, 80.0149872102% {
-    content: "​super skibidi si";
-    content: "​super skibidi si"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  80.0159872102%, 80.414667466% {
-    content: "​super skibidi sig";
-    content: "​super skibidi sig"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  80.415667466%, 80.8143477218% {
-    content: "​super skibidi sigm";
-    content: "​super skibidi sigm"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  80.8153477218%, 81.2140279776% {
-    content: "​super skibidi sigma";
-    content: "​super skibidi sigma"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  81.2150279776%, 89.927057554% {
-    content: "​super skibidi sigmas";
-    content: "​super skibidi sigmas"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  89.928057554%, 90.2468017586% {
-    content: "​super skibidi sigma";
-    content: "​super skibidi sigma"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  90.2478017586%, 90.5665459632% {
-    content: "​super skibidi sigm";
-    content: "​super skibidi sigm"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  90.5675459632%, 90.8862901679% {
-    content: "​super skibidi sig";
-    content: "​super skibidi sig"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  90.8872901679%, 91.2060343725% {
-    content: "​super skibidi si";
-    content: "​super skibidi si"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  91.2070343725%, 91.5257785771% {
-    content: "​super skibidi s";
-    content: "​super skibidi s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  91.5267785771%, 91.8455227818% {
-    content: "​super skibidi ";
-    content: "​super skibidi "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  91.8465227818%, 92.1652669864% {
-    content: "​super skibidi";
-    content: "​super skibidi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  92.1662669864%, 92.485011191% {
-    content: "​super skibid";
-    content: "​super skibid"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  92.486011191%, 92.8047553957% {
-    content: "​super skibi";
-    content: "​super skibi"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  92.8057553957%, 93.1244996003% {
-    content: "​super skib";
-    content: "​super skib"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  93.1254996003%, 93.444243805% {
-    content: "​super ski";
-    content: "​super ski"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  93.445243805%, 93.7639880096% {
-    content: "​super sk";
-    content: "​super sk"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  93.7649880096%, 94.0837322142% {
-    content: "​super s";
-    content: "​super s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  94.0847322142%, 94.4034764189% {
-    content: "​super ";
-    content: "​super "/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  94.4044764189%, 94.7232206235% {
-    content: "​super";
-    content: "​super"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  94.7242206235%, 95.0429648281% {
-    content: "​supe";
-    content: "​supe"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  95.0439648281%, 95.3627090328% {
-    content: "​sup";
-    content: "​sup"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  95.3637090328%, 95.6824532374% {
-    content: "​su";
-    content: "​su"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  95.6834532374%, 96.002197442% {
-    content: "​s";
-    content: "​s"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
-  }
-  96.003197442%, 100% {
-    content: "​";
-    content: "​"/"super pro skibid sigma sigma skibidi sigmas";
-    alt: "super pro skibid sigma sigma skibidi sigmas";
+    content: "​"/"Skibidi sigmas";
+    alt: "Skibidi sigmas";
   }
 }
 @keyframes typed-0-caret {
@@ -955,10 +220,80 @@ body {
   outline: none;
 }
 
+.main-content {
+  min-height: 100vh;
+  padding: 2rem;
+  display: block;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(26, 26, 26, 0.9);
+  padding: 1rem 0;
+  z-index: 1000;
+}
+nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+nav li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+nav li a:hover {
+  color: #64ffda;
+}
+
+header {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+header h1 {
+  font-size: 4rem;
+  margin: 0;
+  animation: slideUp 1s ease-out;
+}
+header .subtitle {
+  font-size: 2rem;
+  color: #64ffda;
+  margin-top: 1rem;
+  animation: slideUp 1s ease-out 0.2s;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 @media (max-width: 768px) {
   .input-wrapper {
     font-size: 1.8rem;
     width: 90%;
+  }
+  header h1 {
+    font-size: 3rem;
+  }
+  .subtitle {
+    font-size: 1.5rem;
   }
 }
 

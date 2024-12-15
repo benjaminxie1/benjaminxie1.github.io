@@ -1,0 +1,160 @@
+/* Base styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-family: 'Courier New', monospace; /* Changed to match index.scss */
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Navigation - matching index.scss style */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(26, 26, 26, 0.9);
+    padding: 1rem 0;
+    z-index: 1000;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #64ffda;
+}
+
+/* Content */
+.content {
+    max-width: 1200px;
+    margin: 120px auto 60px;
+    padding: 0 2rem;
+}
+
+.page-title {
+    font-size: 4rem; /* Matched to index.scss h1 size */
+    margin-bottom: 3rem;
+    text-align: center;
+    color: #ffffff; /* Matched to index.scss */
+    animation: slideUp 1s ease-out;
+}
+
+/* Sections */
+.section {
+    margin: 4rem 0;
+    animation: slideUp 1s ease-out;
+}
+
+.intro-section {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.intro-text {
+    font-size: 2rem; /* Matched to index.scss subtitle size */
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.specialty {
+    font-size: 1.2rem;
+    color: #64ffda; /* Matched to index.scss accent color */
+}
+
+h2 {
+    font-size: 2rem;
+    color: #64ffda;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #64ffda;
+    display: inline-block;
+}
+
+/* Cards */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    color: #64ffda;
+    margin: 0 0 1rem 0;
+}
+
+.year {
+    color: #8892b0;
+    font-style: italic;
+}
+
+/* Skills Grid */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.skill-card {
+    background: rgba(100, 255, 218, 0.1);
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.skill-card:hover {
+    transform: translateY(-3px);
+    color: #64ffda;
+}
+
+/* Using the same animations from index.scss */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design - matching index.scss breakpoints */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 3rem;
+    }
+
+    .intro-text {
+        font-size: 1.5rem;
+    }
+
+    .content {
+        margin-top: 100px;
+    }
+}
