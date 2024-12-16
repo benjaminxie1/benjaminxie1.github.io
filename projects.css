@@ -2,28 +2,10 @@
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background-color: #1a1a1a;
+    background-color: #121212;
     color: #ffffff;
     font-family: 'Courier New', monospace;
     min-height: 100vh;
-}
-
-#networkCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.content {
-    position: relative;
-    z-index: 2;
-    max-width: 1400px;
-    margin: 120px auto 60px;
-    padding: 0 2rem;
 }
 
 nav {
@@ -31,10 +13,9 @@ nav {
     top: 0;
     left: 0;
     right: 0;
-    background-color: rgba(26, 26, 26, 0.8);
+    background-color: rgba(26, 26, 26, 0.9);
     padding: 1rem 0;
     z-index: 1000;
-    backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(100, 255, 218, 0.1);
 }
 
@@ -45,16 +26,15 @@ nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    width: 100%;
 }
 
 nav a {
     color: white;
     text-decoration: none;
     font-size: 1.2rem;
-    transition: all 0.3s ease;
     padding: 0.5rem 1rem;
     border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 nav a:hover {
@@ -62,20 +42,13 @@ nav a:hover {
     background-color: rgba(100, 255, 218, 0.1);
 }
 
-/* Page Title with highlight effect */
+/* Page Title */
 .page-title {
     font-size: 4.5rem;
     text-align: center;
     color: #ffffff;
     margin-bottom: 4rem;
-    animation: slideUp 1s ease-out;
     text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
-    letter-spacing: 2px;
-    transition: text-shadow 0.3s ease;
-}
-
-.page-title:hover {
-    text-shadow: 0 0 30px rgba(100, 255, 218, 0.5);
 }
 
 /* Projects Grid */
@@ -87,52 +60,29 @@ nav a:hover {
 }
 
 .project-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 15px;
     padding: 2rem;
     transition: all 0.4s ease;
     border: 1px solid rgba(100, 255, 218, 0.1);
     position: relative;
     overflow: hidden;
-    animation: fadeIn 0.8s ease-out forwards;
-}
-
-.project-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, transparent, rgba(100, 255, 218, 0.03));
-    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px -15px rgba(100, 255, 218, 0.2);
 }
 
 .project-card:hover {
     transform: translateY(-10px);
     border-color: rgba(100, 255, 218, 0.3);
-    box-shadow: 0 10px 30px -15px rgba(100, 255, 218, 0.2);
-}
-
-.project-card:hover::before {
-    opacity: 1;
 }
 
 .project-content {
     position: relative;
-    z-index: 1;
 }
 
 .project-card h2 {
     color: #64ffda;
-    margin: 0 0 1rem 0;
+    margin-bottom: 1rem;
     font-size: 1.8rem;
-    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
-    transition: text-shadow 0.3s ease;
-}
-
-.project-card h2:hover {
-    text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
 }
 
 .project-description {
@@ -140,6 +90,30 @@ nav a:hover {
     margin-bottom: 1.5rem;
     line-height: 1.6;
 }
+.award-ribbon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff6347; /* Tomato red background for the ribbon */
+    color: #ffffff; /* White text color */
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-shadow: none; /* No shadow */
+}
+
+/* Remove the 3D effect and popping out on hover */
+.award-ribbon:hover {
+    text-shadow: none;
+    transform: none;
+}
+
+
+
+
+
 
 /* Tech Stack Tags */
 .tech-stack {
@@ -155,14 +129,6 @@ nav a:hover {
     padding: 0.4rem 0.8rem;
     border-radius: 4px;
     font-size: 0.9rem;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(100, 255, 218, 0.3);
-}
-
-.tech-tag:hover {
-    background: rgba(100, 255, 218, 0.2);
-    transform: translateY(-2px);
-    text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
 }
 
 /* Project Links */
@@ -186,8 +152,6 @@ nav a:hover {
 
 .btn:hover {
     background: rgba(100, 255, 218, 0.1);
-    transform: translateY(-2px);
-    text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
 }
 
 .icon {
@@ -197,29 +161,6 @@ nav a:hover {
 
 .btn:hover .icon {
     transform: translateX(5px);
-}
-
-/* Animations */
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* Responsive Design */
@@ -232,17 +173,8 @@ nav a:hover {
         grid-template-columns: 1fr;
     }
 
-    .project-card {
-        padding: 1.5rem;
-    }
-
     nav a {
         font-size: 1rem;
-        padding: 0.3rem 0.8rem;
-    }
-
-    nav ul {
-        gap: 1rem;
     }
 }
 
