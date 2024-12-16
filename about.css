@@ -1,230 +1,156 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #1a1a1a;
-    color: #ffffff;
-    font-family: 'Courier New', monospace;
-    line-height: 1.6;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Benjamin Xie</title>
+    <link rel="stylesheet" href="about.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
 
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(26, 26, 26, 0.8);
-    padding: 1rem 0;
-    z-index: 1000;
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-}
+    <main class="content">
+        <h1 class="page-title">About Me</h1>
 
-nav ul {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+        <section class="intro-section">
+            <p class="intro-text">Hello! I'm Benjamin Xie, a software developer based in California.</p>
+            <div class="typing-container">
+                <span class="static-text">I specialize in </span>
+                <span class="specialty"></span>
+                <span class="cursor"></span>
+            </div>
+        </section>
 
-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-}
+        <section class="education-section">
+            <h2>Education</h2>
+            <div class="card">
+                <div class="card-header">
+                    <img src="images/westlake.png" alt="School Logo" class="logo">
+                    <div class="header-content">
+                        <h3>Westlake High School</h3>
+                        <p>4.00 GPA | 11th Grade</p>
+                        <p class="year">2022 - 2026</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-nav a:hover {
-    color: #64ffda;
-    background-color: rgba(100, 255, 218, 0.1);
-}
+        <section class="experience-section">
+            <h2>Experience</h2>
+            <div class="card">
+                <div class="card-header">
+                    <img src="path/to/company-logo.png" alt="Company Logo" class="logo">
+                    <div class="header-content">
+                        <h3>(temporary)</h3>
+                        <p>(title)</p>
+                        <p class="year">Duration</p>
+                        <ul>
+                            <li>Achievement 1</li>
+                            <li>Achievement 2</li>
+                            <li>Achievement 3</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-.content {
-    max-width: 1200px;
-    margin: 120px auto 60px;
-    padding: 0 2rem;
-}
+        <section class="skills-section">
+            <h2>Languages</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="skill-logo">
+                    <span>Python</span>
+                </div>
+                <div class="skill-card">
+                    <img src="images/cplusplus-original.svg" alt="C++" class="skill-logo">
+                    <span>C++</span>
+                </div>
+                <div class="skill-card">
+                    <img src="images/java-original.svg" alt="Java" class="skill-logo">
+                    <span>Java</span>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="skill-logo">
+                    <span>JavaScript</span>
+                </div>
+            </div>
+        </section>
+        <section class="technologies-section">
+            <h2>Technologies</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <img src="images/react-original.svg" alt="React" class="skill-logo">
+                    <span>React</span>
+                </div>
+                <div class="skill-card">
+                    <img src="images/pytorch-original.svg" alt="PyTorch" class="skill-logo">
+                    <span>PyTorch</span>
+                </div>
+                <div class="skill-card">
+                    <img src="images/pytorch-original.svg" alt="TensorFlow" class="skill-logo">
+                    <span>TensorFlow</span>
+                </div>
+                <div class="skill-card">
+                    <img src="images/amazonwebservices-original-wordmark.svg" alt="AWS" class="skill-logo">
+                    <span>Amazon Web Services</span>
+                </div>
+                                <div class="skill-card">
+                    <img src="images/linux-original.svg" alt="Linux" class="skill-logo">
+                    <span>Linux</span>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" class="skill-logo">
+                    <span>Git</span>
+                </div>
 
-.page-title {
-    font-size: 4.5rem;
-    text-align: center;
-    color: #ffffff;
-    margin-bottom: 3rem;
-    animation: slideUp 1s ease-out;
-    text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
-    letter-spacing: 2px;
-}
 
-.intro-section {
-    text-align: center;
-    margin-bottom: 6rem;
-}
+            </div>
+        </section>
+    </main>
 
-.intro-text {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
-}
+    <script>
+        const specialties = [
+            "machine learning.",
+            "software engineering.",
+            "problem solving."
+        ];
 
-.typing-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    min-height: 3rem;
-}
+        const specialtyElement = document.querySelector('.specialty');
+        let currentIndex = 0;
 
-.static-text {
-    font-size: 2rem;
-    color: white;
-}
+        async function typeText(text) {
+            for (let i = 0; i < text.length; i++) {
+                specialtyElement.textContent += text[i];
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            await new Promise(resolve => setTimeout(resolve, 2000));
+        }
 
-.specialty {
-    font-size: 2rem;
-    color: #64ffda;
-    min-width: 1px;
-    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
-}
+        async function deleteText() {
+            const text = specialtyElement.textContent;
+            for (let i = text.length; i > 0; i--) {
+                specialtyElement.textContent = text.substring(0, i - 1);
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+            await new Promise(resolve => setTimeout(resolve, 500));
+        }
 
-.cursor {
-    display: inline-block;
-    width: 3px;
-    height: 2rem;
-    background-color: #64ffda;
-    margin-left: 4px;
-    animation: blink 1s step-end infinite;
-}
+        async function cycleText() {
+            while (true) {
+                await typeText(specialties[currentIndex]);
+                await deleteText();
+                currentIndex = (currentIndex + 1) % specialties.length;
+            }
+        }
 
-section {
-    margin-bottom: 6rem;
-}
-
-h2 {
-    font-size: 2.5rem;
-    color: #64ffda;
-    margin-bottom: 2rem;
-    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
-}
-
-.card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 12px;
-    margin-bottom: 2rem;
-    border: 1px solid rgba(100, 255, 218, 0.1);
-    transition: all 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(100, 255, 218, 0.3);
-}
-
-.card-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-}
-
-.logo {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    border-radius: 8px;
-    padding: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.header-content {
-    flex: 1;
-}
-
-.header-content h3 {
-    font-size: 1.8rem;
-    color: #64ffda;
-    margin: 0 0 1rem 0;
-}
-
-.year {
-    color: #8892b0;
-    font-style: italic;
-}
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.skill-card {
-    background: rgba(100, 255, 218, 0.1);
-    padding: 1.5rem;
-    border-radius: 8px;
-    text-align: center;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.skill-card:hover {
-    transform: translateY(-5px);
-    background: rgba(100, 255, 218, 0.15);
-}
-
-.skill-logo {
-    width: 50px;
-    height: 50px;
-    transition: transform 0.3s ease;
-}
-
-.skill-card:hover .skill-logo {
-    transform: scale(1.1);
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes blink {
-    from, to { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-@media (max-width: 768px) {
-    .content {
-        padding: 0 1.5rem;
-    }
-
-    .page-title {
-        font-size: 3rem;
-    }
-
-    .intro-text, .static-text, .specialty {
-        font-size: 1.5rem;
-    }
-
-    .card-header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+        cycleText();
+    </script>
+</body>
+</html>
