@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Benjamin Xie</title>
     <link rel="stylesheet" href="about.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
 </head>
 <body>
     <nav>
@@ -17,48 +16,134 @@
         </ul>
     </nav>
 
-    <div class="content">
+    <main class="content">
         <h1 class="page-title">About Me</h1>
-        <div class="about-content">
-            <div class="intro-section">
-                <p class="intro-text">Hello! I'm Benjamin Xie, a passionate software developer based in California.</p>
-                <p class="specialty">I specialize in blargh.</p>
-            </div>
 
-            <div class="section education">
-                <h2>Education</h2>
-                <div class="card">
-                    <h3>blargh High School</h3>
-                    <p>blargh</p>
-                    <p class="year">2022 - 2026</p>
+        <section class="intro-section">
+            <p class="intro-text">Hello! I'm Benjamin Xie, a software developer based in California.</p>
+            <div class="typing-container">
+                <span class="static-text">I specialize in </span>
+                <span class="specialty"></span>
+                <span class="cursor"></span>
+            </div>
+        </section>
+
+        <section class="education-section">
+            <h2>Education</h2>
+            <div class="card">
+                <div class="card-header">
+                    <img src="images/westlake.png" alt="School Logo" class="logo">
+                    <div class="header-content">
+                        <h3>Westlake High School</h3>
+                        <p>4.00 GPA | 11th Grade</p>
+                        <p class="year">2022 - 2026</p>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="section experience">
-                <h2>Experience</h2>
-                <div class="card">
-                    <h3>blargh</h3>
-                    <p>blargh</p>
-                    <p class="year">Summer 2023</p>
-                    <ul>
-                        <li>Developed full-stack applications</li>
-                        <li>Worked with modern technologies</li>
-                        <li>Collaborated in agile team environment</li>
-                    </ul>
+        <section class="experience-section">
+            <h2>Experience</h2>
+            <div class="card">
+                <div class="card-header">
+                    <img src="path/to/company-logo.png" alt="Company Logo" class="logo">
+                    <div class="header-content">
+                        <h3>(temporary)</h3>
+                        <p>(title)</p>
+                        <p class="year">Duration</p>
+                        <ul>
+                            <li>Achievement 1</li>
+                            <li>Achievement 2</li>
+                            <li>Achievement 3</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="section skills">
-                <h2>Skills</h2>
-                <div class="skills-grid">
-                    <div class="skill-card">Python</div>
-                    <div class="skill-card">C++</div>
-                    <div class="skill-card">Java</div>
-                    <div class="skill-card">Git</div>
-
+        <section class="skills-section">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="skill-logo">
+                    <span>Python</span>
+                </div>
+                <div class="skill-card">
+                    <img src="images/cplusplus-original.svg" alt="C++" class="skill-logo">
+                    <span>C++</span>
+                </div>
+                <div class="skill-card">
+                    <img src="images/java-original.svg" alt="Java" class="skill-logo">
+                    <span>Java</span>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="skill-logo">
+                    <span>JavaScript</span>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+        <section class="technologies-section">
+            <h2>Technologies</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <img src="images/react-original.svg" alt="React" class="skill-logo">
+                    <span>React</span>
+                </div>
+                <div class="skill-card">
+                    <img src="images/linux-original.svg" alt="Linux" class="skill-logo">
+                    <span>Linux</span>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" class="skill-logo">
+                    <span>Git</span>
+                </div>
+                <div class="skill-card">
+                    <img src="images/pytorch-original.svg" alt="PyTorch" class="skill-logo">
+                    <span>PyTorch</span>
+                </div>
+
+
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const specialties = [
+            "machine learning.",
+            "software engineering.",
+            "problem solving."
+        ];
+
+        const specialtyElement = document.querySelector('.specialty');
+        let currentIndex = 0;
+
+        async function typeText(text) {
+            for (let i = 0; i < text.length; i++) {
+                specialtyElement.textContent += text[i];
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+
+        async function deleteText() {
+            const text = specialtyElement.textContent;
+            for (let i = text.length; i > 0; i--) {
+                specialtyElement.textContent = text.substring(0, i - 1);
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+            await new Promise(resolve => setTimeout(resolve, 500));
+        }
+
+        async function cycleText() {
+            while (true) {
+                await typeText(specialties[currentIndex]);
+                await deleteText();
+                currentIndex = (currentIndex + 1) % specialties.length;
+            }
+        }
+
+        cycleText();
+    </script>
 </body>
 </html>

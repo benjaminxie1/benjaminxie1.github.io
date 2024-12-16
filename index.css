@@ -51,11 +51,11 @@ body {
 }
 .input-wrapper > .placeholder::before {
   content: "​";
-  content: "​"/"Skibidi sigmas";
-  alt: "Skibidi sigmas";
+  content: "​"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+  alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
   white-space: break-spaces;
   will-change: content;
-  animation: typed-0 3.68s linear 1s infinite forwards;
+  animation: typed-0 13.1s linear 1s infinite forwards;
 }
 .input-wrapper > .placeholder::after {
   content: "​";
@@ -67,145 +67,1121 @@ body {
   animation: typed-0-caret 0.75s linear 1s infinite forwards;
 }
 @keyframes typed-0 {
-  0%, 1.8105942029% {
-    content: "​S";
-    content: "​S"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  0%, 0.3806793893% {
+    content: "​I";
+    content: "​I"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  1.8115942029%, 3.6221884058% {
-    content: "​Sk";
-    content: "​Sk"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  0.3816793893%, 0.7623587786% {
+    content: "​If";
+    content: "​If"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  3.6231884058%, 5.4337826087% {
-    content: "​Ski";
-    content: "​Ski"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  0.7633587786%, 1.1440381679% {
+    content: "​If ";
+    content: "​If "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  5.4347826087%, 7.2453768116% {
-    content: "​Skib";
-    content: "​Skib"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  1.1450381679%, 1.5257175573% {
+    content: "​If y";
+    content: "​If y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  7.2463768116%, 9.0569710145% {
-    content: "​Skibi";
-    content: "​Skibi"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  1.5267175573%, 1.9073969466% {
+    content: "​If yo";
+    content: "​If yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  9.0579710145%, 10.8685652174% {
-    content: "​Skibid";
-    content: "​Skibid"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  1.9083969466%, 2.2890763359% {
+    content: "​If you";
+    content: "​If you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  10.8695652174%, 12.6801594203% {
-    content: "​Skibidi";
-    content: "​Skibidi"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  2.2900763359%, 2.6707557252% {
+    content: "​If you ";
+    content: "​If you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  12.6811594203%, 14.4917536232% {
-    content: "​Skibidi ";
-    content: "​Skibidi "/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  2.6717557252%, 3.0524351145% {
+    content: "​If you h";
+    content: "​If you h"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  14.4927536232%, 16.3033478261% {
-    content: "​Skibidi s";
-    content: "​Skibidi s"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  3.0534351145%, 3.4341145038% {
+    content: "​If you ha";
+    content: "​If you ha"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  16.3043478261%, 18.114942029% {
-    content: "​Skibidi si";
-    content: "​Skibidi si"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  3.4351145038%, 3.8157938931% {
+    content: "​If you had";
+    content: "​If you had"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  18.115942029%, 19.9265362319% {
-    content: "​Skibidi sig";
-    content: "​Skibidi sig"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  3.8167938931%, 4.1974732824% {
+    content: "​If you had ";
+    content: "​If you had "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  19.9275362319%, 21.7381304348% {
-    content: "​Skibidi sigm";
-    content: "​Skibidi sigm"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  4.1984732824%, 4.5791526718% {
+    content: "​If you had o";
+    content: "​If you had o"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  21.7391304348%, 23.5497246377% {
-    content: "​Skibidi sigma";
-    content: "​Skibidi sigma"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  4.5801526718%, 4.9608320611% {
+    content: "​If you had on";
+    content: "​If you had on"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  23.5507246377%, 63.0424782609% {
-    content: "​Skibidi sigmas";
-    content: "​Skibidi sigmas"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  4.9618320611%, 5.3425114504% {
+    content: "​If you had one";
+    content: "​If you had one"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  63.0434782609%, 64.4917536232% {
-    content: "​Skibidi sigma";
-    content: "​Skibidi sigma"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  5.3435114504%, 5.7241908397% {
+    content: "​If you had one ";
+    content: "​If you had one "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  64.4927536232%, 65.9410289855% {
-    content: "​Skibidi sigm";
-    content: "​Skibidi sigm"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  5.7251908397%, 6.105870229% {
+    content: "​If you had one c";
+    content: "​If you had one c"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  65.9420289855%, 67.3903043478% {
-    content: "​Skibidi sig";
-    content: "​Skibidi sig"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  6.106870229%, 6.4875496183% {
+    content: "​If you had one ch";
+    content: "​If you had one ch"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  67.3913043478%, 68.8395797101% {
-    content: "​Skibidi si";
-    content: "​Skibidi si"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  6.4885496183%, 6.8692290076% {
+    content: "​If you had one cha";
+    content: "​If you had one cha"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  68.8405797101%, 70.2888550725% {
-    content: "​Skibidi s";
-    content: "​Skibidi s"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  6.8702290076%, 7.2509083969% {
+    content: "​If you had one chan";
+    content: "​If you had one chan"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  70.2898550725%, 71.7381304348% {
-    content: "​Skibidi ";
-    content: "​Skibidi "/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  7.2519083969%, 7.6325877863% {
+    content: "​If you had one chanc";
+    content: "​If you had one chanc"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  71.7391304348%, 73.1874057971% {
-    content: "​Skibidi";
-    content: "​Skibidi"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  7.6335877863%, 8.0142671756% {
+    content: "​If you had one chance";
+    content: "​If you had one chance"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  73.1884057971%, 74.6366811594% {
-    content: "​Skibid";
-    content: "​Skibid"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  8.0152671756%, 8.3959465649% {
+    content: "​If you had one chance ";
+    content: "​If you had one chance "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  74.6376811594%, 76.0859565217% {
-    content: "​Skibi";
-    content: "​Skibi"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  8.3969465649%, 8.7776259542% {
+    content: "​If you had one chance t";
+    content: "​If you had one chance t"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  76.0869565217%, 77.5352318841% {
-    content: "​Skib";
-    content: "​Skib"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  8.7786259542%, 9.1593053435% {
+    content: "​If you had one chance to";
+    content: "​If you had one chance to"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  77.5362318841%, 78.9845072464% {
-    content: "​Ski";
-    content: "​Ski"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  9.1603053435%, 9.5409847328% {
+    content: "​If you had one chance to ";
+    content: "​If you had one chance to "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  78.9855072464%, 80.4337826087% {
-    content: "​Sk";
-    content: "​Sk"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  9.5419847328%, 9.9226641221% {
+    content: "​If you had one chance to s";
+    content: "​If you had one chance to s"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  80.4347826087%, 81.883057971% {
-    content: "​S";
-    content: "​S"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+  9.9236641221%, 10.3043435115% {
+    content: "​If you had one chance to se";
+    content: "​If you had one chance to se"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
   }
-  81.884057971%, 100% {
+  10.3053435115%, 10.6860229008% {
+    content: "​If you had one chance to sei";
+    content: "​If you had one chance to sei"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  10.6870229008%, 11.0677022901% {
+    content: "​If you had one chance to seiz";
+    content: "​If you had one chance to seiz"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  11.0687022901%, 11.4493816794% {
+    content: "​If you had one chance to seize";
+    content: "​If you had one chance to seize"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  11.4503816794%, 11.8310610687% {
+    content: "​If you had one chance to seize ";
+    content: "​If you had one chance to seize "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  11.8320610687%, 12.212740458% {
+    content: "​If you had one chance to seize e";
+    content: "​If you had one chance to seize e"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  12.213740458%, 12.5944198473% {
+    content: "​If you had one chance to seize ev";
+    content: "​If you had one chance to seize ev"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  12.5954198473%, 12.9760992366% {
+    content: "​If you had one chance to seize eve";
+    content: "​If you had one chance to seize eve"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  12.9770992366%, 13.357778626% {
+    content: "​If you had one chance to seize ever";
+    content: "​If you had one chance to seize ever"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  13.358778626%, 13.7394580153% {
+    content: "​If you had one chance to seize every";
+    content: "​If you had one chance to seize every"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  13.7404580153%, 14.1211374046% {
+    content: "​If you had one chance to seize everyt";
+    content: "​If you had one chance to seize everyt"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  14.1221374046%, 14.5028167939% {
+    content: "​If you had one chance to seize everyth";
+    content: "​If you had one chance to seize everyth"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  14.5038167939%, 14.8844961832% {
+    content: "​If you had one chance to seize everythi";
+    content: "​If you had one chance to seize everythi"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  14.8854961832%, 15.2661755725% {
+    content: "​If you had one chance to seize everythin";
+    content: "​If you had one chance to seize everythin"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  15.2671755725%, 15.6478549618% {
+    content: "​If you had one chance to seize everything";
+    content: "​If you had one chance to seize everything"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  15.6488549618%, 16.0295343511% {
+    content: "​If you had one chance to seize everything ";
+    content: "​If you had one chance to seize everything "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  16.0305343511%, 16.4112137405% {
+    content: "​If you had one chance to seize everything y";
+    content: "​If you had one chance to seize everything y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  16.4122137405%, 16.7928931298% {
+    content: "​If you had one chance to seize everything yo";
+    content: "​If you had one chance to seize everything yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  16.7938931298%, 17.1745725191% {
+    content: "​If you had one chance to seize everything you";
+    content: "​If you had one chance to seize everything you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  17.1755725191%, 17.5562519084% {
+    content: "​If you had one chance to seize everything you ";
+    content: "​If you had one chance to seize everything you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  17.5572519084%, 17.9379312977% {
+    content: "​If you had one chance to seize everything you w";
+    content: "​If you had one chance to seize everything you w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  17.9389312977%, 18.319610687% {
+    content: "​If you had one chance to seize everything you wa";
+    content: "​If you had one chance to seize everything you wa"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  18.320610687%, 18.7012900763% {
+    content: "​If you had one chance to seize everything you wan";
+    content: "​If you had one chance to seize everything you wan"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  18.7022900763%, 19.0829694656% {
+    content: "​If you had one chance to seize everything you want";
+    content: "​If you had one chance to seize everything you want"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  19.0839694656%, 19.464648855% {
+    content: "​If you had one chance to seize everything you wante";
+    content: "​If you had one chance to seize everything you wante"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  19.465648855%, 19.8463282443% {
+    content: "​If you had one chance to seize everything you wanted";
+    content: "​If you had one chance to seize everything you wanted"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  19.8473282443%, 20.2280076336% {
+    content: "​If you had one chance to seize everything you wanted,";
+    content: "​If you had one chance to seize everything you wanted,"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  20.2290076336%, 20.6096870229% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  20.6106870229%, 20.9913664122% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  20.9923664122%, 21.3730458015% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  21.3740458015%, 21.7547251908% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  21.7557251908%, 22.1364045802% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  22.1374045802%, 22.5180839695% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  22.5190839695%, 22.8997633588% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  22.9007633588%, 23.2814427481% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  23.2824427481%, 23.6631221374% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  23.6641221374%, 24.0448015267% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  24.0458015267%, 24.426480916% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  24.427480916%, 24.8081603053% {
+    content: "​If you had one chance to seize everything you wanted, w";
+    content: "​If you had one chance to seize everything you wanted, w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  24.8091603053%, 25.1898396947% {
+    content: "​If you had one chance to seize everything you wanted, wo";
+    content: "​If you had one chance to seize everything you wanted, wo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  25.1908396947%, 25.571519084% {
+    content: "​If you had one chance to seize everything you wanted, wou";
+    content: "​If you had one chance to seize everything you wanted, wou"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  25.572519084%, 25.9531984733% {
+    content: "​If you had one chance to seize everything you wanted, woul";
+    content: "​If you had one chance to seize everything you wanted, woul"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  25.9541984733%, 26.3348778626% {
+    content: "​If you had one chance to seize everything you wanted, would";
+    content: "​If you had one chance to seize everything you wanted, would"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  26.3358778626%, 26.7165572519% {
+    content: "​If you had one chance to seize everything you wanted, would ";
+    content: "​If you had one chance to seize everything you wanted, would "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  26.7175572519%, 27.0982366412% {
+    content: "​If you had one chance to seize everything you wanted, would y";
+    content: "​If you had one chance to seize everything you wanted, would y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  27.0992366412%, 27.4799160305% {
+    content: "​If you had one chance to seize everything you wanted, would yo";
+    content: "​If you had one chance to seize everything you wanted, would yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  27.4809160305%, 27.8615954198% {
+    content: "​If you had one chance to seize everything you wanted, would you";
+    content: "​If you had one chance to seize everything you wanted, would you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  27.8625954198%, 28.2432748092% {
+    content: "​If you had one chance to seize everything you wanted, would you ";
+    content: "​If you had one chance to seize everything you wanted, would you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  28.2442748092%, 28.6249541985% {
+    content: "​If you had one chance to seize everything you wanted, would you l";
+    content: "​If you had one chance to seize everything you wanted, would you l"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  28.6259541985%, 29.0066335878% {
+    content: "​If you had one chance to seize everything you wanted, would you le";
+    content: "​If you had one chance to seize everything you wanted, would you le"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  29.0076335878%, 29.3883129771% {
+    content: "​If you had one chance to seize everything you wanted, would you let";
+    content: "​If you had one chance to seize everything you wanted, would you let"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  29.3893129771%, 29.7699923664% {
+    content: "​If you had one chance to seize everything you wanted, would you let ";
+    content: "​If you had one chance to seize everything you wanted, would you let "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  29.7709923664%, 30.1516717557% {
+    content: "​If you had one chance to seize everything you wanted, would you let i";
+    content: "​If you had one chance to seize everything you wanted, would you let i"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  30.1526717557%, 30.533351145% {
+    content: "​If you had one chance to seize everything you wanted, would you let it";
+    content: "​If you had one chance to seize everything you wanted, would you let it"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  30.534351145%, 30.9150305344% {
+    content: "​If you had one chance to seize everything you wanted, would you let it ";
+    content: "​If you had one chance to seize everything you wanted, would you let it "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  30.9160305344%, 31.2967099237% {
+    content: "​If you had one chance to seize everything you wanted, would you let it s";
+    content: "​If you had one chance to seize everything you wanted, would you let it s"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  31.2977099237%, 31.678389313% {
+    content: "​If you had one chance to seize everything you wanted, would you let it sl";
+    content: "​If you had one chance to seize everything you wanted, would you let it sl"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  31.679389313%, 32.0600687023% {
+    content: "​If you had one chance to seize everything you wanted, would you let it sli";
+    content: "​If you had one chance to seize everything you wanted, would you let it sli"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  32.0610687023%, 32.4417480916% {
+    content: "​If you had one chance to seize everything you wanted, would you let it slip";
+    content: "​If you had one chance to seize everything you wanted, would you let it slip"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  32.4427480916%, 32.8234274809% {
+    content: "​If you had one chance to seize everything you wanted, would you let it slip?";
+    content: "​If you had one chance to seize everything you wanted, would you let it slip?"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  32.8244274809%, 48.6631221374% {
+    content: "​If you had one chance to seize everything you wanted, would you let it slip? ";
+    content: "​If you had one chance to seize everything you wanted, would you let it slip? "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  48.6641221374%, 48.8539618321% {
+    content: "​If you had one chance to seize everything you wanted, would you let it slip?";
+    content: "​If you had one chance to seize everything you wanted, would you let it slip?"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  48.8549618321%, 49.0448015267% {
+    content: "​If you had one chance to seize everything you wanted, would you let it slip";
+    content: "​If you had one chance to seize everything you wanted, would you let it slip"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  49.0458015267%, 49.2356412214% {
+    content: "​If you had one chance to seize everything you wanted, would you let it sli";
+    content: "​If you had one chance to seize everything you wanted, would you let it sli"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  49.2366412214%, 49.426480916% {
+    content: "​If you had one chance to seize everything you wanted, would you let it sl";
+    content: "​If you had one chance to seize everything you wanted, would you let it sl"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  49.427480916%, 49.6173206107% {
+    content: "​If you had one chance to seize everything you wanted, would you let it s";
+    content: "​If you had one chance to seize everything you wanted, would you let it s"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  49.6183206107%, 49.8081603053% {
+    content: "​If you had one chance to seize everything you wanted, would you let it ";
+    content: "​If you had one chance to seize everything you wanted, would you let it "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  49.8091603053%, 49.999% {
+    content: "​If you had one chance to seize everything you wanted, would you let it";
+    content: "​If you had one chance to seize everything you wanted, would you let it"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  50%, 50.1898396947% {
+    content: "​If you had one chance to seize everything you wanted, would you let i";
+    content: "​If you had one chance to seize everything you wanted, would you let i"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  50.1908396947%, 50.3806793893% {
+    content: "​If you had one chance to seize everything you wanted, would you let ";
+    content: "​If you had one chance to seize everything you wanted, would you let "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  50.3816793893%, 50.571519084% {
+    content: "​If you had one chance to seize everything you wanted, would you let";
+    content: "​If you had one chance to seize everything you wanted, would you let"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  50.572519084%, 50.7623587786% {
+    content: "​If you had one chance to seize everything you wanted, would you le";
+    content: "​If you had one chance to seize everything you wanted, would you le"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  50.7633587786%, 50.9531984733% {
+    content: "​If you had one chance to seize everything you wanted, would you l";
+    content: "​If you had one chance to seize everything you wanted, would you l"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  50.9541984733%, 51.1440381679% {
+    content: "​If you had one chance to seize everything you wanted, would you ";
+    content: "​If you had one chance to seize everything you wanted, would you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  51.1450381679%, 51.3348778626% {
+    content: "​If you had one chance to seize everything you wanted, would you";
+    content: "​If you had one chance to seize everything you wanted, would you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  51.3358778626%, 51.5257175573% {
+    content: "​If you had one chance to seize everything you wanted, would yo";
+    content: "​If you had one chance to seize everything you wanted, would yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  51.5267175573%, 51.7165572519% {
+    content: "​If you had one chance to seize everything you wanted, would y";
+    content: "​If you had one chance to seize everything you wanted, would y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  51.7175572519%, 51.9073969466% {
+    content: "​If you had one chance to seize everything you wanted, would ";
+    content: "​If you had one chance to seize everything you wanted, would "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  51.9083969466%, 52.0982366412% {
+    content: "​If you had one chance to seize everything you wanted, would";
+    content: "​If you had one chance to seize everything you wanted, would"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  52.0992366412%, 52.2890763359% {
+    content: "​If you had one chance to seize everything you wanted, woul";
+    content: "​If you had one chance to seize everything you wanted, woul"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  52.2900763359%, 52.4799160305% {
+    content: "​If you had one chance to seize everything you wanted, wou";
+    content: "​If you had one chance to seize everything you wanted, wou"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  52.4809160305%, 52.6707557252% {
+    content: "​If you had one chance to seize everything you wanted, wo";
+    content: "​If you had one chance to seize everything you wanted, wo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  52.6717557252%, 52.8615954198% {
+    content: "​If you had one chance to seize everything you wanted, w";
+    content: "​If you had one chance to seize everything you wanted, w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  52.8625954198%, 53.0524351145% {
+    content: "​If you had one chance to seize everything you wanted, ";
+    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  53.0534351145%, 53.2432748092% {
+    content: "​If you had one chance to seize everything you wanted,";
+    content: "​If you had one chance to seize everything you wanted,"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  53.2442748092%, 53.4341145038% {
+    content: "​If you had one chance to seize everything you wanted";
+    content: "​If you had one chance to seize everything you wanted"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  53.4351145038%, 53.6249541985% {
+    content: "​If you had one chance to seize everything you wante";
+    content: "​If you had one chance to seize everything you wante"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  53.6259541985%, 53.8157938931% {
+    content: "​If you had one chance to seize everything you want";
+    content: "​If you had one chance to seize everything you want"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  53.8167938931%, 54.0066335878% {
+    content: "​If you had one chance to seize everything you wan";
+    content: "​If you had one chance to seize everything you wan"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  54.0076335878%, 54.1974732824% {
+    content: "​If you had one chance to seize everything you wa";
+    content: "​If you had one chance to seize everything you wa"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  54.1984732824%, 54.3883129771% {
+    content: "​If you had one chance to seize everything you w";
+    content: "​If you had one chance to seize everything you w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  54.3893129771%, 54.5791526718% {
+    content: "​If you had one chance to seize everything you ";
+    content: "​If you had one chance to seize everything you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  54.5801526718%, 54.7699923664% {
+    content: "​If you had one chance to seize everything you";
+    content: "​If you had one chance to seize everything you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  54.7709923664%, 54.9608320611% {
+    content: "​If you had one chance to seize everything yo";
+    content: "​If you had one chance to seize everything yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  54.9618320611%, 55.1516717557% {
+    content: "​If you had one chance to seize everything y";
+    content: "​If you had one chance to seize everything y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  55.1526717557%, 55.3425114504% {
+    content: "​If you had one chance to seize everything ";
+    content: "​If you had one chance to seize everything "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  55.3435114504%, 55.533351145% {
+    content: "​If you had one chance to seize everything";
+    content: "​If you had one chance to seize everything"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  55.534351145%, 55.7241908397% {
+    content: "​If you had one chance to seize everythin";
+    content: "​If you had one chance to seize everythin"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  55.7251908397%, 55.9150305344% {
+    content: "​If you had one chance to seize everythi";
+    content: "​If you had one chance to seize everythi"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  55.9160305344%, 56.105870229% {
+    content: "​If you had one chance to seize everyth";
+    content: "​If you had one chance to seize everyth"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  56.106870229%, 56.2967099237% {
+    content: "​If you had one chance to seize everyt";
+    content: "​If you had one chance to seize everyt"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  56.2977099237%, 56.4875496183% {
+    content: "​If you had one chance to seize every";
+    content: "​If you had one chance to seize every"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  56.4885496183%, 56.678389313% {
+    content: "​If you had one chance to seize ever";
+    content: "​If you had one chance to seize ever"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  56.679389313%, 56.8692290076% {
+    content: "​If you had one chance to seize eve";
+    content: "​If you had one chance to seize eve"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  56.8702290076%, 57.0600687023% {
+    content: "​If you had one chance to seize ev";
+    content: "​If you had one chance to seize ev"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  57.0610687023%, 57.2509083969% {
+    content: "​If you had one chance to seize e";
+    content: "​If you had one chance to seize e"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  57.2519083969%, 57.4417480916% {
+    content: "​If you had one chance to seize ";
+    content: "​If you had one chance to seize "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  57.4427480916%, 57.6325877863% {
+    content: "​If you had one chance to seize";
+    content: "​If you had one chance to seize"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  57.6335877863%, 57.8234274809% {
+    content: "​If you had one chance to seiz";
+    content: "​If you had one chance to seiz"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  57.8244274809%, 58.0142671756% {
+    content: "​If you had one chance to sei";
+    content: "​If you had one chance to sei"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  58.0152671756%, 58.2051068702% {
+    content: "​If you had one chance to se";
+    content: "​If you had one chance to se"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  58.2061068702%, 58.3959465649% {
+    content: "​If you had one chance to s";
+    content: "​If you had one chance to s"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  58.3969465649%, 58.5867862595% {
+    content: "​If you had one chance to ";
+    content: "​If you had one chance to "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  58.5877862595%, 58.7776259542% {
+    content: "​If you had one chance to";
+    content: "​If you had one chance to"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  58.7786259542%, 58.9684656489% {
+    content: "​If you had one chance t";
+    content: "​If you had one chance t"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  58.9694656489%, 59.1593053435% {
+    content: "​If you had one chance ";
+    content: "​If you had one chance "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  59.1603053435%, 59.3501450382% {
+    content: "​If you had one chance";
+    content: "​If you had one chance"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  59.3511450382%, 59.5409847328% {
+    content: "​If you had one chanc";
+    content: "​If you had one chanc"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  59.5419847328%, 59.7318244275% {
+    content: "​If you had one chan";
+    content: "​If you had one chan"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  59.7328244275%, 59.9226641221% {
+    content: "​If you had one cha";
+    content: "​If you had one cha"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  59.9236641221%, 60.1135038168% {
+    content: "​If you had one ch";
+    content: "​If you had one ch"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  60.1145038168%, 60.3043435115% {
+    content: "​If you had one c";
+    content: "​If you had one c"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  60.3053435115%, 60.4951832061% {
+    content: "​If you had one ";
+    content: "​If you had one "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  60.4961832061%, 60.6860229008% {
+    content: "​If you had one";
+    content: "​If you had one"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  60.6870229008%, 60.8768625954% {
+    content: "​If you had on";
+    content: "​If you had on"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  60.8778625954%, 61.0677022901% {
+    content: "​If you had o";
+    content: "​If you had o"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  61.0687022901%, 61.2585419847% {
+    content: "​If you had ";
+    content: "​If you had "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  61.2595419847%, 61.4493816794% {
+    content: "​If you had";
+    content: "​If you had"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  61.4503816794%, 61.640221374% {
+    content: "​If you ha";
+    content: "​If you ha"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  61.641221374%, 61.8310610687% {
+    content: "​If you h";
+    content: "​If you h"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  61.8320610687%, 62.0219007634% {
+    content: "​If you ";
+    content: "​If you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  62.0229007634%, 62.212740458% {
+    content: "​If you";
+    content: "​If you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  62.213740458%, 62.4035801527% {
+    content: "​If yo";
+    content: "​If yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  62.4045801527%, 62.5944198473% {
+    content: "​If y";
+    content: "​If y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  62.5954198473%, 62.785259542% {
+    content: "​If ";
+    content: "​If "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  62.786259542%, 62.9760992366% {
+    content: "​If";
+    content: "​If"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  62.9770992366%, 63.1669389313% {
+    content: "​I";
+    content: "​I"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  63.1679389313%, 70.8005267176% {
     content: "​";
-    content: "​"/"Skibidi sigmas";
-    alt: "Skibidi sigmas";
+    content: "​"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: unset;
+  }
+  70.8015267176%, 71.1822061069% {
+    content: "​I";
+    content: "​I"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  71.1832061069%, 71.5638854962% {
+    content: "​I ";
+    content: "​I "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  71.5648854962%, 71.9455648855% {
+    content: "​I w";
+    content: "​I w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  71.9465648855%, 72.3272442748% {
+    content: "​I wo";
+    content: "​I wo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  72.3282442748%, 72.7089236641% {
+    content: "​I wou";
+    content: "​I wou"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  72.7099236641%, 73.0906030534% {
+    content: "​I woul";
+    content: "​I woul"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  73.0916030534%, 73.4722824427% {
+    content: "​I would";
+    content: "​I would"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  73.4732824427%, 73.8539618321% {
+    content: "​I wouldn";
+    content: "​I wouldn"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  73.8549618321%, 74.2356412214% {
+    content: "​I wouldn'";
+    content: "​I wouldn'"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  74.2366412214%, 74.6173206107% {
+    content: "​I wouldn't";
+    content: "​I wouldn't"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  74.6183206107%, 90.4570152672% {
+    content: "​I wouldn't.";
+    content: "​I wouldn't."/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  90.4580152672%, 90.6478549618% {
+    content: "​I wouldn't";
+    content: "​I wouldn't"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  90.6488549618%, 90.8386946565% {
+    content: "​I wouldn'";
+    content: "​I wouldn'"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  90.8396946565%, 91.0295343511% {
+    content: "​I wouldn";
+    content: "​I wouldn"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  91.0305343511%, 91.2203740458% {
+    content: "​I would";
+    content: "​I would"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  91.2213740458%, 91.4112137405% {
+    content: "​I woul";
+    content: "​I woul"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  91.4122137405%, 91.6020534351% {
+    content: "​I wou";
+    content: "​I wou"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  91.6030534351%, 91.7928931298% {
+    content: "​I wo";
+    content: "​I wo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  91.7938931298%, 91.9837328244% {
+    content: "​I w";
+    content: "​I w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  91.9847328244%, 92.1745725191% {
+    content: "​I ";
+    content: "​I "/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  92.1755725191%, 92.3654122137% {
+    content: "​I";
+    content: "​I"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
+  }
+  92.3664122137%, 100% {
+    content: "​";
+    content: "​"/"If you had one chance to seize everything you wanted, would you let it slip? ";
+    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+    color: red;
   }
 }
 @keyframes typed-0-caret {

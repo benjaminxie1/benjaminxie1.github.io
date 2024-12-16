@@ -1,23 +1,40 @@
-/* Base styles matching index.scss */
+/* Base styles */
 body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    overflow: hidden;
     background-color: #1a1a1a;
     color: #ffffff;
     font-family: 'Courier New', monospace;
+    min-height: 100vh;
 }
 
-/* Navigation */
+#networkCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin: 120px auto 60px;
+    padding: 0 2rem;
+}
+
 nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background-color: rgba(26, 26, 26, 0.95);
+    background-color: rgba(26, 26, 26, 0.8);
     padding: 1rem 0;
     z-index: 1000;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(100, 255, 218, 0.1);
 }
 
@@ -36,25 +53,29 @@ nav a {
     text-decoration: none;
     font-size: 1.2rem;
     transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
 }
 
 nav a:hover {
     color: #64ffda;
+    background-color: rgba(100, 255, 218, 0.1);
 }
 
-/* Content */
-.content {
-    max-width: 1400px;
-    margin: 120px auto 60px;
-    padding: 0 2rem;
-}
-
+/* Page Title with highlight effect */
 .page-title {
-    font-size: 4rem;
+    font-size: 4.5rem;
     text-align: center;
     color: #ffffff;
     margin-bottom: 4rem;
     animation: slideUp 1s ease-out;
+    text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+    letter-spacing: 2px;
+    transition: text-shadow 0.3s ease;
+}
+
+.page-title:hover {
+    text-shadow: 0 0 30px rgba(100, 255, 218, 0.5);
 }
 
 /* Projects Grid */
@@ -106,6 +127,12 @@ nav a:hover {
     color: #64ffda;
     margin: 0 0 1rem 0;
     font-size: 1.8rem;
+    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+    transition: text-shadow 0.3s ease;
+}
+
+.project-card h2:hover {
+    text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
 }
 
 .project-description {
@@ -129,11 +156,13 @@ nav a:hover {
     border-radius: 4px;
     font-size: 0.9rem;
     transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(100, 255, 218, 0.3);
 }
 
 .tech-tag:hover {
     background: rgba(100, 255, 218, 0.2);
     transform: translateY(-2px);
+    text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
 }
 
 /* Project Links */
@@ -158,6 +187,7 @@ nav a:hover {
 .btn:hover {
     background: rgba(100, 255, 218, 0.1);
     transform: translateY(-2px);
+    text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
 }
 
 .icon {
@@ -204,5 +234,24 @@ nav a:hover {
 
     .project-card {
         padding: 1.5rem;
+    }
+
+    nav a {
+        font-size: 1rem;
+        padding: 0.3rem 0.8rem;
+    }
+
+    nav ul {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 2.5rem;
+    }
+
+    .project-card h2 {
+        font-size: 1.5rem;
     }
 }

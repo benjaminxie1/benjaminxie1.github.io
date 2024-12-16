@@ -52,13 +52,18 @@ body {
     pointer-events: none;
     line-height: 1.5;
     @include typed(
-      "Skibidi sigmas",
-      1.5,
-      (
-        caret-width: 4px,
-        caret-space: 4px
-      )
-    );
+  (
+    "If you had one chance to seize everything you wanted, <[10]>would you let it slip? ": (),
+    "I wouldn't.": (
+      color: red
+    )
+  ),
+  [.05, null, .025], // Make delete speed (.05) faster than type speed (.1)
+  (
+    caret-width: 4px,
+    caret-space: 4px
+  )
+);
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   }
 

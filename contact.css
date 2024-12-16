@@ -1,11 +1,22 @@
 /* Base styles matching index.scss */
+/* Modify the body rule in contact.css */
 body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Changed from overflow: hidden */
     background-color: #1a1a1a;
     color: #ffffff;
     font-family: 'Courier New', monospace;
+    min-height: 100vh;
+}
+
+#networkCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
 /* Navigation */
@@ -14,10 +25,10 @@ nav {
     top: 0;
     left: 0;
     right: 0;
-    background-color: rgba(26, 26, 26, 0.95);
+    background-color: rgba(26, 26, 26, 0.8);
     padding: 1rem 0;
     z-index: 1000;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(100, 255, 218, 0.1);
 }
 
@@ -36,25 +47,37 @@ nav a {
     text-decoration: none;
     font-size: 1.2rem;
     transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
 }
 
 nav a:hover {
     color: #64ffda;
+    background-color: rgba(100, 255, 218, 0.1);
 }
 
 /* Content */
 .content {
+    position: relative;
+    z-index: 2;
     max-width: 1200px;
-    margin: 120px auto 60px;
-    padding: 0 2rem;
+    margin: 120px auto 60px; /* Changed from 60px to 120px to match contact.css */
+    padding: 0 2rem; /* Changed to match contact.css */
 }
 
 .page-title {
-    font-size: 4rem;
+    font-size: 4.5rem;
     text-align: center;
     color: #ffffff;
     margin-bottom: 4rem;
     animation: slideUp 1s ease-out;
+    text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+    letter-spacing: 2px;
+    transition: text-shadow 0.3s ease;
+}
+
+.page-title:hover {
+    text-shadow: 0 0 30px rgba(100, 255, 218, 0.5);
 }
 
 /* Contact Container */
@@ -70,13 +93,19 @@ nav a:hover {
     padding: 2rem;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 15px;
-    border: 1px solid rgba(100, 255, 218, 0.1);
+    border: 2px solid rgba(100, 255, 218, 0.2);
+    transition: border-color 0.3s ease;
+}
+
+.contact-info:hover {
+    border-color: rgba(100, 255, 218, 0.4);
 }
 
 .contact-info h2 {
     color: #64ffda;
     margin-bottom: 2rem;
     font-size: 1.8rem;
+    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
 }
 
 .info-item {
@@ -102,11 +131,12 @@ nav a:hover {
 .info-item a {
     color: #ffffff;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .info-item a:hover {
-    color: #64ffda;
+    color: #007bff;
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
 }
 
 /* Form Styles */
@@ -114,7 +144,12 @@ nav a:hover {
     padding: 2rem;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 15px;
-    border: 1px solid rgba(100, 255, 218, 0.1);
+    border: 2px solid rgba(100, 255, 218, 0.2);
+    transition: border-color 0.3s ease;
+}
+
+.contact-form:hover {
+    border-color: rgba(100, 255, 218, 0.4);
 }
 
 .form-group {
@@ -152,7 +187,7 @@ nav a:hover {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 1px;
+    height: 2px;
     background: #64ffda;
     transform: scaleX(0);
     transition: transform 0.3s ease;
@@ -176,7 +211,7 @@ button {
     position: relative;
     padding: 1rem 2rem;
     background: transparent;
-    border: 1px solid #64ffda;
+    border: 2px solid #64ffda;
     color: #64ffda;
     font-size: 1rem;
     cursor: pointer;
@@ -184,10 +219,12 @@ button {
     transition: all 0.3s ease;
     border-radius: 5px;
     font-family: 'Courier New', monospace;
+    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
 }
 
 button:hover {
     background: rgba(100, 255, 218, 0.1);
+    text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
 }
 
 .button-effect {
@@ -240,8 +277,9 @@ button:hover .button-effect {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .content {
+        margin-top: 100px;
         padding: 0 1rem;
     }
 
@@ -249,4 +287,15 @@ button:hover .button-effect {
     .contact-info {
         padding: 1.5rem;
     }
+
+    .page-title {
+        font-size: 2.5rem;
+    }
+}
+
+/* Add this to your contact.css */
+.info-item img.icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
 }
