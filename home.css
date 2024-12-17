@@ -1,13 +1,18 @@
+/* Base styles */
 body {
     margin: 0;
     padding: 0;
-    background-color: #1a1a1a;
-    color: #ffffff;
-    font-family: 'Courier New', monospace;
+    background-color: #121212; /* Slightly lighter dark background */
+    color: #e0e0e0; /* Light text color */
+    font-family: 'Courier New', sans-serif; /* Improved readability font */
+    font-size: 20px;
     min-height: 100vh;
-    overflow-y: scroll
+    overflow-y: scroll;
+    line-height: 1.6; /* Adjust line-height for readability */
 }
-html{
+
+/* Smooth scroll on hover */
+html {
     scrollbar-gutter: stable;
 }
 
@@ -20,24 +25,25 @@ html{
     z-index: 1;
 }
 
-.main-content {
+.content {
     position: relative;
     z-index: 2;
-    min-height: 100vh;
-    padding: 2rem;
-    display: block;
+    max-width: 1400px;
+    margin: 120px auto 60px;
+    padding: 0 2rem;
 }
 
+/* Navigation Bar */
 nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background-color: rgba(26, 26, 26, 0.8);
-    padding: 1rem 0;
+    background-color: rgba(26, 26, 26, 0.85); /* Darker background for nav */
+    padding: 1.5rem 0;
     z-index: 1000;
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
 }
 
 nav ul {
@@ -51,19 +57,18 @@ nav ul {
 }
 
 nav a {
-    color: white;
+    color: #ffffff;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px; /* Rounded borders for links */
 }
 
 nav a:hover {
     color: #64ffda;
     background-color: rgba(100, 255, 218, 0.1);
 }
-
 header {
     height: 100vh;
     display: flex;
@@ -85,7 +90,7 @@ h1 {
     font-size: 2rem;
     color: #64ffda;
     margin-top: 1rem;
-    animation: slideUp 1s ease-out 0.2s;
+    animation: slideUp 1s ease-out;
     text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
     letter-spacing: 1px;
 }
