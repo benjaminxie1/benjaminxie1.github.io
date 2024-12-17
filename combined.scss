@@ -161,7 +161,6 @@ header {
 }
 
 /* Skills Section */
-/* Skills Section */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Increased min width for skills */
@@ -629,6 +628,32 @@ h2 {
     text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
     text-align: center; /* Centers the text */
 }
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes hammerSwing {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(20deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+
 /* Animations */
 @keyframes slideUp {
     from {
