@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Benjamin Xie</title>
+    <title>Benjamin Xie</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/terminal_r.png" />
     <link rel="stylesheet" href="about.css">
 </head>
 <body>
     <nav>
+        <!--<div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            -->
         <ul>
             <li><a href="home.html">Home</a></li>
             <li><a href="about.html">About</a></li>
@@ -20,12 +27,13 @@
         <h1 class="page-title">About Me</h1>
 
         <section class="intro-section">
-            <p class="intro-text">Hello! I'm Benjamin Xie, a software developer based in California.</p>
+            <p class="intro-text">Hello! I'm Benjamin Xie, a software developer<br> based in California.</p>
             <div class="typing-container">
-                <span class="static-text">I specialize in </span>
-                <span class="specialty"></span>
-                <span class="cursor"></span>
-            </div>
+    <div class="typing-wrapper">
+        <span class="static-text">I specialize in</span>
+        <div class="placeholder"></div>
+    </div>
+</div>
         </section>
 
         <section class="education-section">
@@ -34,7 +42,7 @@
                 <div class="card-header">
                     <img src="images/westlake.png" alt="School Logo" class="logo">
                     <div class="header-content">
-                        <h3>Westlake High School</h3>
+                        <h3>Westlake High School (present)</h3>
                         <p>4.00 GPA | 11th Grade</p>
                         <p class="year">2022 - 2026</p>
                     </div>
@@ -43,23 +51,24 @@
         </section>
 
         <section class="experience-section">
-            <h2>Experience</h2>
-            <div class="card">
-                <div class="card-header">
-                    <img src="path/to/company-logo.png" alt="Company Logo" class="logo">
-                    <div class="header-content">
-                        <h3>(temporary)</h3>
-                        <p>(title)</p>
-                        <p class="year">Duration</p>
-                        <ul>
-                            <li>Achievement 1</li>
-                            <li>Achievement 2</li>
-                            <li>Achievement 3</li>
-                        </ul>
-                    </div>
-                </div>
+    <h2>Experience</h2>
+    <div class="card">
+        <div class="card-header">
+            <img src="path/to/company-logo.png" alt="Company Logo" class="logo">
+            <div class="header-content">
+                <h3>(working on getting a job)</h3>
+                <p>(title)</p>
+                <p class="year">Duration</p>
+                <ul>
+                    <li>Achievement 1:</li>
+                    <li>Achievement 2:</li>
+                    <li>Achievement 3:</li>
+                </ul>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
+
 
         <section class="skills-section">
             <h2>Languages</h2>
@@ -67,6 +76,10 @@
                 <div class="skill-card">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="skill-logo">
                     <span>Python</span>
+                </div>
+                <div class="skill-card">
+                    <img src="images/c-original.svg" alt="C" class="skill-logo">
+                    <span>C</span>
                 </div>
                 <div class="skill-card">
                     <img src="images/cplusplus-original.svg" alt="C++" class="skill-logo">
@@ -79,6 +92,10 @@
                 <div class="skill-card">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="skill-logo">
                     <span>JavaScript</span>
+                </div>
+                <div class="skill-card">
+                    <img src="images/sql.svg" alt="SQL" class="skill-logo">
+                    <span>SQL</span>
                 </div>
             </div>
         </section>
@@ -94,11 +111,11 @@
                     <span>PyTorch</span>
                 </div>
                 <div class="skill-card">
-                    <img src="images/pytorch-original.svg" alt="TensorFlow" class="skill-logo">
+                    <img src="images/TF_FullColor_Icon.png" alt="TensorFlow" class="skill-logo">
                     <span>TensorFlow</span>
                 </div>
                 <div class="skill-card">
-                    <img src="images/amazonwebservices-original-wordmark.svg" alt="AWS" class="skill-logo">
+                    <img src="images/aws_r.png" alt="AWS" class="skill-logo">
                     <span>Amazon Web Services</span>
                 </div>
                                 <div class="skill-card">
@@ -113,44 +130,35 @@
 
             </div>
         </section>
-    </main>
-
-    <script>
-        const specialties = [
-            "machine learning.",
-            "software engineering.",
-            "problem solving."
-        ];
-
-        const specialtyElement = document.querySelector('.specialty');
-        let currentIndex = 0;
-
-        async function typeText(text) {
-            for (let i = 0; i < text.length; i++) {
-                specialtyElement.textContent += text[i];
-                await new Promise(resolve => setTimeout(resolve, 100));
-            }
-            await new Promise(resolve => setTimeout(resolve, 2000));
-        }
-
-        async function deleteText() {
-            const text = specialtyElement.textContent;
-            for (let i = text.length; i > 0; i--) {
-                specialtyElement.textContent = text.substring(0, i - 1);
-                await new Promise(resolve => setTimeout(resolve, 50));
-            }
-            await new Promise(resolve => setTimeout(resolve, 500));
-        }
-
-        async function cycleText() {
-            while (true) {
-                await typeText(specialties[currentIndex]);
-                await deleteText();
-                currentIndex = (currentIndex + 1) % specialties.length;
-            }
-        }
-
-        cycleText();
-    </script>
+    </main>>
 </body>
+<script>
+        // Hamburger menu functionality
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Canvas and particles functionality
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+</script>
 </html>

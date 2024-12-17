@@ -1,230 +1,2010 @@
+@charset "UTF-8";
+/* Base styles */
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #1a1a1a;
-    color: #ffffff;
-    font-family: 'Courier New', monospace;
-    line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: "Courier New", monospace;
+  min-height: 100vh;
 }
 
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(26, 26, 26, 0.8);
-    padding: 1rem 0;
-    z-index: 1000;
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+html {
+  scrollbar-gutter: stable;
 }
 
-nav ul {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-}
-
-nav a:hover {
-    color: #64ffda;
-    background-color: rgba(100, 255, 218, 0.1);
+#networkCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 .content {
-    max-width: 1200px;
-    margin: 120px auto 60px;
-    padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 120px auto 60px;
+  padding: 0 2rem;
 }
 
-.page-title {
-    font-size: 4.5rem;
-    text-align: center;
-    color: #ffffff;
-    margin-bottom: 3rem;
-    animation: slideUp 1s ease-out;
-    text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
-    letter-spacing: 2px;
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(26, 26, 26, 0.8);
+  padding: 1rem 0;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(100, 255, 218, 0.1);
 }
 
-.intro-section {
-    text-align: center;
-    margin-bottom: 6rem;
+nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-.intro-text {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+nav a:hover {
+  color: #64ffda;
+  background-color: rgba(100, 255, 218, 0.1);
 }
 
 .typing-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    min-height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 3rem;
+  margin: 2rem 0;
+}
+
+.typing-wrapper {
+  font-size: 2rem;
+  text-align: center;
+  color: #64ffda;
+  text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+  display: flex;
+  gap: 16px;
+}
+.typing-wrapper .static-text {
+  color: white;
+}
+.typing-wrapper .placeholder::before {
+  content: "​";
+  content: "​"/"machine learning.";
+  alt: "machine learning.";
+  white-space: break-spaces;
+  will-change: content;
+  animation: typed-0 26.2s linear 1s infinite forwards;
+}
+.typing-wrapper .placeholder::after {
+  content: "​";
+  position: relative;
+  display: inline-block;
+  padding-right: 4px;
+  border-right: 4px solid #64ffda;
+  white-space: nowrap;
+  animation: typed-0-caret 0.75s linear 1s infinite forwards;
+}
+@keyframes typed-0 {
+  0%, 0.3806793893% {
+    content: "​m";
+    content: "​m"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  0.3816793893%, 0.7623587786% {
+    content: "​ma";
+    content: "​ma"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  0.7633587786%, 1.1440381679% {
+    content: "​mac";
+    content: "​mac"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  1.1450381679%, 1.5257175573% {
+    content: "​mach";
+    content: "​mach"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  1.5267175573%, 1.9073969466% {
+    content: "​machi";
+    content: "​machi"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  1.9083969466%, 2.2890763359% {
+    content: "​machin";
+    content: "​machin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  2.2900763359%, 2.6707557252% {
+    content: "​machine";
+    content: "​machine"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  2.6717557252%, 3.0524351145% {
+    content: "​machine ";
+    content: "​machine "/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  3.0534351145%, 3.4341145038% {
+    content: "​machine l";
+    content: "​machine l"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  3.4351145038%, 3.8157938931% {
+    content: "​machine le";
+    content: "​machine le"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  3.8167938931%, 4.1974732824% {
+    content: "​machine lea";
+    content: "​machine lea"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  4.1984732824%, 4.5791526718% {
+    content: "​machine lear";
+    content: "​machine lear"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  4.5801526718%, 4.9608320611% {
+    content: "​machine learn";
+    content: "​machine learn"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  4.9618320611%, 5.3425114504% {
+    content: "​machine learni";
+    content: "​machine learni"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  5.3435114504%, 5.7241908397% {
+    content: "​machine learnin";
+    content: "​machine learnin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  5.7251908397%, 6.105870229% {
+    content: "​machine learning";
+    content: "​machine learning"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  6.106870229%, 14.3119770992% {
+    content: "​machine learning.";
+    content: "​machine learning."/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  14.3129770992%, 14.5028167939% {
+    content: "​machine learning";
+    content: "​machine learning"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  14.5038167939%, 14.6936564885% {
+    content: "​machine learnin";
+    content: "​machine learnin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  14.6946564885%, 14.8844961832% {
+    content: "​machine learni";
+    content: "​machine learni"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  14.8854961832%, 15.0753358779% {
+    content: "​machine learn";
+    content: "​machine learn"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  15.0763358779%, 15.2661755725% {
+    content: "​machine lear";
+    content: "​machine lear"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  15.2671755725%, 15.4570152672% {
+    content: "​machine lea";
+    content: "​machine lea"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  15.4580152672%, 15.6478549618% {
+    content: "​machine le";
+    content: "​machine le"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  15.6488549618%, 15.8386946565% {
+    content: "​machine l";
+    content: "​machine l"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  15.8396946565%, 16.0295343511% {
+    content: "​machine ";
+    content: "​machine "/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  16.0305343511%, 16.2203740458% {
+    content: "​machine";
+    content: "​machine"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  16.2213740458%, 16.4112137405% {
+    content: "​machin";
+    content: "​machin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  16.4122137405%, 16.6020534351% {
+    content: "​machi";
+    content: "​machi"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  16.6030534351%, 16.7928931298% {
+    content: "​mach";
+    content: "​mach"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  16.7938931298%, 16.9837328244% {
+    content: "​mac";
+    content: "​mac"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  16.9847328244%, 17.1745725191% {
+    content: "​ma";
+    content: "​ma"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  17.1755725191%, 17.3654122137% {
+    content: "​m";
+    content: "​m"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  17.3664122137%, 20.2280076336% {
+    content: "​";
+    content: "​"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  20.2290076336%, 20.6096870229% {
+    content: "​s";
+    content: "​s"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  20.6106870229%, 20.9913664122% {
+    content: "​so";
+    content: "​so"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  20.9923664122%, 21.3730458015% {
+    content: "​sof";
+    content: "​sof"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  21.3740458015%, 21.7547251908% {
+    content: "​soft";
+    content: "​soft"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  21.7557251908%, 22.1364045802% {
+    content: "​softw";
+    content: "​softw"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  22.1374045802%, 22.5180839695% {
+    content: "​softwa";
+    content: "​softwa"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  22.5190839695%, 22.8997633588% {
+    content: "​softwar";
+    content: "​softwar"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  22.9007633588%, 23.2814427481% {
+    content: "​software";
+    content: "​software"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  23.2824427481%, 23.6631221374% {
+    content: "​software ";
+    content: "​software "/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  23.6641221374%, 24.0448015267% {
+    content: "​software e";
+    content: "​software e"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  24.0458015267%, 24.426480916% {
+    content: "​software en";
+    content: "​software en"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  24.427480916%, 24.8081603053% {
+    content: "​software eng";
+    content: "​software eng"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  24.8091603053%, 25.1898396947% {
+    content: "​software engi";
+    content: "​software engi"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  25.1908396947%, 25.571519084% {
+    content: "​software engin";
+    content: "​software engin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  25.572519084%, 25.9531984733% {
+    content: "​software engine";
+    content: "​software engine"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  25.9541984733%, 26.3348778626% {
+    content: "​software enginee";
+    content: "​software enginee"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  26.3358778626%, 26.7165572519% {
+    content: "​software engineer";
+    content: "​software engineer"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  26.7175572519%, 27.0982366412% {
+    content: "​software engineeri";
+    content: "​software engineeri"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  27.0992366412%, 27.4799160305% {
+    content: "​software engineerin";
+    content: "​software engineerin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  27.4809160305%, 27.8615954198% {
+    content: "​software engineering";
+    content: "​software engineering"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  27.8625954198%, 36.0677022901% {
+    content: "​software engineering.";
+    content: "​software engineering."/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  36.0687022901%, 36.2585419847% {
+    content: "​software engineering";
+    content: "​software engineering"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  36.2595419847%, 36.4493816794% {
+    content: "​software engineerin";
+    content: "​software engineerin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  36.4503816794%, 36.640221374% {
+    content: "​software engineeri";
+    content: "​software engineeri"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  36.641221374%, 36.8310610687% {
+    content: "​software engineer";
+    content: "​software engineer"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  36.8320610687%, 37.0219007634% {
+    content: "​software enginee";
+    content: "​software enginee"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  37.0229007634%, 37.212740458% {
+    content: "​software engine";
+    content: "​software engine"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  37.213740458%, 37.4035801527% {
+    content: "​software engin";
+    content: "​software engin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  37.4045801527%, 37.5944198473% {
+    content: "​software engi";
+    content: "​software engi"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  37.5954198473%, 37.785259542% {
+    content: "​software eng";
+    content: "​software eng"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  37.786259542%, 37.9760992366% {
+    content: "​software en";
+    content: "​software en"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  37.9770992366%, 38.1669389313% {
+    content: "​software e";
+    content: "​software e"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  38.1679389313%, 38.357778626% {
+    content: "​software ";
+    content: "​software "/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  38.358778626%, 38.5486183206% {
+    content: "​software";
+    content: "​software"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  38.5496183206%, 38.7394580153% {
+    content: "​softwar";
+    content: "​softwar"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  38.7404580153%, 38.9302977099% {
+    content: "​softwa";
+    content: "​softwa"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  38.9312977099%, 39.1211374046% {
+    content: "​softw";
+    content: "​softw"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  39.1221374046%, 39.3119770992% {
+    content: "​soft";
+    content: "​soft"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  39.3129770992%, 39.5028167939% {
+    content: "​sof";
+    content: "​sof"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  39.5038167939%, 39.6936564885% {
+    content: "​so";
+    content: "​so"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  39.6946564885%, 39.8844961832% {
+    content: "​s";
+    content: "​s"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  39.8854961832%, 42.7470916031% {
+    content: "​";
+    content: "​"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  42.7480916031%, 43.1287709924% {
+    content: "​p";
+    content: "​p"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  43.1297709924%, 43.5104503817% {
+    content: "​pr";
+    content: "​pr"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  43.5114503817%, 43.892129771% {
+    content: "​pro";
+    content: "​pro"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  43.893129771%, 44.2738091603% {
+    content: "​prob";
+    content: "​prob"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  44.2748091603%, 44.6554885496% {
+    content: "​probl";
+    content: "​probl"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  44.6564885496%, 45.0371679389% {
+    content: "​proble";
+    content: "​proble"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  45.0381679389%, 45.4188473282% {
+    content: "​problem";
+    content: "​problem"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  45.4198473282%, 45.8005267176% {
+    content: "​problem ";
+    content: "​problem "/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  45.8015267176%, 46.1822061069% {
+    content: "​problem s";
+    content: "​problem s"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  46.1832061069%, 46.5638854962% {
+    content: "​problem so";
+    content: "​problem so"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  46.5648854962%, 46.9455648855% {
+    content: "​problem sol";
+    content: "​problem sol"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  46.9465648855%, 47.3272442748% {
+    content: "​problem solv";
+    content: "​problem solv"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  47.3282442748%, 47.7089236641% {
+    content: "​problem solvi";
+    content: "​problem solvi"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  47.7099236641%, 48.0906030534% {
+    content: "​problem solvin";
+    content: "​problem solvin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  48.0916030534%, 48.4722824427% {
+    content: "​problem solving";
+    content: "​problem solving"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  48.4732824427%, 56.678389313% {
+    content: "​problem solving.";
+    content: "​problem solving."/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  56.679389313%, 56.8692290076% {
+    content: "​problem solving";
+    content: "​problem solving"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  56.8702290076%, 57.0600687023% {
+    content: "​problem solvin";
+    content: "​problem solvin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  57.0610687023%, 57.2509083969% {
+    content: "​problem solvi";
+    content: "​problem solvi"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  57.2519083969%, 57.4417480916% {
+    content: "​problem solv";
+    content: "​problem solv"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  57.4427480916%, 57.6325877863% {
+    content: "​problem sol";
+    content: "​problem sol"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  57.6335877863%, 57.8234274809% {
+    content: "​problem so";
+    content: "​problem so"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  57.8244274809%, 58.0142671756% {
+    content: "​problem s";
+    content: "​problem s"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  58.0152671756%, 58.2051068702% {
+    content: "​problem ";
+    content: "​problem "/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  58.2061068702%, 58.3959465649% {
+    content: "​problem";
+    content: "​problem"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  58.3969465649%, 58.5867862595% {
+    content: "​proble";
+    content: "​proble"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  58.5877862595%, 58.7776259542% {
+    content: "​probl";
+    content: "​probl"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  58.7786259542%, 58.9684656489% {
+    content: "​prob";
+    content: "​prob"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  58.9694656489%, 59.1593053435% {
+    content: "​pro";
+    content: "​pro"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  59.1603053435%, 59.3501450382% {
+    content: "​pr";
+    content: "​pr"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  59.3511450382%, 59.5409847328% {
+    content: "​p";
+    content: "​p"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  59.5419847328%, 62.4035801527% {
+    content: "​";
+    content: "​"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  62.4045801527%, 62.785259542% {
+    content: "​d";
+    content: "​d"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  62.786259542%, 63.1669389313% {
+    content: "​da";
+    content: "​da"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  63.1679389313%, 63.5486183206% {
+    content: "​dat";
+    content: "​dat"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  63.5496183206%, 63.9302977099% {
+    content: "​data";
+    content: "​data"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  63.9312977099%, 64.3119770992% {
+    content: "​data ";
+    content: "​data "/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  64.3129770992%, 64.6936564885% {
+    content: "​data s";
+    content: "​data s"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  64.6946564885%, 65.0753358779% {
+    content: "​data sc";
+    content: "​data sc"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  65.0763358779%, 65.4570152672% {
+    content: "​data sci";
+    content: "​data sci"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  65.4580152672%, 65.8386946565% {
+    content: "​data scie";
+    content: "​data scie"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  65.8396946565%, 66.2203740458% {
+    content: "​data scien";
+    content: "​data scien"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  66.2213740458%, 66.6020534351% {
+    content: "​data scienc";
+    content: "​data scienc"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  66.6030534351%, 66.9837328244% {
+    content: "​data science";
+    content: "​data science"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  66.9847328244%, 75.1898396947% {
+    content: "​data science.";
+    content: "​data science."/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  75.1908396947%, 75.3806793893% {
+    content: "​data science";
+    content: "​data science"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  75.3816793893%, 75.571519084% {
+    content: "​data scienc";
+    content: "​data scienc"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  75.572519084%, 75.7623587786% {
+    content: "​data scien";
+    content: "​data scien"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  75.7633587786%, 75.9531984733% {
+    content: "​data scie";
+    content: "​data scie"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  75.9541984733%, 76.1440381679% {
+    content: "​data sci";
+    content: "​data sci"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  76.1450381679%, 76.3348778626% {
+    content: "​data sc";
+    content: "​data sc"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  76.3358778626%, 76.5257175573% {
+    content: "​data s";
+    content: "​data s"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  76.5267175573%, 76.7165572519% {
+    content: "​data ";
+    content: "​data "/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  76.7175572519%, 76.9073969466% {
+    content: "​data";
+    content: "​data"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  76.9083969466%, 77.0982366412% {
+    content: "​dat";
+    content: "​dat"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  77.0992366412%, 77.2890763359% {
+    content: "​da";
+    content: "​da"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  77.2900763359%, 77.4799160305% {
+    content: "​d";
+    content: "​d"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  77.4809160305%, 80.3425114504% {
+    content: "​";
+    content: "​"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  80.3435114504%, 80.7241908397% {
+    content: "​c";
+    content: "​c"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  80.7251908397%, 81.105870229% {
+    content: "​cl";
+    content: "​cl"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  81.106870229%, 81.4875496183% {
+    content: "​clo";
+    content: "​clo"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  81.4885496183%, 81.8692290076% {
+    content: "​clou";
+    content: "​clou"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  81.8702290076%, 82.2509083969% {
+    content: "​cloud";
+    content: "​cloud"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  82.2519083969%, 82.6325877863% {
+    content: "​cloud ";
+    content: "​cloud "/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  82.6335877863%, 83.0142671756% {
+    content: "​cloud c";
+    content: "​cloud c"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  83.0152671756%, 83.3959465649% {
+    content: "​cloud co";
+    content: "​cloud co"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  83.3969465649%, 83.7776259542% {
+    content: "​cloud com";
+    content: "​cloud com"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  83.7786259542%, 84.1593053435% {
+    content: "​cloud comp";
+    content: "​cloud comp"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  84.1603053435%, 84.5409847328% {
+    content: "​cloud compu";
+    content: "​cloud compu"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  84.5419847328%, 84.9226641221% {
+    content: "​cloud comput";
+    content: "​cloud comput"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  84.9236641221%, 85.3043435115% {
+    content: "​cloud computi";
+    content: "​cloud computi"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  85.3053435115%, 85.6860229008% {
+    content: "​cloud computin";
+    content: "​cloud computin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  85.6870229008%, 86.0677022901% {
+    content: "​cloud computing";
+    content: "​cloud computing"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  86.0687022901%, 94.2738091603% {
+    content: "​cloud computing.";
+    content: "​cloud computing."/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  94.2748091603%, 94.464648855% {
+    content: "​cloud computing";
+    content: "​cloud computing"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  94.465648855%, 94.6554885496% {
+    content: "​cloud computin";
+    content: "​cloud computin"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  94.6564885496%, 94.8463282443% {
+    content: "​cloud computi";
+    content: "​cloud computi"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  94.8473282443%, 95.0371679389% {
+    content: "​cloud comput";
+    content: "​cloud comput"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  95.0381679389%, 95.2280076336% {
+    content: "​cloud compu";
+    content: "​cloud compu"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  95.2290076336%, 95.4188473282% {
+    content: "​cloud comp";
+    content: "​cloud comp"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  95.4198473282%, 95.6096870229% {
+    content: "​cloud com";
+    content: "​cloud com"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  95.6106870229%, 95.8005267176% {
+    content: "​cloud co";
+    content: "​cloud co"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  95.8015267176%, 95.9913664122% {
+    content: "​cloud c";
+    content: "​cloud c"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  95.9923664122%, 96.1822061069% {
+    content: "​cloud ";
+    content: "​cloud "/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  96.1832061069%, 96.3730458015% {
+    content: "​cloud";
+    content: "​cloud"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  96.3740458015%, 96.5638854962% {
+    content: "​clou";
+    content: "​clou"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  96.5648854962%, 96.7547251908% {
+    content: "​clo";
+    content: "​clo"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  96.7557251908%, 96.9455648855% {
+    content: "​cl";
+    content: "​cl"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  96.9465648855%, 97.1364045802% {
+    content: "​c";
+    content: "​c"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+  97.1374045802%, 100% {
+    content: "​";
+    content: "​"/"machine learning.";
+    alt: "machine learning.";
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+    text-decoration: none;
+  }
+}
+@keyframes typed-0-caret {
+  75% {
+    border-color: transparent;
+  }
+}
+
+.page-title {
+  font-size: 4.5rem;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 3rem;
+  animation: slideUp 1s ease-out;
+  text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+  letter-spacing: 2px;
+}
+
+.intro-section {
+  text-align: center;
+  margin-bottom: 6rem;
+}
+
+.intro-text {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+}
+
+.typing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  min-height: 3rem;
 }
 
 .static-text {
-    font-size: 2rem;
-    color: white;
+  font-size: 2rem;
+  color: white;
 }
 
 .specialty {
-    font-size: 2rem;
-    color: #64ffda;
-    min-width: 1px;
-    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+  font-size: 2rem;
+  color: #64ffda;
+  min-width: 1px;
+  text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  padding: 15px;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px 0;
+  background-color: #fff;
+  transition: all 0.3s ease;
 }
 
 .cursor {
-    display: inline-block;
-    width: 3px;
-    height: 2rem;
-    background-color: #64ffda;
-    margin-left: 4px;
-    animation: blink 1s step-end infinite;
+  display: inline-block;
+  width: 3px;
+  height: 2rem;
+  background-color: #64ffda;
+  margin-left: 4px;
+  animation: blink 1s step-end infinite;
 }
 
 section {
-    margin-bottom: 6rem;
+  margin-bottom: 6rem;
 }
 
 h2 {
-    font-size: 2.5rem;
-    color: #64ffda;
-    margin-bottom: 2rem;
-    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+  font-size: 2.5rem;
+  color: #64ffda;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 12px;
-    margin-bottom: 2rem;
-    border: 1px solid rgba(100, 255, 218, 0.1);
-    transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(100, 255, 218, 0.1);
+  transition: all 0.3s ease;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(100, 255, 218, 0.3);
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(100, 255, 218, 0.3);
 }
 
 .card-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
 }
 
 .logo {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    border-radius: 8px;
-    padding: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .header-content {
-    flex: 1;
+  flex: 1;
 }
 
 .header-content h3 {
-    font-size: 1.8rem;
-    color: #64ffda;
-    margin: 0 0 1rem 0;
+  font-size: 1.8rem;
+  color: #64ffda;
+  margin: 0 0 1rem 0;
 }
 
 .year {
-    color: #8892b0;
-    font-style: italic;
+  color: #8892b0;
+  font-style: italic;
 }
 
 .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
 .skill-card {
-    background: rgba(100, 255, 218, 0.1);
-    padding: 1.5rem;
-    border-radius: 8px;
-    text-align: center;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+  background: rgba(100, 255, 218, 0.1);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .skill-card:hover {
-    transform: translateY(-5px);
-    background: rgba(100, 255, 218, 0.15);
+  transform: translateY(-5px);
+  background: rgba(100, 255, 218, 0.15);
 }
 
 .skill-logo {
-    width: 50px;
-    height: 50px;
-    transition: transform 0.3s ease;
+  width: 50px;
+  height: 50px;
+  transition: transform 0.3s ease;
 }
 
 .skill-card:hover .skill-logo {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
+.btn {
+  padding: 0.8rem 1.5rem;
+  border: 1px solid #64ffda;
+  border-radius: 5px;
+  color: #64ffda;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn:hover {
+  background: rgba(100, 255, 218, 0.1);
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+}
+
+.icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.btn:hover .icon {
+  transform: translateX(5px);
+}
+
+/* Animations */
 @keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 @keyframes blink {
-    from, to { opacity: 1; }
-    50% { opacity: 0; }
+  from, to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
-
 @media (max-width: 768px) {
-    .content {
-        padding: 0 1.5rem;
-    }
-
-    .page-title {
-        font-size: 3rem;
-    }
-
-    .intro-text, .static-text, .specialty {
-        font-size: 1.5rem;
-    }
-
-    .card-header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .content {
+    padding: 0 1.5rem;
+  }
+  .page-title {
+    font-size: 3rem;
+  }
+  .intro-text, .static-text, .specialty {
+    font-size: 1.5rem;
+  }
+  .card-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
+
+/*# sourceMappingURL=about.css.map */

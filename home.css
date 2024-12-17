@@ -1,11 +1,14 @@
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
     background-color: #1a1a1a;
     color: #ffffff;
     font-family: 'Courier New', monospace;
     min-height: 100vh;
+    overflow-y: scroll
+}
+html{
+    scrollbar-gutter: stable;
 }
 
 #networkCanvas {

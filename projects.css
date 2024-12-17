@@ -2,11 +2,15 @@
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
     background-color: #1a1a1a;
     color: #ffffff;
     font-family: 'Courier New', monospace;
     min-height: 100vh;
+    overflow-y: scroll
+}
+
+html{
+  scrollbar-gutter: stable;
 }
 
 #networkCanvas {
@@ -278,4 +282,68 @@ nav a:hover {
     color: #ffffff; /* Keep text white */
     transform: scale(1.1); /* Slightly increase size on hover */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Enhance the shadow on hover */
+}
+
+/* Press Section */
+.press-section {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    padding: 2rem;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-out forwards;
+    margin-top: 4rem; /* Space before the press section */
+}
+
+.press-section h2 {
+    color: #64ffda;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+    transition: text-shadow 0.3s ease;
+}
+
+.press-section h2:hover {
+    text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
+}
+
+.press-section p {
+    color: #a8b2d1;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.press-links {
+    list-style-type: none;
+    padding: 0;
+}
+
+.press-links li {
+    margin-bottom: 1rem;
+}
+
+.press-links a {
+    color: #64ffda;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.press-links a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
