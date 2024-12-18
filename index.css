@@ -51,11 +51,11 @@ body {
 }
 .input-wrapper > .placeholder::before {
   content: "​";
-  content: "​"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-  alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
+  content: "​"/"What is the meaning of life?";
+  alt: "What is the meaning of life?";
   white-space: break-spaces;
   will-change: content;
-  animation: typed-0 13.1s linear 1s infinite forwards;
+  animation: typed-0 14.98s linear 1s infinite forwards;
 }
 .input-wrapper > .placeholder::after {
   content: "​";
@@ -67,1121 +67,1041 @@ body {
   animation: typed-0-caret 0.75s linear 1s infinite forwards;
 }
 @keyframes typed-0 {
-  0%, 0.3806793893% {
-    content: "​I";
-    content: "​I"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  0.3816793893%, 0.7623587786% {
-    content: "​If";
-    content: "​If"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  0.7633587786%, 1.1440381679% {
-    content: "​If ";
-    content: "​If "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  1.1450381679%, 1.5257175573% {
-    content: "​If y";
-    content: "​If y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  1.5267175573%, 1.9073969466% {
-    content: "​If yo";
-    content: "​If yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  1.9083969466%, 2.2890763359% {
-    content: "​If you";
-    content: "​If you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  2.2900763359%, 2.6707557252% {
-    content: "​If you ";
-    content: "​If you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  2.6717557252%, 3.0524351145% {
-    content: "​If you h";
-    content: "​If you h"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  3.0534351145%, 3.4341145038% {
-    content: "​If you ha";
-    content: "​If you ha"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  3.4351145038%, 3.8157938931% {
-    content: "​If you had";
-    content: "​If you had"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  3.8167938931%, 4.1974732824% {
-    content: "​If you had ";
-    content: "​If you had "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  4.1984732824%, 4.5791526718% {
-    content: "​If you had o";
-    content: "​If you had o"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  4.5801526718%, 4.9608320611% {
-    content: "​If you had on";
-    content: "​If you had on"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  4.9618320611%, 5.3425114504% {
-    content: "​If you had one";
-    content: "​If you had one"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  5.3435114504%, 5.7241908397% {
-    content: "​If you had one ";
-    content: "​If you had one "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  5.7251908397%, 6.105870229% {
-    content: "​If you had one c";
-    content: "​If you had one c"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  6.106870229%, 6.4875496183% {
-    content: "​If you had one ch";
-    content: "​If you had one ch"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  6.4885496183%, 6.8692290076% {
-    content: "​If you had one cha";
-    content: "​If you had one cha"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  6.8702290076%, 7.2509083969% {
-    content: "​If you had one chan";
-    content: "​If you had one chan"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  7.2519083969%, 7.6325877863% {
-    content: "​If you had one chanc";
-    content: "​If you had one chanc"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  7.6335877863%, 8.0142671756% {
-    content: "​If you had one chance";
-    content: "​If you had one chance"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  8.0152671756%, 8.3959465649% {
-    content: "​If you had one chance ";
-    content: "​If you had one chance "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  8.3969465649%, 8.7776259542% {
-    content: "​If you had one chance t";
-    content: "​If you had one chance t"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  8.7786259542%, 9.1593053435% {
-    content: "​If you had one chance to";
-    content: "​If you had one chance to"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  9.1603053435%, 9.5409847328% {
-    content: "​If you had one chance to ";
-    content: "​If you had one chance to "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  9.5419847328%, 9.9226641221% {
-    content: "​If you had one chance to s";
-    content: "​If you had one chance to s"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  9.9236641221%, 10.3043435115% {
-    content: "​If you had one chance to se";
-    content: "​If you had one chance to se"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  10.3053435115%, 10.6860229008% {
-    content: "​If you had one chance to sei";
-    content: "​If you had one chance to sei"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  10.6870229008%, 11.0677022901% {
-    content: "​If you had one chance to seiz";
-    content: "​If you had one chance to seiz"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  11.0687022901%, 11.4493816794% {
-    content: "​If you had one chance to seize";
-    content: "​If you had one chance to seize"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  11.4503816794%, 11.8310610687% {
-    content: "​If you had one chance to seize ";
-    content: "​If you had one chance to seize "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  11.8320610687%, 12.212740458% {
-    content: "​If you had one chance to seize e";
-    content: "​If you had one chance to seize e"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  12.213740458%, 12.5944198473% {
-    content: "​If you had one chance to seize ev";
-    content: "​If you had one chance to seize ev"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  12.5954198473%, 12.9760992366% {
-    content: "​If you had one chance to seize eve";
-    content: "​If you had one chance to seize eve"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  12.9770992366%, 13.357778626% {
-    content: "​If you had one chance to seize ever";
-    content: "​If you had one chance to seize ever"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  13.358778626%, 13.7394580153% {
-    content: "​If you had one chance to seize every";
-    content: "​If you had one chance to seize every"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  13.7404580153%, 14.1211374046% {
-    content: "​If you had one chance to seize everyt";
-    content: "​If you had one chance to seize everyt"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  14.1221374046%, 14.5028167939% {
-    content: "​If you had one chance to seize everyth";
-    content: "​If you had one chance to seize everyth"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  14.5038167939%, 14.8844961832% {
-    content: "​If you had one chance to seize everythi";
-    content: "​If you had one chance to seize everythi"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  14.8854961832%, 15.2661755725% {
-    content: "​If you had one chance to seize everythin";
-    content: "​If you had one chance to seize everythin"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  15.2671755725%, 15.6478549618% {
-    content: "​If you had one chance to seize everything";
-    content: "​If you had one chance to seize everything"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  15.6488549618%, 16.0295343511% {
-    content: "​If you had one chance to seize everything ";
-    content: "​If you had one chance to seize everything "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  16.0305343511%, 16.4112137405% {
-    content: "​If you had one chance to seize everything y";
-    content: "​If you had one chance to seize everything y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  16.4122137405%, 16.7928931298% {
-    content: "​If you had one chance to seize everything yo";
-    content: "​If you had one chance to seize everything yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  16.7938931298%, 17.1745725191% {
-    content: "​If you had one chance to seize everything you";
-    content: "​If you had one chance to seize everything you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  17.1755725191%, 17.5562519084% {
-    content: "​If you had one chance to seize everything you ";
-    content: "​If you had one chance to seize everything you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  17.5572519084%, 17.9379312977% {
-    content: "​If you had one chance to seize everything you w";
-    content: "​If you had one chance to seize everything you w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  17.9389312977%, 18.319610687% {
-    content: "​If you had one chance to seize everything you wa";
-    content: "​If you had one chance to seize everything you wa"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  18.320610687%, 18.7012900763% {
-    content: "​If you had one chance to seize everything you wan";
-    content: "​If you had one chance to seize everything you wan"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  18.7022900763%, 19.0829694656% {
-    content: "​If you had one chance to seize everything you want";
-    content: "​If you had one chance to seize everything you want"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  19.0839694656%, 19.464648855% {
-    content: "​If you had one chance to seize everything you wante";
-    content: "​If you had one chance to seize everything you wante"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  19.465648855%, 19.8463282443% {
-    content: "​If you had one chance to seize everything you wanted";
-    content: "​If you had one chance to seize everything you wanted"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  19.8473282443%, 20.2280076336% {
-    content: "​If you had one chance to seize everything you wanted,";
-    content: "​If you had one chance to seize everything you wanted,"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  20.2290076336%, 20.6096870229% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  20.6106870229%, 20.9913664122% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  20.9923664122%, 21.3730458015% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  21.3740458015%, 21.7547251908% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  21.7557251908%, 22.1364045802% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  22.1374045802%, 22.5180839695% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  22.5190839695%, 22.8997633588% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  22.9007633588%, 23.2814427481% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  23.2824427481%, 23.6631221374% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  23.6641221374%, 24.0448015267% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  24.0458015267%, 24.426480916% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  24.427480916%, 24.8081603053% {
-    content: "​If you had one chance to seize everything you wanted, w";
-    content: "​If you had one chance to seize everything you wanted, w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  24.8091603053%, 25.1898396947% {
-    content: "​If you had one chance to seize everything you wanted, wo";
-    content: "​If you had one chance to seize everything you wanted, wo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  25.1908396947%, 25.571519084% {
-    content: "​If you had one chance to seize everything you wanted, wou";
-    content: "​If you had one chance to seize everything you wanted, wou"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  25.572519084%, 25.9531984733% {
-    content: "​If you had one chance to seize everything you wanted, woul";
-    content: "​If you had one chance to seize everything you wanted, woul"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  25.9541984733%, 26.3348778626% {
-    content: "​If you had one chance to seize everything you wanted, would";
-    content: "​If you had one chance to seize everything you wanted, would"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  26.3358778626%, 26.7165572519% {
-    content: "​If you had one chance to seize everything you wanted, would ";
-    content: "​If you had one chance to seize everything you wanted, would "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  26.7175572519%, 27.0982366412% {
-    content: "​If you had one chance to seize everything you wanted, would y";
-    content: "​If you had one chance to seize everything you wanted, would y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  27.0992366412%, 27.4799160305% {
-    content: "​If you had one chance to seize everything you wanted, would yo";
-    content: "​If you had one chance to seize everything you wanted, would yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  27.4809160305%, 27.8615954198% {
-    content: "​If you had one chance to seize everything you wanted, would you";
-    content: "​If you had one chance to seize everything you wanted, would you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  27.8625954198%, 28.2432748092% {
-    content: "​If you had one chance to seize everything you wanted, would you ";
-    content: "​If you had one chance to seize everything you wanted, would you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  28.2442748092%, 28.6249541985% {
-    content: "​If you had one chance to seize everything you wanted, would you l";
-    content: "​If you had one chance to seize everything you wanted, would you l"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  28.6259541985%, 29.0066335878% {
-    content: "​If you had one chance to seize everything you wanted, would you le";
-    content: "​If you had one chance to seize everything you wanted, would you le"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  29.0076335878%, 29.3883129771% {
-    content: "​If you had one chance to seize everything you wanted, would you let";
-    content: "​If you had one chance to seize everything you wanted, would you let"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  29.3893129771%, 29.7699923664% {
-    content: "​If you had one chance to seize everything you wanted, would you let ";
-    content: "​If you had one chance to seize everything you wanted, would you let "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  29.7709923664%, 30.1516717557% {
-    content: "​If you had one chance to seize everything you wanted, would you let i";
-    content: "​If you had one chance to seize everything you wanted, would you let i"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  30.1526717557%, 30.533351145% {
-    content: "​If you had one chance to seize everything you wanted, would you let it";
-    content: "​If you had one chance to seize everything you wanted, would you let it"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  30.534351145%, 30.9150305344% {
-    content: "​If you had one chance to seize everything you wanted, would you let it ";
-    content: "​If you had one chance to seize everything you wanted, would you let it "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  30.9160305344%, 31.2967099237% {
-    content: "​If you had one chance to seize everything you wanted, would you let it s";
-    content: "​If you had one chance to seize everything you wanted, would you let it s"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  31.2977099237%, 31.678389313% {
-    content: "​If you had one chance to seize everything you wanted, would you let it sl";
-    content: "​If you had one chance to seize everything you wanted, would you let it sl"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  31.679389313%, 32.0600687023% {
-    content: "​If you had one chance to seize everything you wanted, would you let it sli";
-    content: "​If you had one chance to seize everything you wanted, would you let it sli"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  32.0610687023%, 32.4417480916% {
-    content: "​If you had one chance to seize everything you wanted, would you let it slip";
-    content: "​If you had one chance to seize everything you wanted, would you let it slip"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  32.4427480916%, 32.8234274809% {
-    content: "​If you had one chance to seize everything you wanted, would you let it slip?";
-    content: "​If you had one chance to seize everything you wanted, would you let it slip?"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  32.8244274809%, 48.6631221374% {
-    content: "​If you had one chance to seize everything you wanted, would you let it slip? ";
-    content: "​If you had one chance to seize everything you wanted, would you let it slip? "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  48.6641221374%, 48.8539618321% {
-    content: "​If you had one chance to seize everything you wanted, would you let it slip?";
-    content: "​If you had one chance to seize everything you wanted, would you let it slip?"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  48.8549618321%, 49.0448015267% {
-    content: "​If you had one chance to seize everything you wanted, would you let it slip";
-    content: "​If you had one chance to seize everything you wanted, would you let it slip"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  49.0458015267%, 49.2356412214% {
-    content: "​If you had one chance to seize everything you wanted, would you let it sli";
-    content: "​If you had one chance to seize everything you wanted, would you let it sli"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  49.2366412214%, 49.426480916% {
-    content: "​If you had one chance to seize everything you wanted, would you let it sl";
-    content: "​If you had one chance to seize everything you wanted, would you let it sl"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  49.427480916%, 49.6173206107% {
-    content: "​If you had one chance to seize everything you wanted, would you let it s";
-    content: "​If you had one chance to seize everything you wanted, would you let it s"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  49.6183206107%, 49.8081603053% {
-    content: "​If you had one chance to seize everything you wanted, would you let it ";
-    content: "​If you had one chance to seize everything you wanted, would you let it "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  49.8091603053%, 49.999% {
-    content: "​If you had one chance to seize everything you wanted, would you let it";
-    content: "​If you had one chance to seize everything you wanted, would you let it"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  50%, 50.1898396947% {
-    content: "​If you had one chance to seize everything you wanted, would you let i";
-    content: "​If you had one chance to seize everything you wanted, would you let i"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  50.1908396947%, 50.3806793893% {
-    content: "​If you had one chance to seize everything you wanted, would you let ";
-    content: "​If you had one chance to seize everything you wanted, would you let "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  50.3816793893%, 50.571519084% {
-    content: "​If you had one chance to seize everything you wanted, would you let";
-    content: "​If you had one chance to seize everything you wanted, would you let"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  50.572519084%, 50.7623587786% {
-    content: "​If you had one chance to seize everything you wanted, would you le";
-    content: "​If you had one chance to seize everything you wanted, would you le"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  50.7633587786%, 50.9531984733% {
-    content: "​If you had one chance to seize everything you wanted, would you l";
-    content: "​If you had one chance to seize everything you wanted, would you l"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  50.9541984733%, 51.1440381679% {
-    content: "​If you had one chance to seize everything you wanted, would you ";
-    content: "​If you had one chance to seize everything you wanted, would you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  51.1450381679%, 51.3348778626% {
-    content: "​If you had one chance to seize everything you wanted, would you";
-    content: "​If you had one chance to seize everything you wanted, would you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  51.3358778626%, 51.5257175573% {
-    content: "​If you had one chance to seize everything you wanted, would yo";
-    content: "​If you had one chance to seize everything you wanted, would yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  51.5267175573%, 51.7165572519% {
-    content: "​If you had one chance to seize everything you wanted, would y";
-    content: "​If you had one chance to seize everything you wanted, would y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  51.7175572519%, 51.9073969466% {
-    content: "​If you had one chance to seize everything you wanted, would ";
-    content: "​If you had one chance to seize everything you wanted, would "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  51.9083969466%, 52.0982366412% {
-    content: "​If you had one chance to seize everything you wanted, would";
-    content: "​If you had one chance to seize everything you wanted, would"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  52.0992366412%, 52.2890763359% {
-    content: "​If you had one chance to seize everything you wanted, woul";
-    content: "​If you had one chance to seize everything you wanted, woul"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  52.2900763359%, 52.4799160305% {
-    content: "​If you had one chance to seize everything you wanted, wou";
-    content: "​If you had one chance to seize everything you wanted, wou"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  52.4809160305%, 52.6707557252% {
-    content: "​If you had one chance to seize everything you wanted, wo";
-    content: "​If you had one chance to seize everything you wanted, wo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  52.6717557252%, 52.8615954198% {
-    content: "​If you had one chance to seize everything you wanted, w";
-    content: "​If you had one chance to seize everything you wanted, w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  52.8625954198%, 53.0524351145% {
-    content: "​If you had one chance to seize everything you wanted, ";
-    content: "​If you had one chance to seize everything you wanted, "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  53.0534351145%, 53.2432748092% {
-    content: "​If you had one chance to seize everything you wanted,";
-    content: "​If you had one chance to seize everything you wanted,"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  53.2442748092%, 53.4341145038% {
-    content: "​If you had one chance to seize everything you wanted";
-    content: "​If you had one chance to seize everything you wanted"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  53.4351145038%, 53.6249541985% {
-    content: "​If you had one chance to seize everything you wante";
-    content: "​If you had one chance to seize everything you wante"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  53.6259541985%, 53.8157938931% {
-    content: "​If you had one chance to seize everything you want";
-    content: "​If you had one chance to seize everything you want"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  53.8167938931%, 54.0066335878% {
-    content: "​If you had one chance to seize everything you wan";
-    content: "​If you had one chance to seize everything you wan"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  54.0076335878%, 54.1974732824% {
-    content: "​If you had one chance to seize everything you wa";
-    content: "​If you had one chance to seize everything you wa"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  54.1984732824%, 54.3883129771% {
-    content: "​If you had one chance to seize everything you w";
-    content: "​If you had one chance to seize everything you w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  54.3893129771%, 54.5791526718% {
-    content: "​If you had one chance to seize everything you ";
-    content: "​If you had one chance to seize everything you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  54.5801526718%, 54.7699923664% {
-    content: "​If you had one chance to seize everything you";
-    content: "​If you had one chance to seize everything you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  54.7709923664%, 54.9608320611% {
-    content: "​If you had one chance to seize everything yo";
-    content: "​If you had one chance to seize everything yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  54.9618320611%, 55.1516717557% {
-    content: "​If you had one chance to seize everything y";
-    content: "​If you had one chance to seize everything y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  55.1526717557%, 55.3425114504% {
-    content: "​If you had one chance to seize everything ";
-    content: "​If you had one chance to seize everything "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  55.3435114504%, 55.533351145% {
-    content: "​If you had one chance to seize everything";
-    content: "​If you had one chance to seize everything"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  55.534351145%, 55.7241908397% {
-    content: "​If you had one chance to seize everythin";
-    content: "​If you had one chance to seize everythin"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  55.7251908397%, 55.9150305344% {
-    content: "​If you had one chance to seize everythi";
-    content: "​If you had one chance to seize everythi"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  55.9160305344%, 56.105870229% {
-    content: "​If you had one chance to seize everyth";
-    content: "​If you had one chance to seize everyth"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  56.106870229%, 56.2967099237% {
-    content: "​If you had one chance to seize everyt";
-    content: "​If you had one chance to seize everyt"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  56.2977099237%, 56.4875496183% {
-    content: "​If you had one chance to seize every";
-    content: "​If you had one chance to seize every"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  56.4885496183%, 56.678389313% {
-    content: "​If you had one chance to seize ever";
-    content: "​If you had one chance to seize ever"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  56.679389313%, 56.8692290076% {
-    content: "​If you had one chance to seize eve";
-    content: "​If you had one chance to seize eve"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  56.8702290076%, 57.0600687023% {
-    content: "​If you had one chance to seize ev";
-    content: "​If you had one chance to seize ev"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  57.0610687023%, 57.2509083969% {
-    content: "​If you had one chance to seize e";
-    content: "​If you had one chance to seize e"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  57.2519083969%, 57.4417480916% {
-    content: "​If you had one chance to seize ";
-    content: "​If you had one chance to seize "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  57.4427480916%, 57.6325877863% {
-    content: "​If you had one chance to seize";
-    content: "​If you had one chance to seize"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  57.6335877863%, 57.8234274809% {
-    content: "​If you had one chance to seiz";
-    content: "​If you had one chance to seiz"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  57.8244274809%, 58.0142671756% {
-    content: "​If you had one chance to sei";
-    content: "​If you had one chance to sei"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  58.0152671756%, 58.2051068702% {
-    content: "​If you had one chance to se";
-    content: "​If you had one chance to se"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  58.2061068702%, 58.3959465649% {
-    content: "​If you had one chance to s";
-    content: "​If you had one chance to s"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  58.3969465649%, 58.5867862595% {
-    content: "​If you had one chance to ";
-    content: "​If you had one chance to "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  58.5877862595%, 58.7776259542% {
-    content: "​If you had one chance to";
-    content: "​If you had one chance to"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  58.7786259542%, 58.9684656489% {
-    content: "​If you had one chance t";
-    content: "​If you had one chance t"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  58.9694656489%, 59.1593053435% {
-    content: "​If you had one chance ";
-    content: "​If you had one chance "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  59.1603053435%, 59.3501450382% {
-    content: "​If you had one chance";
-    content: "​If you had one chance"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  59.3511450382%, 59.5409847328% {
-    content: "​If you had one chanc";
-    content: "​If you had one chanc"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  59.5419847328%, 59.7318244275% {
-    content: "​If you had one chan";
-    content: "​If you had one chan"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  59.7328244275%, 59.9226641221% {
-    content: "​If you had one cha";
-    content: "​If you had one cha"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  59.9236641221%, 60.1135038168% {
-    content: "​If you had one ch";
-    content: "​If you had one ch"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  60.1145038168%, 60.3043435115% {
-    content: "​If you had one c";
-    content: "​If you had one c"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  60.3053435115%, 60.4951832061% {
-    content: "​If you had one ";
-    content: "​If you had one "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  60.4961832061%, 60.6860229008% {
-    content: "​If you had one";
-    content: "​If you had one"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  60.6870229008%, 60.8768625954% {
-    content: "​If you had on";
-    content: "​If you had on"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  60.8778625954%, 61.0677022901% {
-    content: "​If you had o";
-    content: "​If you had o"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  61.0687022901%, 61.2585419847% {
-    content: "​If you had ";
-    content: "​If you had "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  61.2595419847%, 61.4493816794% {
-    content: "​If you had";
-    content: "​If you had"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  61.4503816794%, 61.640221374% {
-    content: "​If you ha";
-    content: "​If you ha"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  61.641221374%, 61.8310610687% {
-    content: "​If you h";
-    content: "​If you h"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  61.8320610687%, 62.0219007634% {
-    content: "​If you ";
-    content: "​If you "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  62.0229007634%, 62.212740458% {
-    content: "​If you";
-    content: "​If you"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  62.213740458%, 62.4035801527% {
-    content: "​If yo";
-    content: "​If yo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  62.4045801527%, 62.5944198473% {
-    content: "​If y";
-    content: "​If y"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  62.5954198473%, 62.785259542% {
-    content: "​If ";
-    content: "​If "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  62.786259542%, 62.9760992366% {
-    content: "​If";
-    content: "​If"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  62.9770992366%, 63.1669389313% {
-    content: "​I";
-    content: "​I"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
-  }
-  63.1679389313%, 70.8005267176% {
+  0%, 0.4662897196% {
+    content: "​W";
+    content: "​W"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  0.4672897196%, 0.9335794393% {
+    content: "​Wh";
+    content: "​Wh"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  0.9345794393%, 1.4008691589% {
+    content: "​Wha";
+    content: "​Wha"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  1.4018691589%, 1.8681588785% {
+    content: "​What";
+    content: "​What"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  1.8691588785%, 2.3354485981% {
+    content: "​What ";
+    content: "​What "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  2.3364485981%, 2.8027383178% {
+    content: "​What i";
+    content: "​What i"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  2.8037383178%, 3.2700280374% {
+    content: "​What is";
+    content: "​What is"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  3.2710280374%, 3.737317757% {
+    content: "​What is ";
+    content: "​What is "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  3.738317757%, 4.2046074766% {
+    content: "​What is t";
+    content: "​What is t"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  4.2056074766%, 4.6718971963% {
+    content: "​What is th";
+    content: "​What is th"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  4.6728971963%, 5.1391869159% {
+    content: "​What is the";
+    content: "​What is the"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  5.1401869159%, 5.6064766355% {
+    content: "​What is the ";
+    content: "​What is the "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  5.6074766355%, 6.0737663551% {
+    content: "​What is the m";
+    content: "​What is the m"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  6.0747663551%, 6.5410560748% {
+    content: "​What is the me";
+    content: "​What is the me"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  6.5420560748%, 7.0083457944% {
+    content: "​What is the mea";
+    content: "​What is the mea"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  7.0093457944%, 7.475635514% {
+    content: "​What is the mean";
+    content: "​What is the mean"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  7.476635514%, 7.9429252336% {
+    content: "​What is the meani";
+    content: "​What is the meani"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  7.9439252336%, 8.4102149533% {
+    content: "​What is the meanin";
+    content: "​What is the meanin"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  8.4112149533%, 8.8775046729% {
+    content: "​What is the meaning";
+    content: "​What is the meaning"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  8.8785046729%, 9.3447943925% {
+    content: "​What is the meaning ";
+    content: "​What is the meaning "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  9.3457943925%, 9.8120841121% {
+    content: "​What is the meaning o";
+    content: "​What is the meaning o"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  9.8130841121%, 10.2793738318% {
+    content: "​What is the meaning of";
+    content: "​What is the meaning of"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  10.2803738318%, 10.7466635514% {
+    content: "​What is the meaning of ";
+    content: "​What is the meaning of "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  10.7476635514%, 11.213953271% {
+    content: "​What is the meaning of l";
+    content: "​What is the meaning of l"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  11.214953271%, 11.6812429907% {
+    content: "​What is the meaning of li";
+    content: "​What is the meaning of li"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  11.6822429907%, 12.1485327103% {
+    content: "​What is the meaning of lif";
+    content: "​What is the meaning of lif"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  12.1495327103%, 12.6158224299% {
+    content: "​What is the meaning of life";
+    content: "​What is the meaning of life"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  12.6168224299%, 26.7680253672% {
+    content: "​What is the meaning of life?";
+    content: "​What is the meaning of life?"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  26.7690253672%, 27.1018037383% {
+    content: "​What is the meaning of life";
+    content: "​What is the meaning of life"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  27.1028037383%, 27.4355821095% {
+    content: "​What is the meaning of lif";
+    content: "​What is the meaning of lif"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  27.4365821095%, 27.7693604806% {
+    content: "​What is the meaning of li";
+    content: "​What is the meaning of li"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  27.7703604806%, 28.1031388518% {
+    content: "​What is the meaning of l";
+    content: "​What is the meaning of l"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  28.1041388518%, 28.436917223% {
+    content: "​What is the meaning of ";
+    content: "​What is the meaning of "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  28.437917223%, 28.7706955941% {
+    content: "​What is the meaning of";
+    content: "​What is the meaning of"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  28.7716955941%, 29.1044739653% {
+    content: "​What is the meaning o";
+    content: "​What is the meaning o"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  29.1054739653%, 29.4382523364% {
+    content: "​What is the meaning ";
+    content: "​What is the meaning "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  29.4392523364%, 29.7720307076% {
+    content: "​What is the meaning";
+    content: "​What is the meaning"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  29.7730307076%, 30.1058090788% {
+    content: "​What is the meanin";
+    content: "​What is the meanin"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  30.1068090788%, 30.4395874499% {
+    content: "​What is the meani";
+    content: "​What is the meani"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  30.4405874499%, 30.7733658211% {
+    content: "​What is the mean";
+    content: "​What is the mean"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  30.7743658211%, 31.1071441923% {
+    content: "​What is the mea";
+    content: "​What is the mea"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  31.1081441923%, 31.4409225634% {
+    content: "​What is the me";
+    content: "​What is the me"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  31.4419225634%, 31.7747009346% {
+    content: "​What is the m";
+    content: "​What is the m"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  31.7757009346%, 32.1084793057% {
+    content: "​What is the ";
+    content: "​What is the "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  32.1094793057%, 32.4422576769% {
+    content: "​What is the";
+    content: "​What is the"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  32.4432576769%, 32.7760360481% {
+    content: "​What is th";
+    content: "​What is th"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  32.7770360481%, 33.1098144192% {
+    content: "​What is t";
+    content: "​What is t"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  33.1108144192%, 33.4435927904% {
+    content: "​What is ";
+    content: "​What is "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  33.4445927904%, 33.7773711615% {
+    content: "​What is";
+    content: "​What is"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  33.7783711615%, 34.1111495327% {
+    content: "​What i";
+    content: "​What i"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  34.1121495327%, 34.4449279039% {
+    content: "​What ";
+    content: "​What "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  34.4459279039%, 34.778706275% {
+    content: "​What";
+    content: "​What"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  34.779706275%, 35.1124846462% {
+    content: "​Wha";
+    content: "​Wha"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  35.1134846462%, 35.4462630174% {
+    content: "​Wh";
+    content: "​Wh"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  35.4472630174%, 35.7800413885% {
+    content: "​W";
+    content: "​W"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
+  }
+  35.7810413885%, 42.4556088117% {
     content: "​";
-    content: "​"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: unset;
+    content: "​"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: blue;
+    color: blue;
   }
-  70.8015267176%, 71.1822061069% {
-    content: "​I";
-    content: "​I"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  42.4566088117%, 42.9228985314% {
+    content: "​T";
+    content: "​T"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  71.1832061069%, 71.5638854962% {
-    content: "​I ";
-    content: "​I "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  42.9238985314%, 43.390188251% {
+    content: "​To";
+    content: "​To"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  71.5648854962%, 71.9455648855% {
-    content: "​I w";
-    content: "​I w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  43.391188251%, 43.8574779706% {
+    content: "​To ";
+    content: "​To "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  71.9465648855%, 72.3272442748% {
-    content: "​I wo";
-    content: "​I wo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  43.8584779706%, 44.3247676903% {
+    content: "​To f";
+    content: "​To f"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  72.3282442748%, 72.7089236641% {
-    content: "​I wou";
-    content: "​I wou"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  44.3257676903%, 44.7920574099% {
+    content: "​To fi";
+    content: "​To fi"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  72.7099236641%, 73.0906030534% {
-    content: "​I woul";
-    content: "​I woul"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  44.7930574099%, 45.2593471295% {
+    content: "​To fin";
+    content: "​To fin"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  73.0916030534%, 73.4722824427% {
-    content: "​I would";
-    content: "​I would"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  45.2603471295%, 45.7266368491% {
+    content: "​To find";
+    content: "​To find"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  73.4732824427%, 73.8539618321% {
-    content: "​I wouldn";
-    content: "​I wouldn"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  45.7276368491%, 46.1939265688% {
+    content: "​To find ";
+    content: "​To find "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  73.8549618321%, 74.2356412214% {
-    content: "​I wouldn'";
-    content: "​I wouldn'"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  46.1949265688%, 46.6612162884% {
+    content: "​To find y";
+    content: "​To find y"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  74.2366412214%, 74.6173206107% {
-    content: "​I wouldn't";
-    content: "​I wouldn't"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  46.6622162884%, 47.128506008% {
+    content: "​To find yo";
+    content: "​To find yo"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  74.6183206107%, 90.4570152672% {
-    content: "​I wouldn't.";
-    content: "​I wouldn't."/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  47.129506008%, 47.5957957276% {
+    content: "​To find you";
+    content: "​To find you"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  90.4580152672%, 90.6478549618% {
-    content: "​I wouldn't";
-    content: "​I wouldn't"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  47.5967957276%, 48.0630854473% {
+    content: "​To find your";
+    content: "​To find your"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  90.6488549618%, 90.8386946565% {
-    content: "​I wouldn'";
-    content: "​I wouldn'"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  48.0640854473%, 48.5303751669% {
+    content: "​To find your ";
+    content: "​To find your "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  90.8396946565%, 91.0295343511% {
-    content: "​I wouldn";
-    content: "​I wouldn"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  48.5313751669%, 48.9976648865% {
+    content: "​To find your g";
+    content: "​To find your g"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  91.0305343511%, 91.2203740458% {
-    content: "​I would";
-    content: "​I would"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  48.9986648865%, 49.4649546061% {
+    content: "​To find your gi";
+    content: "​To find your gi"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  91.2213740458%, 91.4112137405% {
-    content: "​I woul";
-    content: "​I woul"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  49.4659546061%, 49.9322443258% {
+    content: "​To find your gif";
+    content: "​To find your gif"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  91.4122137405%, 91.6020534351% {
-    content: "​I wou";
-    content: "​I wou"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  49.9332443258%, 50.3995340454% {
+    content: "​To find your gift";
+    content: "​To find your gift"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  91.6030534351%, 91.7928931298% {
-    content: "​I wo";
-    content: "​I wo"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  50.4005340454%, 50.866823765% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  91.7938931298%, 91.9837328244% {
-    content: "​I w";
-    content: "​I w"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  50.867823765%, 51.3341134846% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  91.9847328244%, 92.1745725191% {
-    content: "​I ";
-    content: "​I "/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  51.3351134846%, 51.8014032043% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  92.1755725191%, 92.3654122137% {
-    content: "​I";
-    content: "​I"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+  51.8024032043%, 52.2686929239% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
-  92.3664122137%, 100% {
+  52.2696929239%, 52.7359826435% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  52.7369826435%, 53.2032723632% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  53.2042723632%, 53.6705620828% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  53.6715620828%, 54.1378518024% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  54.1388518024%, 54.605141522% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  54.606141522%, 55.0724312417% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  55.0734312417%, 55.5397209613% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  55.5407209613%, 56.0070106809% {
+    content: "​To find your gift, ";
+    content: "​To find your gift, "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  56.0080106809%, 56.4743004005% {
+    content: "​To find your gift, a";
+    content: "​To find your gift, a"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  56.4753004005%, 56.9415901202% {
+    content: "​To find your gift, an";
+    content: "​To find your gift, an"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  56.9425901202%, 57.4088798398% {
+    content: "​To find your gift, and";
+    content: "​To find your gift, and"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  57.4098798398%, 57.8761695594% {
+    content: "​To find your gift, and ";
+    content: "​To find your gift, and "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  57.8771695594%, 58.343459279% {
+    content: "​To find your gift, and t";
+    content: "​To find your gift, and t"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  58.344459279%, 58.8107489987% {
+    content: "​To find your gift, and th";
+    content: "​To find your gift, and th"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  58.8117489987%, 59.2780387183% {
+    content: "​To find your gift, and the";
+    content: "​To find your gift, and the"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  59.2790387183%, 59.7453284379% {
+    content: "​To find your gift, and then";
+    content: "​To find your gift, and then"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  59.7463284379%, 60.2126181575% {
+    content: "​To find your gift, and then ";
+    content: "​To find your gift, and then "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  60.2136181575%, 60.6799078772% {
+    content: "​To find your gift, and then g";
+    content: "​To find your gift, and then g"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  60.6809078772%, 61.1471975968% {
+    content: "​To find your gift, and then gi";
+    content: "​To find your gift, and then gi"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  61.1481975968%, 61.6144873164% {
+    content: "​To find your gift, and then giv";
+    content: "​To find your gift, and then giv"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  61.6154873164%, 62.081777036% {
+    content: "​To find your gift, and then give";
+    content: "​To find your gift, and then give"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  62.082777036%, 62.5490667557% {
+    content: "​To find your gift, and then give ";
+    content: "​To find your gift, and then give "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  62.5500667557%, 63.0163564753% {
+    content: "​To find your gift, and then give i";
+    content: "​To find your gift, and then give i"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  63.0173564753%, 63.4836461949% {
+    content: "​To find your gift, and then give it";
+    content: "​To find your gift, and then give it"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  63.4846461949%, 63.9509359146% {
+    content: "​To find your gift, and then give it ";
+    content: "​To find your gift, and then give it "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  63.9519359146%, 64.4182256342% {
+    content: "​To find your gift, and then give it a";
+    content: "​To find your gift, and then give it a"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  64.4192256342%, 64.8855153538% {
+    content: "​To find your gift, and then give it aw";
+    content: "​To find your gift, and then give it aw"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  64.8865153538%, 65.3528050734% {
+    content: "​To find your gift, and then give it awa";
+    content: "​To find your gift, and then give it awa"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  65.3538050734%, 65.8200947931% {
+    content: "​To find your gift, and then give it away";
+    content: "​To find your gift, and then give it away"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  65.8210947931%, 79.9722977303% {
+    content: "​To find your gift, and then give it away.";
+    content: "​To find your gift, and then give it away."/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  79.9732977303%, 80.3060761015% {
+    content: "​To find your gift, and then give it away";
+    content: "​To find your gift, and then give it away"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  80.3070761015%, 80.6398544726% {
+    content: "​To find your gift, and then give it awa";
+    content: "​To find your gift, and then give it awa"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  80.6408544726%, 80.9736328438% {
+    content: "​To find your gift, and then give it aw";
+    content: "​To find your gift, and then give it aw"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  80.9746328438%, 81.307411215% {
+    content: "​To find your gift, and then give it a";
+    content: "​To find your gift, and then give it a"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  81.308411215%, 81.6411895861% {
+    content: "​To find your gift, and then give it ";
+    content: "​To find your gift, and then give it "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  81.6421895861%, 81.9749679573% {
+    content: "​To find your gift, and then give it";
+    content: "​To find your gift, and then give it"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  81.9759679573%, 82.3087463284% {
+    content: "​To find your gift, and then give i";
+    content: "​To find your gift, and then give i"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  82.3097463284%, 82.6425246996% {
+    content: "​To find your gift, and then give ";
+    content: "​To find your gift, and then give "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  82.6435246996%, 82.9763030708% {
+    content: "​To find your gift, and then give";
+    content: "​To find your gift, and then give"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  82.9773030708%, 83.3100814419% {
+    content: "​To find your gift, and then giv";
+    content: "​To find your gift, and then giv"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  83.3110814419%, 83.6438598131% {
+    content: "​To find your gift, and then gi";
+    content: "​To find your gift, and then gi"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  83.6448598131%, 83.9776381842% {
+    content: "​To find your gift, and then g";
+    content: "​To find your gift, and then g"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  83.9786381842%, 84.3114165554% {
+    content: "​To find your gift, and then ";
+    content: "​To find your gift, and then "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  84.3124165554%, 84.6451949266% {
+    content: "​To find your gift, and then";
+    content: "​To find your gift, and then"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  84.6461949266%, 84.9789732977% {
+    content: "​To find your gift, and the";
+    content: "​To find your gift, and the"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  84.9799732977%, 85.3127516689% {
+    content: "​To find your gift, and th";
+    content: "​To find your gift, and th"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  85.3137516689%, 85.6465300401% {
+    content: "​To find your gift, and t";
+    content: "​To find your gift, and t"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  85.6475300401%, 85.9803084112% {
+    content: "​To find your gift, and ";
+    content: "​To find your gift, and "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  85.9813084112%, 86.3140867824% {
+    content: "​To find your gift, and";
+    content: "​To find your gift, and"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  86.3150867824%, 86.6478651535% {
+    content: "​To find your gift, an";
+    content: "​To find your gift, an"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  86.6488651535%, 86.9816435247% {
+    content: "​To find your gift, a";
+    content: "​To find your gift, a"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  86.9826435247%, 87.3154218959% {
+    content: "​To find your gift, ";
+    content: "​To find your gift, "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  87.3164218959%, 87.649200267% {
+    content: "​To find your gift,";
+    content: "​To find your gift,"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  87.650200267%, 87.9829786382% {
+    content: "​To find your gift";
+    content: "​To find your gift"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  87.9839786382%, 88.3167570093% {
+    content: "​To find your gif";
+    content: "​To find your gif"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  88.3177570093%, 88.6505353805% {
+    content: "​To find your gi";
+    content: "​To find your gi"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  88.6515353805%, 88.9843137517% {
+    content: "​To find your g";
+    content: "​To find your g"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  88.9853137517%, 89.3180921228% {
+    content: "​To find your ";
+    content: "​To find your "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  89.3190921228%, 89.651870494% {
+    content: "​To find your";
+    content: "​To find your"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  89.652870494%, 89.9856488652% {
+    content: "​To find you";
+    content: "​To find you"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  89.9866488652%, 90.3194272363% {
+    content: "​To find yo";
+    content: "​To find yo"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  90.3204272363%, 90.6532056075% {
+    content: "​To find y";
+    content: "​To find y"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  90.6542056075%, 90.9869839786% {
+    content: "​To find ";
+    content: "​To find "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  90.9879839786%, 91.3207623498% {
+    content: "​To find";
+    content: "​To find"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  91.3217623498%, 91.654540721% {
+    content: "​To fin";
+    content: "​To fin"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  91.655540721%, 91.9883190921% {
+    content: "​To fi";
+    content: "​To fi"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  91.9893190921%, 92.3220974633% {
+    content: "​To f";
+    content: "​To f"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  92.3230974633%, 92.6558758344% {
+    content: "​To ";
+    content: "​To "/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  92.6568758344%, 92.9896542056% {
+    content: "​To";
+    content: "​To"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  92.9906542056%, 93.3234325768% {
+    content: "​T";
+    content: "​T"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
+  }
+  93.3244325768%, 100% {
     content: "​";
-    content: "​"/"If you had one chance to seize everything you wanted, would you let it slip? ";
-    alt: "If you had one chance to seize everything you wanted, would you let it slip? ";
-    color: red;
+    content: "​"/"What is the meaning of life?";
+    alt: "What is the meaning of life?";
+    color: white;
+    color: white;
   }
 }
 @keyframes typed-0-caret {
