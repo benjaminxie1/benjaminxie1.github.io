@@ -70,6 +70,64 @@ nav a:hover {
   background-color: rgba(100, 255, 218, 0.1);
 }
 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.hamburger span {
+  width: 2rem;
+  height: 0.25rem;
+  background: #ffffff;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+  }
+  nav ul {
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background: rgba(26, 26, 26, 0.98);
+    padding-top: 4rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  nav ul.active {
+    transform: translateX(0);
+  }
+  nav ul li {
+    margin: 1rem 0;
+  }
+  .hamburger.active span:first-child {
+    transform: rotate(45deg);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg);
+  }
+}
 h1 {
   font-size: 4.5rem;
   margin: 0;
@@ -2006,15 +2064,34 @@ header {
 
 .press-links a {
   font-size: 1.4rem;
-  /* Increased font size for press links */
   color: #64ffda;
   text-decoration: none;
   padding: 0.5rem 0;
   transition: all 0.3s ease;
+  width: fit-content;
+  position: relative;
+}
+
+.press-links a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #64ffda;
+  left: 0;
+  bottom: 0.3rem; /* Moved up closer to text */
+  transform: scaleX(0); /* Hide underline by default */
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
 .press-links a:hover {
   color: #ffffff;
+}
+
+.press-links a:hover::after {
+  transform: scaleX(1); /* Show underline on hover */
+  background: #ffffff;
 }
 
 .press-links {
@@ -2301,7 +2378,6 @@ h2 {
   margin-bottom: 1.5rem;
   text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
   text-align: left;
-  white-space: nowrap;
   letter-spacing: 0.5px;
   position: relative;
 }
@@ -2430,54 +2506,6 @@ h2 {
   opacity: 0.9;
 }
 
-/* Enhanced Media Queries */
-@media (max-width: 1200px) {
-  .intro-container {
-    gap: 3rem;
-  }
-  .profile-container {
-    width: 350px;
-  }
-  .profile-wrapper {
-    width: 280px;
-    height: 280px;
-  }
-}
-@media (max-width: 968px) {
-  .intro-container {
-    flex-direction: column-reverse;
-    align-items: center;
-    gap: 4rem;
-  }
-  .intro-text-container {
-    width: 100%;
-  }
-  .profile-container {
-    width: 100%;
-    max-width: 400px;
-  }
-  .typing-container .typing-wrapper {
-    justify-content: center;
-  }
-}
-@media (max-width: 480px) {
-  .intro-card {
-    padding: 2rem;
-  }
-  .profile-wrapper {
-    width: 250px;
-    height: 250px;
-  }
-  .profile-name {
-    font-size: 2rem;
-  }
-  .profile-title {
-    font-size: 1.3rem;
-  }
-  .intro-text {
-    font-size: 1.4rem;
-  }
-}
 .info-item {
   animation: fadeInUp 1s ease forwards;
   animation-delay: calc(var(--order) * 0.1s);
@@ -2585,26 +2613,108 @@ footer p {
   }
 }
 /* Media Queries */
+/* Media Queries */
+/* Large screens */
+@media (max-width: 1200px) {
+  .intro-container {
+    gap: 3rem;
+  }
+  .profile-container {
+    width: 350px;
+  }
+  .profile-wrapper {
+    width: 280px;
+    height: 280px;
+  }
+}
+/* Medium screens */
+@media (max-width: 968px) {
+  .intro-container {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 4rem;
+  }
+  .intro-text-container {
+    width: 100%;
+  }
+  .profile-container {
+    width: 100%;
+    max-width: 400px;
+  }
+  .typing-container .typing-wrapper {
+    justify-content: center;
+  }
+}
+/* Tablets and smaller */
 @media (max-width: 768px) {
   .content {
     padding: 0 1.5rem;
   }
   .page-title {
     font-size: 3.5rem;
-    /* Adjusted font size for mobile */
   }
-  .intro-text,
-  .static-text,
-  .specialty {
+  .typing-container {
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .intro-text, .specialty {
     font-size: 2rem;
+  }
+  .static-text, .placeholder {
+    font-size: 1.4rem;
   }
   .card-header {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
+  .hamburger {
+    display: flex;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+  }
+  .intro-card {
+    padding: 1.5rem;
+  }
+  .intro-card h2 {
+    font-size: 1.8rem;
+    white-space: normal;
+  }
+  .intro-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  .fancy-underline::after {
+    height: 3px;
+  }
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* Mobile */
+@media (max-width: 480px) {
+  .intro-card {
+    padding: 2rem;
+  }
+  .profile-wrapper {
+    width: 250px;
+    height: 250px;
+  }
+  .profile-name {
+    font-size: 2rem;
+  }
+  .profile-title {
+    font-size: 1.3rem;
+  }
+  .static-text, .placeholder, .typing-wrapper {
+    font-size: 1.2rem;
+  }
+  .intro-text {
+    font-size: 1rem;
+  }
+  .intro-card h2 {
+    font-size: 1.6rem;
   }
 }
 

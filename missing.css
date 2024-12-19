@@ -12,6 +12,26 @@ body {
     flex-direction: column;
     text-align: center;
 }
+.btn {
+    padding: 1.2rem 2rem;  /* Increased padding */
+    border: 2px solid #64ffda;  /* Slightly thicker border */
+    border-radius: 5px;
+    color: #64ffda;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;  /* Larger text */
+    margin: 0 auto;  /* Center horizontally */
+    width: fit-content;  /* Ensure button only takes up necessary width */
+}
+
+/* Optional hover effect */
+.btn:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+    transform: scale(1.05);
+}
 
 /* Missing Content */
 .missing-content {

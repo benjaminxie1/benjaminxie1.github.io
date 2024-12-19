@@ -17,20 +17,20 @@
   gtag('config', 'G-MR9LMN9MLL');
 </script>
 <body>
-    <nav>
-        <!--<div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            -->
-        <ul>
-            <li><a href="home.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
+    <nav class="nav-bar">
+  <button class="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <ul class="nav-links">
+    <li><a href="home.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
 
     <main class="content">
         <h1 class="page-title">About Me</h1>
@@ -41,7 +41,7 @@
             <div class="intro-card">
         <h2>I create <span class="fancy-underline">design-focused solutions</span>.</h2>
     <p class="intro-text">
-        Hello! I'm a software developer based in California with 2 years of experience in programming. Currently a junior in high school, I'm love creating software that has measurable impact.
+        Hello! I'm a software developer based in California with 2 years of experience in programming. Currently a junior in high school, I love creating software that has measurable impact.
         <br><br>
         I'm currently looking for internships, research opportunities, or open-source collaborations. If you're interested, feel free to reach out!
     </p>
@@ -165,32 +165,20 @@
         <p>© Benjamin Xie</p>
     </footer>
 <script>
-        // Hamburger menu functionality
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  navLinks.classList.toggle('active');
+});
 
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Canvas and particles functionality
-        const canvas = document.getElementById('networkCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+// Close menu when clicking a link
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('active');
+  });
+});
 </script>
 </html>
