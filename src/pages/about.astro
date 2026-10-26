@@ -33,7 +33,7 @@ const awards = [
 ---
 
 <Base title="About">
-  <main class="wrap prose">
+  <main class="narrow prose">
     <h1>About</h1>
     <p>
       I'm Ben, a student at UC Berkeley in the M.E.T. program (EECS + Business Administration, class of 2029).
@@ -43,8 +43,8 @@ const awards = [
       Reach me at <a href={`mailto:${site.email}`}>{site.email}</a>, or on <a href={site.linkedin}>LinkedIn</a>.
     </p>
 
-    <h2>experience</h2>
-    <ul class="list">
+    <h2>Experience</h2>
+    <ul class="plain">
       {experience.map((e) => (
         <li>
           <div class="row">
@@ -57,12 +57,12 @@ const awards = [
       ))}
     </ul>
 
-    <h2>awards</h2>
+    <h2>Awards</h2>
     <ul>
       {awards.map((a) => <li>{a}</li>)}
     </ul>
 
-    <h2>tools</h2>
+    <h2>Tools</h2>
     <p class="muted">
       Python, TypeScript, C++, Java, SQL · React, Next.js, Node, PyTorch, OpenCV, Unreal Engine 5 · AWS, Postgres,
       DynamoDB, Redis, Docker

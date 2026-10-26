@@ -4,9 +4,9 @@ import { projects } from '../data/projects';
 ---
 
 <Base title="Projects">
-  <main class="wrap">
+  <main class="narrow">
     <h1>Projects</h1>
-    <ul class="list">
+    <ul class="plain">
       {projects.map((p) => (
         <li>
           <div class="row">
@@ -15,7 +15,7 @@ import { projects } from '../data/projects';
           </div>
           {p.award && <div class="muted">{p.award}</div>}
           <p style="margin: 8px 0 0">{p.blurb}</p>
-          <div class="tags">
+          <div class="muted small" style="margin-top:6px">
             {p.stack.join(' · ')}
             {p.links.map((l) => (
               <>

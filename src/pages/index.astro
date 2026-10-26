@@ -1,75 +1,146 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import WillowPond from '../components/WillowPond.astro';
 import { site } from '../data/site';
+import { projects } from '../data/projects';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+
+const experience = [
+  { org: 'Shell', role: 'Backend & Security Developer', date: '2026–' },
+  { org: 'Air Force Research Lab', role: 'SWE Intern, VR/XR', date: '2025' },
+  { org: 'AgentAI', role: 'ML Intern', date: '2024' },
+];
 ---
 
-<Base bare>
-  <WillowPond />
-  <main class="intro">
-    <p class="tagline" title="Lu You, 12th century: past the dark willows, bright flowers, and another village">
-      柳暗花明又一村<br />
-      past the willows, another village
-    </p>
-    <p>你好, I'm Ben.</p>
-    <p>
-      EECS + Business @ <a href="https://met.berkeley.edu">UC Berkeley M.E.T.</a>, building things that work in the real world.
-    </p>
-    <p>Currently, backend &amp; security @ Shell.</p>
-    <p>
-      Recently, won the <a href="/projects">Gemini 4 Argon hackathon</a> and <a href="/projects">a16z SpeedHacks</a>.
-    </p>
-    <p class="links">
-      <a href={site.github}>github</a> / <a href={site.linkedin}>linkedin</a> / <a href={`mailto:${site.email}`}>email</a>
-    </p>
+<Base>
+  <main>
+    <section class="hero">
+      <figure class="art" title="Click the water to feed the koi">
+        <WillowPond />
+        <figcaption>柳暗花明又一村</figcaption>
+      </figure>
+      <div class="intro">
+        <h1>Hi, I'm Ben.</h1>
+        <p>EECS + Business @ <a href="https://met.berkeley.edu">UC Berkeley</a> (M.E.T. '29), building things that touch the real world.</p>
+        <p>
+          Before that, <a href="/about">Air Force Research Lab</a> (intern), <a href="/about">AgentAI</a> (intern), and
+          <a href="/projects">Sentinel</a>, a wildfire camera network I took to the U.S. Capitol.
+        </p>
+        <p>Currently, backend &amp; security @ <a href="https://www.shell.com">Shell</a>.</p>
+        <p>
+          Recently, won <a href="https://github.com/benjaminxie1/argon-hacks">Gemini 4 Argon Hacks</a> @ Cerebral Valley and
+          <a href="https://github.com/Will-code112223/Speedhacks">a16z SpeedHacks</a>.
+        </p>
+        <p class="pills">
+          <a class="pill" href={site.github}>GitHub</a>
+          <a class="pill" href={site.linkedin}>LinkedIn</a>
+          <a class="pill" href={`mailto:${site.email}`}>Email</a>
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Selected projects</h2>
+      <ul class="plain projects">
+        {projects.map((p) => (
+          <li>
+            <a class="name" href={p.links[0]?.href}>{p.name}</a>
+            {p.award && <span class="tag">{p.award}</span>}
+            <div class="muted blurb">{p.blurb}</div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="two">
+      <div>
+        <h2>Experience</h2>
+        <ul class="plain">
+          {experience.map((e) => (
+            <li><strong>{e.org}</strong> <span class="muted small">{e.role} · {e.date}</span></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2>Writing</h2>
+        <ul class="plain">
+          {posts.map((p) => (
+            <li><a href={`/blog/${p.id}/`}>{p.data.title}</a> <span class="muted small">{fmt(p.data.date)}</span></li>
+          ))}
+        </ul>
+      </div>
+    </section>
   </main>
 </Base>
 
 <style>
-  :global(body.bare) {
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+    gap: 56px;
+    align-items: center;
+    margin-bottom: 80px;
+  }
+  .art {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 440 / 520;
+    border-radius: 18px;
     overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--tile);
+    cursor: crosshair;
   }
-  :global(body.bare .site-nav) {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-  .intro {
-    position: fixed;
-    z-index: 1;
-    left: clamp(20px, 16vw, 260px);
-    bottom: clamp(32px, 12vh, 140px);
-  }
-  @media (max-width: 700px) {
-    .intro {
-      bottom: 28px;
-      font-size: 13px;
-    }
-    max-width: min(560px, calc(100vw - 40px));
-    font-size: 14px;
-    line-height: 1.6;
+  .art figcaption {
+    position: absolute;
+    right: 14px;
+    bottom: 10px;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
     pointer-events: none;
-    text-shadow: 0 0 6px var(--bg), 0 0 2px var(--bg);
   }
   .intro p {
-    margin: 0 0 0.35rem;
+    margin: 0 0 14px;
   }
-  .intro a {
-    pointer-events: auto;
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px !important;
   }
-  .tagline {
-    color: var(--muted);
-    margin-bottom: 1.6rem !important;
+  .projects li {
+    padding: 10px 0;
   }
-  .links {
-    margin-top: 1.4rem !important;
-    color: var(--muted);
+  .name {
+    font-weight: 600;
   }
-  .links a {
-    color: var(--muted);
+  .blurb {
+    font-size: 15px;
+    margin-top: 2px;
   }
-  .links a:hover {
-    color: var(--ink);
+  .two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  @media (max-width: 820px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .art {
+      max-width: 440px;
+      width: 100%;
+    }
+    .two {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
   }
 </style>

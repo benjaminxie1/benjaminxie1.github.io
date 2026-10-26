@@ -1,528 +1,971 @@
 ---
-// Full-viewport ASCII willow tree over a pond, drawn on a canvas as a grid of
-// character cells. Everything is procedural: tweak the constants below.
+// An ASCII willow over a koi pond, filling its parent element.
+//
+// Everything is drawn on one canvas as a grid of near-square cells. Solid
+// things (bark, leaves, rocks, koi, the moon) are tiles washed in a colour
+// that is shaded by a simple light model, with a glyph etched on top whose
+// density follows the shading. Thin things (twigs, strand tips, ripples) are
+// line glyphs that follow their direction. Water carries an energy field that
+// spreads and fades, so koi, falling leaves and the pointer leave wakes.
 ---
 
-<canvas id="pond" aria-hidden="true"></canvas>
+<canvas class="willow-pond" aria-hidden="true"></canvas>
 
 <style>
-  #pond {
-    position: fixed;
+  .willow-pond {
+    position: absolute;
     inset: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
+    width: 100%;
+    height: 100%;
     display: block;
-    z-index: 0;
   }
 </style>
 
 <script>
-  type RGB = [number, number, number];
-  type Palette = {
-    bg: RGB;
-    leaf: RGB[];
-    bark: RGB[];
-    rock: RGB[];
-    line: RGB;
-    water: RGB;
-    moon: RGB;
-    koiA: RGB;
-    koiB: RGB;
-    koiW: RGB;
-    lotus: RGB;
-    glyphOnLight: string;
-    glyphOnDark: string;
+  type Rgb = [number, number, number];
+
+  interface Palette {
+    bg: Rgb;
+    leaf: Rgb[];
+    bark: Rgb[];
+    rock: Rgb[];
+    moss: Rgb;
+    moon: Rgb[];
+    lotus: Rgb[];
+    pad: Rgb[];
+    koiWhite: Rgb;
+    koiRed: Rgb[];
+    koiBlack: Rgb;
+    water: Rgb;
+    shadow: Rgb;
+    shadowAlpha: number;
+    /** How much colour a tile carries, from shadow to lit; the rest is page background. */
+    tile: [number, number];
+    /** Glyph brightness relative to the tile under it. */
+    ink: number;
+    alpha: number;
+  }
+
+  const DARK: Palette = {
+    bg: [25, 25, 24],
+    leaf: [[28, 46, 30], [44, 72, 42], [66, 102, 56], [98, 136, 74], [140, 172, 98], [188, 208, 136]],
+    bark: [[34, 28, 24], [56, 46, 38], [82, 68, 56], [112, 94, 78], [146, 126, 104]],
+    rock: [[44, 44, 44], [66, 66, 64], [94, 94, 90], [128, 126, 120], [164, 160, 152]],
+    moss: [86, 116, 64],
+    moon: [[150, 140, 118], [196, 186, 160], [232, 224, 202], [250, 244, 226]],
+    lotus: [[150, 60, 84], [206, 98, 120], [236, 150, 164], [250, 206, 212]],
+    pad: [[34, 60, 40], [56, 92, 56], [84, 124, 70], [118, 156, 92]],
+    koiWhite: [236, 228, 218],
+    koiRed: [[112, 22, 24], [168, 34, 28], [214, 58, 30], [240, 96, 34], [250, 138, 52], [255, 178, 96]],
+    koiBlack: [70, 68, 80],
+    water: [214, 226, 232],
+    shadow: [0, 0, 0],
+    shadowAlpha: 0.5,
+    tile: [0.62, 0.98],
+    ink: 0.45,
+    alpha: 0.92,
   };
 
-  const PALETTES: Record<'dark' | 'light', Palette> = {
-    dark: {
-      bg: [25, 25, 24],
-      leaf: [
-        [52, 70, 46],
-        [74, 98, 62],
-        [98, 128, 80],
-        [128, 158, 104],
-        [160, 186, 132],
-      ],
-      bark: [
-        [58, 52, 46],
-        [74, 66, 58],
-        [92, 82, 72],
-      ],
-      rock: [
-        [56, 56, 54],
-        [74, 74, 71],
-        [96, 96, 92],
-      ],
-      line: [120, 112, 100],
-      water: [104, 128, 140],
-      moon: [222, 214, 196],
-      koiA: [208, 112, 47],
-      koiB: [181, 69, 47],
-      koiW: [206, 201, 192],
-      lotus: [214, 128, 140],
-      glyphOnLight: 'rgba(0,0,0,0.42)',
-      glyphOnDark: 'rgba(255,255,255,0.22)',
-    },
-    light: {
-      bg: [244, 241, 234],
-      leaf: [
-        [168, 190, 150],
-        [138, 166, 118],
-        [108, 140, 92],
-        [82, 114, 70],
-        [60, 88, 52],
-      ],
-      bark: [
-        [120, 104, 90],
-        [100, 86, 74],
-        [80, 70, 60],
-      ],
-      rock: [
-        [200, 196, 188],
-        [176, 172, 163],
-        [150, 146, 138],
-      ],
-      line: [140, 128, 112],
-      water: [96, 122, 136],
-      moon: [212, 196, 160],
-      koiA: [214, 110, 40],
-      koiB: [181, 69, 47],
-      koiW: [224, 218, 206],
-      lotus: [214, 110, 128],
-      glyphOnLight: 'rgba(0,0,0,0.38)',
-      glyphOnDark: 'rgba(255,255,255,0.4)',
-    },
+  const LIGHT: Palette = {
+    bg: [244, 241, 234],
+    leaf: [[22, 52, 30], [38, 84, 44], [62, 116, 58], [96, 148, 76], [142, 180, 104], [190, 212, 150]],
+    bark: [[40, 32, 26], [70, 56, 44], [102, 84, 66], [136, 116, 94], [170, 152, 128]],
+    rock: [[70, 68, 64], [102, 100, 94], [136, 132, 124], [168, 164, 154], [200, 196, 186]],
+    moss: [92, 130, 70],
+    moon: [[196, 170, 112], [216, 194, 140], [232, 214, 170], [244, 232, 200]],
+    lotus: [[170, 52, 80], [214, 92, 116], [234, 140, 156], [246, 192, 200]],
+    pad: [[46, 92, 52], [70, 122, 64], [104, 150, 82], [146, 184, 116]],
+    koiWhite: [150, 144, 136],
+    koiRed: [[138, 24, 22], [184, 38, 24], [222, 62, 28], [238, 100, 38], [244, 140, 66], [248, 176, 116]],
+    koiBlack: [40, 36, 42],
+    water: [52, 72, 84],
+    shadow: [70, 66, 60],
+    shadowAlpha: 0.22,
+    tile: [0.72, 0.5],
+    ink: 0.5,
+    alpha: 0.95,
   };
 
-  const LEAF_CHARS = "|!;:i'l,|";
-  const BARK_CHARS = '%S8X#%&';
-  const ROCK_CHARS = 'o8O0@.';
-  const FPS = 24;
+  // Dense glyphs in shadow, sparse where the light hits.
+  const ETCH = '@#8XS%t+:';
+  const LEAF_ETCH = "#&%l!i;:'";
+  const TAU = Math.PI * 2;
 
-  // Small deterministic PRNG so the tree is the same on every visit.
-  function mulberry32(seed: number) {
+  // ---------- small math ----------
+  const clamp = (v: number, lo: number, hi: number) => (v < lo ? lo : v > hi ? hi : v);
+  const smooth = (e0: number, e1: number, x: number) => {
+    const t = clamp((x - e0) / (e1 - e0), 0, 1);
+    return t * t * (3 - 2 * t);
+  };
+  function hash(x: number, y: number, z: number) {
+    let h = Math.imul(x | 0, 0x2c1b3c6d) ^ Math.imul(y | 0, 0x297a2d39) ^ Math.imul(z | 0, 0x5bd1e995);
+    h = Math.imul(h ^ (h >>> 15), 0x85ebca6b);
+    h ^= h >>> 13;
+    return (h >>> 0) / 4294967296;
+  }
+  function noise(x: number, y: number, seed: number) {
+    const xi = Math.floor(x);
+    const yi = Math.floor(y);
+    const u = smooth(0, 1, x - xi);
+    const v = smooth(0, 1, y - yi);
+    const a = hash(xi, yi, seed);
+    const b = hash(xi + 1, yi, seed);
+    const c = hash(xi, yi + 1, seed);
+    const d = hash(xi + 1, yi + 1, seed);
+    return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+  }
+  function seeded(seed: number) {
     return () => {
-      seed |= 0;
       seed = (seed + 0x6d2b79f5) | 0;
       let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
       t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
   }
-  const pick = <T,>(arr: ArrayLike<T>, r: number) => arr[Math.floor(r * arr.length) % arr.length];
-  const rgba = (c: RGB, a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
-  const lum = (c: RGB) => 0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2];
-
-  type Strand = { x: number; y: number; len: number; phase: number; shades: number[]; chars: string[] };
-  type Solid = { x: number; y: number; shade: number; ch: string };
-  type Line = { x: number; y: number; ch: string };
-  type Leaf = { x: number; y: number; vy: number; ch: string; floating: number };
-  type Ripple = { x: number; y: number; t0: number; max: number };
-
-  const canvas = document.getElementById('pond') as HTMLCanvasElement;
-  const ctx = canvas.getContext('2d')!;
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  let pal: Palette = PALETTES.dark;
-  let cell = 13;
-  let cols = 0;
-  let rows = 0;
-  let waterY = 0;
-  let treeX = 0;
-  let moon = { x: 0, y: 0, r: 0 };
-  let trunk: Solid[] = [];
-  let rocks: Solid[] = [];
-  let branches: Line[] = [];
-  let canopy: Solid[] = [];
-  let strands: Strand[] = [];
-  let pads: { x: number; y: number; rx: number; lotus: boolean }[] = [];
-  let leaves: Leaf[] = [];
-  let ripples: Ripple[] = [];
-  let wind = 0;
-  let windTarget = 0;
-  let lastPointer = 0;
-
-  const narrow = () => cols < 70;
-
-  function readTheme() {
-    const t = document.documentElement.dataset.theme;
-    pal = t === 'light' ? PALETTES.light : PALETTES.dark;
+  const mix = (a: Rgb, b: Rgb, k: number): Rgb => [
+    (a[0] + (b[0] - a[0]) * k) | 0,
+    (a[1] + (b[1] - a[1]) * k) | 0,
+    (a[2] + (b[2] - a[2]) * k) | 0,
+  ];
+  const shade = (c: Rgb, k: number): Rgb => [Math.min(255, c[0] * k) | 0, Math.min(255, c[1] * k) | 0, Math.min(255, c[2] * k) | 0];
+  function ramp(stops: Rgb[], t: number): Rgb {
+    const x = clamp(t, 0, 1) * (stops.length - 1);
+    const i = Math.min(stops.length - 2, Math.floor(x));
+    return mix(stops[i], stops[i + 1], x - i);
   }
+  /** A line glyph that follows a direction in cell space. */
+  function lineGlyph(dx: number, dy: number) {
+    const d = Math.hypot(dx, dy) || 1;
+    if (Math.abs(dy) < 0.38 * d) return '-';
+    if (Math.abs(dx) < 0.38 * d) return '|';
+    return dx * dy > 0 ? '\\' : '/';
+  }
+  const etch = (set: string, lum: number, jitter: number) =>
+    set[clamp(Math.round((1 - lum) * (set.length - 3)) + jitter, 0, set.length - 1)];
 
-  function build() {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    cell = w < 600 ? 10 : 13;
-    canvas.width = Math.round(w * dpr);
-    canvas.height = Math.round(h * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cols = Math.ceil(w / cell);
-    rows = Math.ceil(h / cell);
+  // ---------- scene ----------
+  type Strand = { x: number; y: number; len: number; phase: number; lift: number; seed: number };
+  type Koi = {
+    id: number;
+    x: number;
+    y: number;
+    heading: number;
+    speed: number;
+    beat: number;
+    phase: number;
+    len: number;
+    nodes: Float32Array;
+    target: { x: number; y: number; until: number } | null;
+  };
+  type Leaf = { x: number; y: number; vy: number; ch: string; afloat: number };
+  type Ripple = { x: number; y: number; born: number; strength: number };
 
-    const isNarrow = narrow();
-    const rand = mulberry32(8);
-    waterY = Math.round(rows * (isNarrow ? 0.5 : 0.68));
-    treeX = Math.round(cols * (isNarrow ? 0.56 : 0.7));
-    const topY = Math.max(6, Math.round(rows * (isNarrow ? 0.2 : 0.24)));
-    moon = { x: Math.round(cols * (isNarrow ? 0.14 : 0.24)), y: Math.round(rows * (isNarrow ? 0.11 : 0.2)), r: isNarrow ? 3 : 4 };
+  const KOI_NODES = 7;
+  // Rows are taller than columns are wide; water distances stretch rows to match.
+  const FLAT = 2.2;
 
-    // Trunk: a gnarled, tapering column that flares into roots at the bank.
-    trunk = [];
-    const trunkH = waterY - 1 - topY;
-    const trunkCx = (y: number) => {
-      const t = (y - topY) / trunkH;
-      return treeX + Math.round(2.2 * Math.sin(t * 3.4 + 0.6) * (1 - t * 0.4));
-    };
-    for (let y = topY; y < waterY; y++) {
-      const t = (y - topY) / trunkH;
-      const hw = 0.8 + t * 1.8 + (t > 0.82 ? (t - 0.82) * 22 : 0);
-      const cx = trunkCx(y);
-      for (let x = Math.round(cx - hw); x <= Math.round(cx + hw); x++) {
-        const edge = Math.abs(x - cx) > hw - 1;
-        trunk.push({ x, y, shade: edge ? 0 : 1 + Math.floor(rand() * 2), ch: pick(BARK_CHARS, rand()) });
-      }
+  class WillowPond {
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+    pal = LIGHT;
+    dpr = 1;
+    cw = 10;
+    ch = 12;
+    cols = 0;
+    rows = 0;
+    waterY = 0;
+    treeX = 0;
+    topY = 0;
+    moon = { x: 0, y: 0, r: 0 };
+    strands: Strand[] = [];
+    twigs: { x: number; y: number; dx: number; dy: number; thick: number }[] = [];
+    boulders: { x: number; y: number; rx: number; ry: number }[] = [];
+    pads: { x: number; y: number; rx: number; lotus: boolean }[] = [];
+    koi: Koi[] = [];
+    leaves: Leaf[] = [];
+    ripples: Ripple[] = [];
+    wind = 0;
+    windTarget = 0;
+    gust = 0;
+    time = 0;
+    pointer = { x: -1, y: -1, active: false, lastMove: 0 };
+
+    // Per-cell buffers, rebuilt each frame.
+    tileRgb = new Uint32Array(0);
+    tileA = new Float32Array(0);
+    glyph = new Uint16Array(0);
+    glyphRgb = new Uint32Array(0);
+    glyphA = new Float32Array(0);
+    shadowCell = new Uint8Array(0);
+    energy = new Float32Array(0);
+    energyTmp = new Float32Array(0);
+    styles = new Map<number, string>();
+
+    constructor(canvas: HTMLCanvasElement) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext('2d')!;
     }
 
-    // Branches: quadratic arcs leaving the crown and sagging at the tips.
-    branches = [];
-    canopy = [];
-    strands = [];
-    const crownX = trunkCx(topY);
-    const reach = isNarrow ? cols * 0.4 : Math.min(cols * 0.36, 46);
-    const specs = [
-      { dir: -1, len: 1.0, lift: 7 },
-      { dir: -1, len: 0.72, lift: 9 },
-      { dir: -1, len: 0.45, lift: 6 },
-      { dir: 1, len: 0.5, lift: 8 },
-      { dir: 1, len: 0.82, lift: 6 },
-      { dir: -1, len: 0.25, lift: 4 },
-      { dir: 1, len: 0.28, lift: 5 },
-    ];
-    const strandCols = new Map<number, number>();
-    for (const s of specs) {
-      const sx = crownX;
-      const sy = topY + Math.floor(rand() * 3);
-      const ex = sx + s.dir * reach * s.len;
-      const ey = topY - 1 + rand() * 4;
-      const qx = sx + s.dir * reach * s.len * 0.45;
-      const qy = topY - s.lift - rand() * 3;
-      let prev: [number, number] | null = null;
-      const steps = Math.ceil(reach * s.len * 3);
-      for (let i = 0; i <= steps; i++) {
-        const t = i / steps;
-        const bx = (1 - t) ** 2 * sx + 2 * (1 - t) * t * qx + t * t * ex;
-        const by = (1 - t) ** 2 * sy + 2 * (1 - t) * t * qy + t * t * ey;
-        const cx = Math.round(bx);
-        const cy = Math.round(by);
-        if (prev && prev[0] === cx && prev[1] === cy) continue;
-        const dx = 2 * (1 - t) * (qx - sx) + 2 * t * (ex - qx);
-        const dy = 2 * (1 - t) * (qy - sy) + 2 * t * (ey - qy);
-        let ch = '_';
-        if (Math.abs(dy) > Math.abs(dx) * 0.45) ch = dy < 0 === dx > 0 ? '/' : '\\';
-        branches.push({ x: cx, y: cy, ch });
-        prev = [cx, cy];
-        // Foliage clumps along the upper branches.
-        for (let k = -1; k <= 1; k++) {
-          if (rand() < 0.4 - Math.abs(k) * 0.18) {
-            canopy.push({ x: cx + (rand() < 0.5 ? -1 : 1), y: cy + k, shade: 2 + Math.floor(rand() * 3), ch: pick(LEAF_CHARS, rand()) });
+    setTheme(dark: boolean) {
+      this.pal = dark ? DARK : LIGHT;
+    }
+
+    resize() {
+      const rect = this.canvas.parentElement!.getBoundingClientRect();
+      const w = Math.max(1, rect.width);
+      const h = Math.max(1, rect.height);
+      this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+      this.cw = clamp(Math.round(Math.min(w, h * 1.2) / 62), 7, 11);
+      this.ch = this.cw + 2;
+      this.cols = Math.ceil(w / this.cw);
+      this.rows = Math.ceil(h / this.ch);
+      this.canvas.width = Math.round(w * this.dpr);
+      this.canvas.height = Math.round(h * this.dpr);
+      const n = this.cols * this.rows;
+      this.tileRgb = new Uint32Array(n);
+      this.tileA = new Float32Array(n);
+      this.glyph = new Uint16Array(n);
+      this.glyphRgb = new Uint32Array(n);
+      this.glyphA = new Float32Array(n);
+      this.shadowCell = new Uint8Array(n);
+      this.energy = new Float32Array(n);
+      this.energyTmp = new Float32Array(n);
+      this.build();
+    }
+
+    build() {
+      const { cols, rows } = this;
+      const rand = seeded(8);
+      this.waterY = Math.round(rows * 0.7);
+      this.treeX = Math.round(cols * 0.52);
+      this.topY = Math.round(rows * 0.28);
+      this.moon = { x: Math.round(cols * 0.15), y: Math.round(rows * 0.12), r: Math.max(3, Math.round(cols * 0.065)) };
+
+      // Branches arc out of the crown and sag at the tips; strands hang from them.
+      this.twigs = [];
+      this.strands = [];
+      const crownX = this.trunkCx(this.topY);
+      const reach = Math.min(cols * 0.44, 46);
+      const lift = Math.min(1, rows / 60);
+      const specs = [
+        [-1, 1.0, 7], [-1, 0.74, 10], [-1, 0.46, 6], [1, 0.52, 9],
+        [1, 0.86, 6], [-1, 0.26, 4], [1, 0.3, 5], [1, 0.66, 11],
+      ];
+      const taken = new Set<number>();
+      for (const [dir, len, up] of specs) {
+        const sx = crownX;
+        const sy = this.topY + rand() * 2;
+        const ex = sx + dir * reach * len;
+        const ey = this.topY + rand() * 3;
+        const qx = sx + dir * reach * len * 0.45;
+        const qy = this.topY - (up + rand() * 3) * lift;
+        const steps = Math.ceil(reach * len * 4);
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps;
+          const x = (1 - t) ** 2 * sx + 2 * (1 - t) * t * qx + t * t * ex;
+          const y = (1 - t) ** 2 * sy + 2 * (1 - t) * t * qy + t * t * ey;
+          const dx = 2 * (1 - t) * (qx - sx) + 2 * t * (ex - qx);
+          const dy = 2 * (1 - t) * (qy - sy) + 2 * t * (ey - qy);
+          this.twigs.push({ x, y, dx, dy, thick: 1 - t });
+          const col = Math.round(x);
+          if (t > 0.08 && !taken.has(col) && rand() < 0.62) {
+            taken.add(col);
+            const room = this.waterY - y - 1;
+            const dips = rand() < 0.1;
+            const l = dips ? room + 1.5 : room * (0.3 + 0.62 * rand() * (1 - t * 0.3));
+            this.strands.push({ x, y: y + 0.6, len: Math.max(3, l), phase: rand() * TAU, lift: rand(), seed: (rand() * 1e6) | 0 });
           }
         }
-        // Hanging strands, the willow's signature.
-        if (t > 0.1 && rand() < 0.55) {
-          const used = strandCols.get(cx) ?? 0;
-          if (used > 0 || strandCols.has(cx - 1) && rand() < 0.6) continue;
-          strandCols.set(cx, used + 1);
-          const room = waterY - cy - 1;
-          const dips = rand() < 0.12;
-          const len = Math.max(3, Math.round(dips ? room + 1 : room * (0.25 + 0.65 * rand() * (1 - t * 0.3))));
-          const shades: number[] = [];
-          const chars: string[] = [];
-          for (let k = 0; k < len; k++) {
-            const f = k / len;
-            shades.push(Math.min(4, Math.max(0, Math.round(3.4 - f * 3 + (rand() - 0.5) * 1.6))));
-            chars.push(pick(LEAF_CHARS, rand()));
-          }
-          strands.push({ x: cx, y: cy + 1, len, phase: rand() * Math.PI * 2, shades, chars });
-        }
       }
-    }
 
-    // Scholar's rocks around the roots: a few overlapping boulders.
-    rocks = [];
-    const boulders = [
-      { x: treeX - 6, y: waterY - 1, rx: 4.5, ry: 2 },
-      { x: treeX + 4, y: waterY, rx: 3.5, ry: 1.6 },
-      { x: treeX - 1, y: waterY + 0.5, rx: 3, ry: 1.2 },
-    ];
-    const seenRock = new Set<number>();
-    for (const b of boulders) {
-      for (let y = Math.floor(b.y - b.ry); y <= Math.ceil(b.y + b.ry); y++) {
-        for (let x = Math.floor(b.x - b.rx); x <= Math.ceil(b.x + b.rx); x++) {
-          const d = ((x - b.x) / b.rx) ** 2 + ((y - b.y) / b.ry) ** 2;
-          if (d > 1.05 || seenRock.has(x * 9973 + y)) continue;
-          seenRock.add(x * 9973 + y);
-          const top = y < b.y ? 2 : y > b.y ? 0 : 1;
-          rocks.push({ x, y, shade: Math.max(0, Math.min(2, top + (rand() < 0.3 ? -1 : 0))), ch: pick(ROCK_CHARS, rand()) });
-        }
-      }
-    }
+      const wy = this.waterY;
+      const tx = this.treeX;
+      this.boulders = [
+        { x: tx - 5.5, y: wy - 0.6, rx: 4.6, ry: 2.2 },
+        { x: tx + 4, y: wy + 0.2, rx: 3.6, ry: 1.7 },
+        { x: tx - 0.5, y: wy + 0.9, rx: 3.2, ry: 1.2 },
+      ];
 
-    // Lily pads, one with a lotus, kept away from the intro text on the left.
-    const prand = mulberry32(21);
-    pads = [];
-    const padCount = isNarrow ? 2 : 4;
-    for (let i = 0; i < padCount; i++) {
-      pads.push({
-        x: Math.round(cols * (isNarrow ? 0.55 + i * 0.25 : 0.56 + i * 0.1 + prand() * 0.04)),
-        y: waterY + 3 + Math.floor(prand() * Math.max(1, rows - waterY - 6)),
-        rx: 2 + Math.floor(prand() * 2),
+      const prand = seeded(21);
+      const depth = rows - wy;
+      this.pads = [0, 1, 2].map((i) => ({
+        x: cols * (0.16 + i * 0.32 + prand() * 0.06),
+        y: wy + depth * (0.35 + prand() * 0.4),
+        rx: 2.2 + prand() * 1.4,
         lotus: i === 1,
-      });
+      }));
+
+      // Koi keep their place across resizes; spawn them the first time.
+      if (!this.koi.length) {
+        for (let i = 0; i < 3; i++) this.koi.push(this.spawnKoi(i));
+      }
+      for (const k of this.koi) {
+        k.len = clamp(cols * 0.17, 9, 17);
+        this.keepInPond(k);
+      }
+      this.leaves = [];
+      this.ripples = [];
     }
 
-    leaves = [];
-    ripples = [];
-  }
+    spawnKoi(id: number): Koi {
+      const r = seeded(100 + id);
+      const x = this.cols * (0.2 + r() * 0.6);
+      const y = this.waterY + (this.rows - this.waterY) * (0.3 + r() * 0.5);
+      const heading = r() * TAU;
+      const nodes = new Float32Array(KOI_NODES * 2);
+      for (let n = 0; n < KOI_NODES; n++) {
+        nodes[n * 2] = x - Math.cos(heading) * n;
+        nodes[n * 2 + 1] = y - (Math.sin(heading) * n) / FLAT;
+      }
+      return { id, x, y, heading, speed: 2, beat: 0, phase: r() * TAU, len: 8, nodes, target: null };
+    }
 
-  // ---------- drawing helpers ----------
-  function block(x: number, y: number, c: RGB, ch: string, a = 1) {
-    if (x < 0 || y < 0 || x >= cols || y >= rows) return;
-    const px = x * cell;
-    const py = y * cell;
-    ctx.fillStyle = rgba(c, a);
-    ctx.fillRect(px + 0.5, py + 0.5, cell - 1, cell - 1);
-    if (ch !== ' ') {
-      ctx.fillStyle = lum(c) > 110 ? pal.glyphOnLight : pal.glyphOnDark;
-      ctx.globalAlpha = a;
-      ctx.fillText(ch, px + cell / 2, py + cell / 2 + 1);
+    pond() {
+      return { x0: 1.5, x1: this.cols - 2.5, y0: this.waterY + 1.5, y1: this.rows - 1.5 };
+    }
+
+    keepInPond(k: Koi) {
+      const p = this.pond();
+      k.x = clamp(k.x, p.x0, p.x1);
+      k.y = clamp(k.y, p.y0, p.y1);
+    }
+
+    trunkCx(y: number) {
+      const t = (y - this.topY) / Math.max(1, this.waterY - 1 - this.topY);
+      return this.treeX + 2.2 * Math.sin(t * 3.3 + 0.6) * (1 - t * 0.45);
+    }
+    trunkHw(y: number) {
+      const t = (y - this.topY) / Math.max(1, this.waterY - 1 - this.topY);
+      return 0.9 + t * 1.7 + (t > 0.8 ? (t - 0.8) ** 2 * 60 : 0);
+    }
+
+    // ---------- buffers ----------
+    idx(c: number, r: number) {
+      return c < 0 || r < 0 || c >= this.cols || r >= this.rows ? -1 : r * this.cols + c;
+    }
+    putTile(c: number, r: number, tile: Rgb, tileA: number, g: string, gRgb: Rgb, gA: number) {
+      const i = this.idx(c, r);
+      if (i < 0) return;
+      this.tileRgb[i] = (tile[0] << 16) | (tile[1] << 8) | tile[2];
+      this.tileA[i] = tileA;
+      this.glyph[i] = g.charCodeAt(0);
+      this.glyphRgb[i] = (gRgb[0] << 16) | (gRgb[1] << 8) | gRgb[2];
+      this.glyphA[i] = gA;
+    }
+    putGlyph(c: number, r: number, g: string, rgb: Rgb, a: number) {
+      const i = this.idx(c, r);
+      if (i < 0) return;
+      this.tileA[i] = 0;
+      this.glyph[i] = g.charCodeAt(0);
+      this.glyphRgb[i] = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+      this.glyphA[i] = a;
+    }
+    /** A lit tile: colour from the ramp, washed toward the page, with an etched glyph. */
+    litTile(c: number, r: number, stops: Rgb[], lum: number, set: string, key: number, alpha = 1) {
+      const p = this.pal;
+      const base = ramp(stops, lum);
+      let tile = mix(p.bg, base, p.tile[0] + (p.tile[1] - p.tile[0]) * lum);
+      // Glints on a staggered clock, like light catching a leaf or a scale.
+      const tick = Math.floor(this.time * 1.3 + (key % 997) / 97);
+      if (hash(key, tick, 7) < 0.025) tile = mix(tile, p.bg, 0.4);
+      const g = etch(set, lum, (key >>> 3) % 3);
+      this.putTile(c, r, tile, p.alpha * alpha, g, shade(tile, p.ink), p.alpha * alpha * 0.9);
+    }
+
+    // ---------- simulation ----------
+    step(dt: number) {
+      this.time += dt;
+      const t = this.time;
+      if (performance.now() - this.pointer.lastMove > 2500) this.windTarget = 0;
+      const breeze = 0.5 * Math.sin(t * 0.31) + 0.25 * Math.sin(t * 0.83 + 1.3);
+      const prev = this.wind;
+      this.wind += (breeze + this.windTarget - this.wind) * Math.min(1, dt * 1.2);
+      // A gust is the change in wind; it drives the sheen that runs through the leaves.
+      this.gust = clamp(this.gust * Math.exp(-dt * 0.8) + Math.abs(this.wind - prev) * 6, 0, 1);
+      for (const k of this.koi) this.swim(k, dt);
+      this.stepLeaves(dt);
+      this.ripples = this.ripples.filter((r) => t - r.born < 2.4 + r.strength * 1.6);
+    }
+
+    swim(k: Koi, dt: number) {
+      const p = this.pond();
+      const t = this.time;
+      let desired = k.heading + (noise(t * 0.25, k.id * 7.1, 3) - 0.5) * 1.6;
+      if (k.target && t < k.target.until) {
+        desired = Math.atan2((k.target.y - k.y) * FLAT, k.target.x - k.x);
+        if (Math.hypot(k.target.x - k.x, (k.target.y - k.y) * FLAT) < 1.2) k.target = null;
+      }
+      // Steer back toward open water near the edges.
+      const mx = (p.x0 + p.x1) / 2;
+      const my = (p.y0 + p.y1) / 2;
+      const ex = Math.abs(k.x - mx) / ((p.x1 - p.x0) / 2);
+      const ey = Math.abs(k.y - my) / Math.max(1, (p.y1 - p.y0) / 2);
+      if (ex > 0.75 || ey > 0.7) desired = Math.atan2((my - k.y) * FLAT, mx - k.x);
+      const diff = ((((desired - k.heading + Math.PI) % TAU) + TAU) % TAU) - Math.PI;
+      k.heading += clamp(diff, -1.2, 1.2) * dt * 0.9;
+      // Burst and coast: the tail beats in spells.
+      const urge = k.target ? 1 : noise(t * 0.4, k.id * 3.3, 11);
+      k.beat += ((urge > 0.55 ? 1 : 0) - k.beat) * Math.min(1, dt * 2);
+      k.speed += (1.4 + k.beat * 2.6 - k.speed) * Math.min(1, dt * 1.5);
+      k.phase += dt * (2 + k.beat * 7);
+      k.x += Math.cos(k.heading) * k.speed * dt;
+      k.y += (Math.sin(k.heading) * k.speed * dt) / FLAT;
+      this.keepInPond(k);
+      // The body follows the head, each node a fixed spacing behind the last.
+      const n = k.nodes;
+      n[0] = k.x;
+      n[1] = k.y;
+      const gap = k.len / (KOI_NODES - 1);
+      for (let i = 1; i < KOI_NODES; i++) {
+        const dx = n[i * 2] - n[(i - 1) * 2];
+        const dy = (n[i * 2 + 1] - n[(i - 1) * 2 + 1]) * FLAT;
+        const d = Math.hypot(dx, dy) || 1;
+        n[i * 2] = n[(i - 1) * 2] + (dx / d) * gap;
+        n[i * 2 + 1] = n[(i - 1) * 2 + 1] + (dy / d) * (gap / FLAT);
+      }
+    }
+
+    stepLeaves(dt: number) {
+      if (this.leaves.length < 12 && Math.random() < dt * 1.2 && this.strands.length) {
+        const s = this.strands[Math.floor(Math.random() * this.strands.length)];
+        const k = Math.random() * s.len;
+        this.leaves.push({ x: s.x + this.sway(s, k), y: s.y + k, vy: 1.6 + Math.random() * 1.4, ch: ",'`"[(Math.random() * 3) | 0], afloat: 0 });
+      }
+      for (const l of this.leaves) {
+        if (l.afloat) {
+          l.afloat += dt;
+          l.x += (0.5 + this.wind * 0.8) * dt;
+        } else {
+          l.y += l.vy * dt;
+          l.x += (this.wind * 2.4 + Math.sin(this.time * 2 + l.y) * 0.8) * dt;
+          if (l.y >= this.waterY) {
+            l.y = this.waterY;
+            l.afloat = 0.001;
+            this.ripples.push({ x: l.x, y: this.waterY + 0.6, born: this.time, strength: 0.35 });
+            this.addEnergy(l.x, this.waterY + 1, 0.8);
+          }
+        }
+      }
+      this.leaves = this.leaves.filter((l) => l.afloat < 9 && l.x < this.cols + 2);
+    }
+
+    sway(s: Strand, k: number) {
+      const f = k / s.len;
+      return this.wind * 3.4 * f ** 1.6 * Math.min(1.4, s.len / 14) + 0.9 * Math.sin(this.time * 1.3 + s.phase + k * 0.28) * f;
+    }
+
+    addEnergy(x: number, y: number, e: number) {
+      const r = Math.round(y);
+      const i = this.idx(Math.round(x), r);
+      if (i >= 0 && r > this.waterY) this.energy[i] = Math.min(1.5, this.energy[i] + e);
+    }
+
+    /** Blur and decay the water's energy so wakes spread like ripples and fade. */
+    diffuse(dt: number) {
+      const { cols, rows, energy, energyTmp: tmp } = this;
+      const decay = Math.exp(-dt * 1.2);
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const i = r * cols + c;
+          const l = c > 0 ? energy[i - 1] : energy[i];
+          const rt = c < cols - 1 ? energy[i + 1] : energy[i];
+          const u = r > 0 ? energy[i - cols] : energy[i];
+          const d = r < rows - 1 ? energy[i + cols] : energy[i];
+          // Spreads faster sideways than up and down, as on a surface seen at an angle.
+          tmp[i] = ((energy[i] * 3 + (l + rt) * 1.5 + (u + d) * 0.5) / 7) * decay;
+        }
+      }
+      this.energy = tmp;
+      this.energyTmp = energy;
+    }
+
+    // ---------- drawing ----------
+    render(dt: number) {
+      const { ctx, dpr, cols } = this;
+      if (!cols) return;
+      this.glyph.fill(0);
+      this.tileA.fill(0);
+      this.shadowCell.fill(0);
+
+      for (const k of this.koi) {
+        for (let n = KOI_NODES - 3; n < KOI_NODES; n++) this.addEnergy(k.nodes[n * 2], k.nodes[n * 2 + 1], 0.05 + k.beat * 0.06);
+      }
+      if (this.pointer.active) this.addEnergy(this.pointer.x, this.pointer.y, 0.15);
+      this.diffuse(dt);
+
+      // Back to front.
+      this.drawMoon();
+      this.drawReflections();
+      this.drawPads();
+      for (const k of this.koi) this.drawKoi(k);
+      this.drawStrands(false);
+      this.drawTrunk();
+      this.drawTwigs();
+      this.drawStrands(true);
+      this.drawRocks();
+      this.drawLeaves();
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = `rgb(${this.pal.bg.join(',')})`;
+      ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.font = `600 ${Math.round(this.ch * 0.72)}px ui-monospace, 'SF Mono', Menlo, Consolas, monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      this.drawWater();
+      this.drawCells();
       ctx.globalAlpha = 1;
     }
-  }
-  function glyph(x: number, y: number, c: RGB, ch: string, a = 1) {
-    if (x < 0 || y < 0 || x >= cols || y >= rows) return;
-    ctx.fillStyle = rgba(c, a);
-    ctx.fillText(ch, x * cell + cell / 2, y * cell + cell / 2 + 1);
-  }
 
-  function sway(k: number, len: number, phase: number, t: number) {
-    const f = k / len;
-    return wind * 3.2 * f ** 1.6 * Math.min(1.4, len / 14) + 0.9 * Math.sin(t * 1.3 + phase + k * 0.28) * f;
-  }
-
-  function draw(t: number) {
-    ctx.fillStyle = rgba(pal.bg);
-    ctx.fillRect(0, 0, cols * cell, rows * cell);
-    ctx.font = `${Math.round(cell * 0.78)}px ui-monospace, 'SF Mono', Menlo, Consolas, monospace`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-
-    // Moon and its broken reflection.
-    for (let y = moon.y - moon.r; y <= moon.y + moon.r; y++) {
-      for (let x = moon.x - moon.r; x <= moon.x + moon.r; x++) {
-        const d = Math.hypot(x - moon.x, y - moon.y);
-        if (d <= moon.r + 0.3) {
-          const crater = mulberry32(x * 131 + y * 17)() > 0.82;
-          block(x, y, pal.moon, crater ? 'o' : d > moon.r - 0.8 ? '.' : ' ', crater ? 0.75 : 0.9);
-        }
-      }
-    }
-    for (let k = 1; k < Math.min(9, rows - waterY); k++) {
-      const half = Math.max(0, Math.round(moon.r - k * 0.45 + Math.sin(t * 2 + k * 1.7) * 1.2));
-      const off = Math.round(Math.sin(t * 1.4 + k) * 1.2);
-      for (let x = -half; x <= half; x++) {
-        if (Math.sin(t * 3 + x * 1.9 + k * 2.3) > -0.3) glyph(moon.x + x + off, waterY + k, pal.moon, k % 2 ? '-' : '=', 0.5 - k * 0.04);
-      }
-    }
-
-    // Water surface texture.
-    for (let y = waterY; y < rows; y++) {
-      const depth = (y - waterY) / Math.max(1, rows - waterY);
-      for (let x = 0; x < cols; x++) {
-        const n = Math.sin(x * 0.23 + t * 0.6 + y * 1.37) * Math.sin(x * 0.071 - t * 0.33 + y * 0.53);
-        if (y === waterY) {
-          if (n > -0.2) glyph(x, y, pal.water, n > 0.3 ? '~' : '-', 0.55);
-        } else if (n > 0.5) {
-          glyph(x, y, pal.water, n > 0.72 ? '~' : '-', 0.32 - depth * 0.15);
+    drawMoon() {
+      const { x, y, r } = this.moon;
+      const squash = this.ch / this.cw;
+      for (let rr = Math.floor(y - r / squash) - 1; rr <= y + r / squash + 1; rr++) {
+        for (let c = Math.floor(x - r) - 1; c <= x + r + 1; c++) {
+          const dx = (c + 0.5 - x) / r;
+          const dy = ((rr + 0.5 - y) * squash) / r;
+          const d2 = dx * dx + dy * dy;
+          if (d2 > 1) continue;
+          const nz = Math.sqrt(1 - d2);
+          const crater = noise(c * 0.9, rr * 1.1, 5) > 0.68 ? 0.22 : 0;
+          const lum = clamp(0.25 + 0.6 * nz - 0.15 * dx - crater, 0, 1);
+          this.litTile(c, rr, this.pal.moon, lum, ETCH, c * 131 + rr, d2 > 0.82 ? 0.55 : 0.9);
         }
       }
     }
 
-    // Ripples (clicks, falling leaves, strands touching the water).
-    ripples = ripples.filter((r) => t - r.t0 < r.max / 4);
-    for (const r of ripples) {
-      const rad = (t - r.t0) * 4;
-      const a = Math.max(0, 0.7 * (1 - rad / r.max));
-      const steps = Math.ceil(rad * 7) + 6;
+    drawReflections() {
+      const { waterY: wy, rows, pal } = this;
+      const fade = (rr: number) => 0.5 * (1 - (rr - wy) / (rows - wy + 3));
+      // The moon's reflection: broken streaks that shimmer.
+      for (let k = 1; k < Math.min(10, rows - wy); k++) {
+        const half = Math.max(0, Math.round(this.moon.r * 0.9 - k * 0.35 + Math.sin(this.time * 2 + k * 1.7) * 1.1));
+        const off = Math.round(Math.sin(this.time * 1.4 + k) * 1.2);
+        for (let dx = -half; dx <= half; dx++) {
+          if (Math.sin(this.time * 3 + dx * 1.9 + k * 2.3) > -0.2) {
+            this.putGlyph(Math.round(this.moon.x) + dx + off, wy + k, k % 2 ? '-' : '=', ramp(pal.moon, 0.8), fade(wy + k) * 0.9);
+          }
+        }
+      }
+      // The tree's reflection: strands as faint wavering lines, the trunk as a pale smear.
+      for (const s of this.strands) {
+        for (let k = 0; k < s.len; k += 2.5) {
+          const ry = Math.round(2 * wy - (s.y + k));
+          if (ry <= wy || ry >= rows) continue;
+          const x = s.x + this.sway(s, k) + Math.sin(this.time * 1.8 + ry * 0.9) * 0.7;
+          this.putGlyph(Math.round(x), ry, k % 5 < 2.5 ? '|' : ':', ramp(pal.leaf, 0.6), fade(ry) * 0.4);
+        }
+      }
+      for (let y = this.topY; y < wy; y++) {
+        const ry = 2 * wy - y;
+        if (ry >= rows) continue;
+        const cx = this.trunkCx(y) + Math.sin(this.time * 1.8 + ry * 0.9) * 0.7;
+        const hw = this.trunkHw(y);
+        for (let c = Math.round(cx - hw); c <= Math.round(cx + hw); c++) {
+          this.putGlyph(c, ry, (c + ry) % 2 ? ':' : '.', ramp(pal.bark, 0.55), fade(ry) * 0.7);
+        }
+      }
+    }
+
+    drawPads() {
+      const p = this.pal;
+      for (const pad of this.pads) {
+        const bob = Math.sin(this.time * 0.8 + pad.x) * 0.15;
+        const ry = Math.max(0.6, pad.rx * 0.32);
+        for (let r = Math.floor(pad.y - ry); r <= pad.y + ry; r++) {
+          for (let c = Math.floor(pad.x - pad.rx); c <= pad.x + pad.rx; c++) {
+            const dx = (c + 0.5 - pad.x) / pad.rx;
+            const dy = (r + 0.5 - pad.y - bob) / ry;
+            const d2 = dx * dx + dy * dy;
+            if (d2 > 1) continue;
+            // The notch: a wedge cut out toward the right.
+            if (dx > 0.15 && Math.abs(dy) < 0.35) continue;
+            const lum = clamp(0.35 + 0.45 * Math.sqrt(1 - d2) - 0.2 * dx, 0, 1);
+            if (d2 > 0.25 && (c + r) % 2 === 0) {
+              // Veins: line glyphs that run out from the centre.
+              const tile = mix(p.bg, ramp(p.pad, lum), 0.75);
+              this.putTile(c, r, tile, p.alpha, lineGlyph(dx, dy), shade(tile, p.ink), p.alpha * 0.7);
+            } else this.litTile(c, r, p.pad, lum, LEAF_ETCH, c * 17 + r * 3, 1);
+          }
+        }
+        if (pad.lotus) {
+          const cx = Math.round(pad.x - 0.5);
+          const cy = Math.round(pad.y - ry - 0.5);
+          const petals: [number, number, number][] = [[-1, 0, 0.45], [0, 0, 0.7], [1, 0, 0.5], [0, -1, 0.95], [-1, -1, 0.6], [1, -1, 0.75]];
+          for (const [dx, dy, lum] of petals) this.litTile(cx + dx, cy + dy, p.lotus, lum, ETCH, (cx + dx) * 7 + dy, 1);
+          this.putGlyph(cx, cy - 2, '^', ramp(p.lotus, 0.9), p.alpha * 0.8);
+        }
+      }
+    }
+
+    drawKoi(k: Koi) {
+      const p = this.pal;
+      const n = k.nodes;
+      const L = k.len;
+      // A wave travels down the body, growing toward the tail, stronger while the tail beats.
+      const sp = new Float32Array(KOI_NODES * 2);
+      for (let i = 0; i < KOI_NODES; i++) {
+        const s = i / (KOI_NODES - 1);
+        const a = Math.max(0, i - 1);
+        const b = Math.min(KOI_NODES - 1, i + 1);
+        let tx = n[a * 2] - n[b * 2];
+        let ty = (n[a * 2 + 1] - n[b * 2 + 1]) * FLAT;
+        const tl = Math.hypot(tx, ty) || 1;
+        tx /= tl;
+        ty /= tl;
+        const off = L * 0.06 * s ** 2 * (0.3 + k.beat) * Math.sin(k.phase - s * 4.5);
+        sp[i * 2] = n[i * 2] - ty * off;
+        sp[i * 2 + 1] = n[i * 2 + 1] + (tx * off) / FLAT;
+      }
+      let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      for (let i = 0; i < KOI_NODES; i++) {
+        x0 = Math.min(x0, sp[i * 2]);
+        x1 = Math.max(x1, sp[i * 2]);
+        y0 = Math.min(y0, sp[i * 2 + 1]);
+        y1 = Math.max(y1, sp[i * 2 + 1]);
+      }
+      // Seen from above: a round head, plump shoulders, a narrow tail stalk.
+      const half = (s: number) =>
+        (s < 0.15 ? 0.17 * Math.sin((s / 0.15) * Math.PI * 0.5) ** 0.6 : 0.17 * (1 - smooth(0.25, 0.8, s)) + 0.035) * L;
+      const isRed = (s: number, v: number) => {
+        const w = (noise(s * 12 + k.id, v * 3, k.id) - 0.5) * 0.25;
+        if (k.id % 3 === 2) return Math.hypot((s - 0.1) / 0.07, v / 0.9) < 1 + w; // tancho: one red crown
+        if (s < 0.17 && hash(k.id, 0, 41) < 0.8) return true;
+        return s < 0.72 && Math.sin(s * (14 + hash(k.id, 1, 41) * 6) + hash(k.id, 2, 41) * 6) > 0.25 + w;
+      };
+      const isBlack = (s: number, v: number) =>
+        k.id % 3 === 1 && s > 0.2 && s < 0.7 && hash(Math.round(s * 30), Math.round(v * 2), k.id) > 0.9;
+
+      for (let r = Math.floor(y0 - 2); r <= y1 + 2; r++) {
+        for (let c = Math.floor(x0 - 3); c <= x1 + 3; c++) {
+          // Nearest point on the spine, with rows stretched to match columns.
+          const px = c + 0.5;
+          const py = (r + 0.5) * FLAT;
+          let best = Infinity, bestS = 0, sign = 1, past = 0, tx = 1, ty = 0;
+          for (let i = 0; i < KOI_NODES - 1; i++) {
+            const ax = sp[i * 2], ay = sp[i * 2 + 1] * FLAT;
+            const sx = sp[(i + 1) * 2] - ax, sy = sp[(i + 1) * 2 + 1] * FLAT - ay;
+            const len2 = sx * sx + sy * sy || 1;
+            const raw = ((px - ax) * sx + (py - ay) * sy) / len2;
+            const u = clamp(raw, 0, 1);
+            const d2 = (px - ax - sx * u) ** 2 + (py - ay - sy * u) ** 2;
+            if (d2 < best) {
+              const len = Math.sqrt(len2);
+              best = d2;
+              bestS = (i + u) / (KOI_NODES - 1);
+              sign = sx * (py - ay) - sy * (px - ax) >= 0 ? 1 : -1;
+              past = i === KOI_NODES - 2 ? Math.max(0, raw - 1) * len : 0;
+              tx = sx / len;
+              ty = sy / len;
+            }
+          }
+          const dist = Math.sqrt(best);
+          const hw = half(bestS);
+          // Tail fan beyond the last node: line glyphs that follow the rays.
+          if (past > 0) {
+            if (past < L * 0.22 && dist < 0.4 + past * 0.9) {
+              this.putGlyph(c, r, lineGlyph(tx - sign * ty * 0.6, (ty + sign * tx * 0.6) / FLAT), p.koiWhite, p.alpha * 0.55);
+            }
+            continue;
+          }
+          // Pectoral fins: a pale veil flecked with dots just behind the head.
+          if (dist > hw && dist < hw + L * 0.12 && bestS > 0.18 && bestS < 0.32) {
+            const tile = mix(p.bg, p.koiWhite, 0.4);
+            this.putTile(c, r, tile, p.alpha * 0.35, (c + r) % 2 ? '.' : ' ', shade(tile, p.ink), p.alpha * 0.5);
+            continue;
+          }
+          if (dist > hw + 0.35) continue;
+          const across = clamp(dist / Math.max(0.5, hw), 0, 1);
+          const v = across * sign;
+          const facing = sign * (0.6 * ty - 0.8 * tx) * across;
+          const lum = clamp(0.25 + 0.5 * Math.sqrt(1 - across * across) + 0.18 * facing, 0, 1);
+          const key = (hash(Math.round(bestS * 40), Math.round(v * 3), k.id) * 4294967295) >>> 0;
+          if (dist > hw) {
+            // Edge cells: a paler, mostly empty tile, so the outline reads soft.
+            const tile = mix(p.bg, p.koiWhite, 0.35);
+            this.putTile(c, r, tile, p.alpha * 0.4, key % 3 ? ' ' : '.', shade(tile, p.ink), p.alpha * 0.5);
+            continue;
+          }
+          const si = this.idx(c + 1, r + 1);
+          if (si >= 0) this.shadowCell[si] = 1;
+          if (bestS < 0.06 && across < 0.9) {
+            this.putTile(c, r, mix(p.bg, p.koiBlack, 0.85), p.alpha, 'o', mix(p.bg, p.koiWhite, 0.9), p.alpha);
+          } else if (isRed(bestS, v)) {
+            // Red runs the full ramp, crimson in shadow to amber in the light, with a sheen sliding down the back.
+            const sheen = Math.max(0, Math.sin(bestS * 11 - this.time * 1.8 + k.id) - 0.7) / 0.3;
+            const grain = (noise(bestS * 9 + k.id, v * 4, k.id + 21) - 0.5) * 0.25;
+            const tile = ramp(p.koiRed, 0.15 + 0.8 * lum + grain + sheen * 0.35);
+            this.putTile(c, r, tile, p.alpha, etch(ETCH, lum, (key >>> 4) % 3), shade(tile, p.ink), p.alpha * 0.9);
+          } else if (isBlack(bestS, v)) {
+            const tile = mix(p.bg, p.koiBlack, 0.9);
+            this.putTile(c, r, tile, p.alpha, etch(ETCH, lum, 1), shade(tile, 1.6), p.alpha * 0.8);
+          } else {
+            const tile = mix(p.bg, p.koiWhite, p.tile[0] + (p.tile[1] - p.tile[0]) * lum);
+            this.putTile(c, r, tile, p.alpha, etch(ETCH, lum, (key >>> 4) % 3), shade(tile, p.ink), p.alpha * 0.55);
+          }
+        }
+      }
+    }
+
+    /** Strands hang behind the trunk (back) or in front of it (front), alternating. */
+    drawStrands(front: boolean) {
+      const p = this.pal;
+      const gustBand = (x: number, y: number) => Math.max(0, Math.sin(x * 0.3 - this.time * 1.7 + y * 0.12) - 0.72) / 0.28;
+      for (let si = 0; si < this.strands.length; si++) {
+        if ((si % 2 === 0) !== front) continue;
+        const s = this.strands[si];
+        let prevX = s.x;
+        for (let k = 0; k < s.len; k++) {
+          const x = s.x + this.sway(s, k);
+          const y = s.y + k;
+          const r = Math.round(y);
+          const c = Math.round(x);
+          if (r >= this.waterY) {
+            this.addEnergy(x, this.waterY + 1, 0.04);
+            break;
+          }
+          const f = k / s.len;
+          if (front && r > this.topY + 1 && Math.abs(x - this.trunkCx(y)) < this.trunkHw(y) + 0.5) {
+            prevX = x;
+            continue;
+          }
+          if (f < 0.42 + s.lift * 0.15) {
+            // Upper strand: leafy tiles lit from above, with a sheen that runs through in gusts.
+            const lum = clamp(
+              0.8 - f * 0.9 + (noise(x * 0.5, y * 0.5, 9) - 0.5) * 0.5 - (front ? 0 : 0.18) + gustBand(x, y) * this.gust * 0.5,
+              0,
+              1,
+            );
+            this.litTile(c, r, p.leaf, lum, LEAF_ETCH, (s.seed + k * 31) >>> 0, front ? 1 : 0.85);
+          } else {
+            // Lower strand: thin line glyphs that follow the sway, fading to flecks at the tip.
+            const g = f > 0.9 ? (k % 2 ? ',' : '.') : lineGlyph(x - prevX, 1);
+            this.putGlyph(c, r, g, ramp(p.leaf, front ? 0.55 : 0.4), p.alpha * (0.95 - f * 0.4));
+          }
+          prevX = x;
+        }
+      }
+    }
+
+    drawTrunk() {
+      const p = this.pal;
+      for (let r = this.topY; r < this.waterY; r++) {
+        const cx = this.trunkCx(r + 0.5);
+        const hw = this.trunkHw(r + 0.5);
+        for (let c = Math.floor(cx - hw) - 1; c <= cx + hw + 1; c++) {
+          let hits = 0;
+          for (const sx of [0.2, 0.5, 0.8]) if (Math.abs(c + sx - cx) <= hw) hits++;
+          if (!hits) continue;
+          // A rounded trunk lit from the left, with vertical bark streaks.
+          const a = clamp((c + 0.5 - cx) / hw, -1, 1);
+          const grain = noise(c * 1.6, r * 0.28, 3) - 0.5;
+          const lum = clamp(0.18 + 0.5 * Math.sqrt(1 - a * a) - 0.22 * a + grain * 0.45, 0, 1);
+          if (hits < 3) {
+            const tile = mix(p.bg, ramp(p.bark, lum), 0.45);
+            this.putTile(c, r, tile, p.alpha * 0.6, (c + r) % 3 ? ' ' : '.', shade(tile, p.ink), p.alpha * 0.6);
+          } else this.litTile(c, r, p.bark, lum, ETCH, c * 977 + r * 13);
+        }
+      }
+    }
+
+    drawTwigs() {
+      const p = this.pal;
       const seen = new Set<number>();
-      for (let i = 0; i < steps; i++) {
-        const ang = (i / steps) * Math.PI * 2;
-        const x = Math.round(r.x + Math.cos(ang) * rad);
-        const y = Math.round(r.y + Math.sin(ang) * rad * 0.42);
-        if (y < waterY + 1 || seen.has(x * 9973 + y)) continue;
-        seen.add(x * 9973 + y);
-        const c = Math.abs(Math.cos(ang));
-        const ch = c > 0.85 ? (Math.cos(ang) > 0 ? ')' : '(') : c < 0.4 ? '-' : Math.sin(ang) * Math.cos(ang) > 0 ? '\\' : '/';
-        glyph(x, y, pal.water, ch, a);
+      for (const tw of this.twigs) {
+        const c = Math.round(tw.x);
+        const r = Math.round(tw.y);
+        const key = c * 4099 + r;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        if (tw.thick > 0.72) this.litTile(c, r, p.bark, 0.35 + tw.thick * 0.3, ETCH, key);
+        else this.putGlyph(c, r, lineGlyph(tw.dx, tw.dy), ramp(p.bark, 0.75), p.alpha * (0.55 + tw.thick * 0.5));
+        // Foliage clusters along the upper branches.
+        const h = hash(c, r, 77);
+        if (h < 0.5) {
+          const dy = h < 0.25 ? -1 : 1;
+          const lum = clamp(0.75 - (dy > 0 ? 0.25 : 0) + (noise(c * 0.4, r * 0.4, 4) - 0.5) * 0.5, 0, 1);
+          this.litTile(c + (h < 0.12 ? -1 : 0), r + dy, p.leaf, lum, LEAF_ETCH, key * 3);
+        }
       }
     }
 
-    // Reflections of the tree, wobbling with the water.
-    const reflect = (x: number, y: number, c: RGB, a: number, ch?: string) => {
-      const ry = 2 * waterY - y - 1;
-      if (ry <= waterY || ry >= rows) return;
-      const wob = Math.round(Math.sin(t * 1.8 + ry * 0.9) * 0.7);
-      const fade = a * (1 - (ry - waterY) / (rows - waterY + 4));
-      if (ch) glyph(x + wob, ry, c, ch, fade);
-      else block(x + wob, ry, c, ' ', fade);
+    drawRocks() {
+      const p = this.pal;
+      for (const b of this.boulders) {
+        for (let r = Math.floor(b.y - b.ry); r <= b.y + b.ry; r++) {
+          for (let c = Math.floor(b.x - b.rx); c <= b.x + b.rx; c++) {
+            const nx = (c + 0.5 - b.x) / b.rx;
+            const ny = (r + 0.5 - b.y) / b.ry;
+            const d2 = nx * nx + ny * ny;
+            if (d2 > 1) continue;
+            // A scholar's stone: pitted and knobbly, lit from the top-left, moss on top.
+            const pit = noise(c * 0.8, r * 1.3, 12) < 0.25 ? 0.25 : 0;
+            const lum = clamp(0.2 + 0.45 * Math.sqrt(1 - d2) - 0.25 * nx - 0.35 * ny - pit, 0, 1);
+            if (ny < -0.35 && noise(c * 0.6, r, 13) > 0.55) {
+              const tile = mix(p.bg, p.moss, 0.55 + lum * 0.35);
+              this.putTile(c, r, tile, p.alpha, etch(LEAF_ETCH, lum, 1), shade(tile, p.ink), p.alpha * 0.85);
+            } else this.litTile(c, r, p.rock, lum, ETCH, c * 389 + r);
+          }
+        }
+      }
+    }
+
+    drawLeaves() {
+      for (const l of this.leaves) {
+        const a = l.afloat ? Math.max(0, 1 - l.afloat / 9) : 1;
+        this.putGlyph(Math.round(l.x), Math.round(l.y), l.ch, ramp(this.pal.leaf, 0.7), this.pal.alpha * a);
+      }
+    }
+
+    drawWater() {
+      const { ctx, cw, ch, cols, rows, waterY: wy, pal: p, energy } = this;
+      const at = (c: number, r: number, g: string, rgb: Rgb, a: number) => {
+        ctx.globalAlpha = a;
+        ctx.fillStyle = this.style((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
+        ctx.fillText(g, c * cw + cw / 2, r * ch + ch / 2 + 1);
+      };
+      const t = this.time;
+      for (let r = wy; r < rows; r++) {
+        const depth = (r - wy) / Math.max(1, rows - wy);
+        for (let c = 0; c < cols; c++) {
+          const i = r * cols + c;
+          if (this.glyph[i] || this.tileA[i] > 0.3) continue;
+          if (this.shadowCell[i]) {
+            at(c, r, ':', p.shadow, p.shadowAlpha);
+            continue;
+          }
+          const e = energy[i];
+          if (e > 0.2) {
+            at(c, r, e > 0.5 ? '~' : e > 0.32 ? '-' : '.', p.water, Math.min(1, (e - 0.2) * 1.5) * 0.45);
+            continue;
+          }
+          const n = Math.sin(c * 0.23 + t * 0.6 + r * 1.37) * Math.sin(c * 0.071 - t * 0.33 + r * 0.53);
+          if (r === wy) {
+            if (n > -0.25) at(c, r, n > 0.3 ? '~' : '-', p.water, 0.45);
+          } else if (n > 0.55) at(c, r, n > 0.75 ? '~' : '-', p.water, 0.22 - depth * 0.1);
+        }
+      }
+      // Ripples: an outer ring of line glyphs that follow the ring, an inner ring of dots.
+      for (const rp of this.ripples) {
+        const age = t - rp.born;
+        const fade = Math.pow(Math.max(0, 1 - age / (2.4 + rp.strength * 1.6)), 1.5) * rp.strength;
+        for (let ring = 0; ring < 2; ring++) {
+          const rad = Math.max(0, age - ring * 0.45) * 6 * (0.7 + 0.5 * rp.strength);
+          if (rad < 1) continue;
+          const steps = Math.ceil(rad * 8) + 8;
+          const seen = new Set<number>();
+          for (let s = 0; s < steps; s++) {
+            const ang = (s / steps) * TAU;
+            const c = Math.round(rp.x + Math.cos(ang) * rad);
+            const r = Math.round(rp.y + (Math.sin(ang) * rad) / FLAT);
+            if (r <= wy || c < 0 || c >= cols || r >= rows) continue;
+            const i = r * cols + c;
+            if (seen.has(i) || this.glyph[i]) continue;
+            seen.add(i);
+            at(c, r, ring ? '.' : lineGlyph(-Math.sin(ang), Math.cos(ang) / FLAT), p.water, fade * (ring ? 0.3 : 0.6));
+          }
+        }
+      }
+    }
+
+    drawCells() {
+      const { ctx, cw, ch, cols, glyph, tileA, tileRgb, glyphRgb, glyphA } = this;
+      for (let i = 0; i < glyph.length; i++) {
+        const code = glyph[i];
+        if (!code && tileA[i] <= 0) continue;
+        const x = (i % cols) * cw;
+        const y = ((i / cols) | 0) * ch;
+        if (tileA[i] > 0) {
+          ctx.globalAlpha = tileA[i];
+          ctx.fillStyle = this.style(tileRgb[i]);
+          ctx.fillRect(x + 0.5, y + 0.5, cw - 1, ch - 1);
+        }
+        if (!code || code === 32) continue;
+        ctx.globalAlpha = glyphA[i];
+        ctx.fillStyle = this.style(glyphRgb[i]);
+        ctx.fillText(String.fromCharCode(code), x + cw / 2, y + ch / 2 + 1);
+      }
+    }
+
+    style(rgb: number) {
+      let s = this.styles.get(rgb);
+      if (!s) {
+        s = `rgb(${rgb >>> 16},${(rgb >>> 8) & 255},${rgb & 255})`;
+        this.styles.set(rgb, s);
+      }
+      return s;
+    }
+
+    // ---------- input ----------
+    toCell(e: PointerEvent) {
+      const r = this.canvas.getBoundingClientRect();
+      const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      return { x: (e.clientX - r.left) / this.cw, y: (e.clientY - r.top) / this.ch, inside };
+    }
+    onMove(e: PointerEvent) {
+      const p = this.toCell(e);
+      this.pointer.lastMove = performance.now();
+      this.windTarget = clamp(((p.x - this.treeX) / this.cols) * 3, -1.6, 1.6);
+      this.pointer.active = p.inside && p.y > this.waterY;
+      this.pointer.x = p.x;
+      this.pointer.y = p.y;
+    }
+    onDown(e: PointerEvent) {
+      const p = this.toCell(e);
+      if (!p.inside || p.y <= this.waterY) return;
+      this.ripples.push({ x: p.x, y: p.y, born: this.time, strength: 1 });
+      this.addEnergy(p.x, p.y, 1.2);
+      // The nearest koi comes to see what landed.
+      let best: Koi | null = null;
+      let bd = Infinity;
+      for (const k of this.koi) {
+        const d = Math.hypot(k.x - p.x, (k.y - p.y) * FLAT);
+        if (d < bd) {
+          bd = d;
+          best = k;
+        }
+      }
+      if (best) best.target = { x: p.x, y: p.y, until: this.time + 5 };
+    }
+  }
+
+  // ---------- mount ----------
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  for (const canvas of document.querySelectorAll<HTMLCanvasElement>('canvas.willow-pond')) {
+    const pond = new WillowPond(canvas);
+    const theme = () => pond.setTheme(document.documentElement.dataset.theme === 'dark');
+    const still = () => {
+      pond.time = 0;
+      for (let i = 0; i < 90; i++) pond.step(1 / 30);
+      pond.render(1 / 30);
     };
-    for (const s of trunk) reflect(s.x, s.y, pal.bark[s.shade], 0.22);
-    for (const st of strands) {
-      for (let k = 0; k < st.len; k += 2) reflect(st.x + Math.round(sway(k, st.len, st.phase, t)), st.y + k, pal.leaf[3], 0.35, st.chars[k]);
-    }
-
-    // Koi: small horizontal sprites gliding along slow loops in the open water.
-    const W = 'W', O = 'O', R = 'R';
-    const koi = [
-      { w: 0.045, phase: 0, rows: [[0, 0, O, W, 0, 0], [W, O, W, O, W, W], [0, 0, W, O, 0, 0]] },
-      { w: 0.035, phase: 2.6, rows: [[0, 0, O, 0, 0], [O, R, O, O, W], [0, 0, O, 0, 0]] },
-    ];
-    const colorOf: Record<string, RGB> = { W: pal.koiW, O: pal.koiA, R: pal.koiB };
-    const span = cols * (narrow() ? 0.35 : 0.22);
-    const midX = cols * (narrow() ? 0.5 : 0.7);
-    const midY = waterY + (rows - waterY) * 0.55;
-    const ampY = Math.max(1, (rows - waterY) * 0.28);
-    for (const k of koi) {
-      const a = t * k.w * Math.PI * 2 + k.phase;
-      const x = Math.round(midX + Math.cos(a) * span);
-      const y = Math.round(midY + Math.sin(a * 2) * ampY);
-      const right = -Math.sin(a) > 0;
-      const len = k.rows[1].length;
-      const wag = Math.sin(t * 6 + k.phase) > 0 ? '/' : '\\';
-      k.rows.forEach((row, ry) => {
-        row.forEach((cc, i) => {
-          if (!cc) return;
-          const bx = right ? x + i - len + 1 : x - i + len - 1;
-          const head = i === len - 1 && ry === 1;
-          block(bx, y + ry - 1, colorOf[cc as string], head ? 'o' : pick('XS%8', ((i * 7 + ry * 3) % 10) / 10), 0.92);
-        });
-      });
-      const tailX = right ? x - len : x + len;
-      glyph(tailX, y, pal.koiW, right ? '<' : '>', 0.6);
-      glyph(tailX, y - 1, pal.koiW, wag, 0.4);
-    }
-
-    // Lily pads and a lotus.
-    for (const p of pads) {
-      for (let dx = -p.rx; dx <= p.rx; dx++) {
-        if (dx === 1) continue; // the notch
-        block(p.x + dx, p.y, pal.leaf[1 + (Math.abs(dx) % 2)], '.', 0.85);
-      }
-      block(p.x, p.y - 1, pal.leaf[2], ' ', 0.85);
-      if (p.lotus) {
-        block(p.x - 1, p.y - 1, pal.lotus, '*', 0.95);
-        block(p.x, p.y - 2, pal.lotus, '^', 0.95);
-        block(p.x + 1, p.y - 1, pal.lotus, '*', 0.95);
-      }
-    }
-
-    // Strands, then the trunk in front of them, then branches, foliage and rocks.
-    for (const st of strands) {
-      for (let k = 0; k < st.len; k++) {
-        const x = st.x + Math.round(sway(k, st.len, st.phase, t));
-        const y = st.y + k;
-        if (y >= waterY) {
-          if (Math.random() < 0.004) ripples.push({ x, y: waterY + 1, t0: t, max: 4 });
-          break;
-        }
-        const c = pal.leaf[st.shades[k]];
-        if (k < st.len * 0.35 && (st.phase * 10 + k) % 3 < 2) block(x, y, c, st.chars[k], 0.9);
-        else glyph(x, y, pal.leaf[Math.min(4, st.shades[k] + 1)], st.chars[k], 0.95 - (k / st.len) * 0.35);
-      }
-    }
-    for (const s of trunk) block(s.x, s.y, pal.bark[s.shade], s.ch);
-    for (const b of branches) glyph(b.x, b.y, pal.line, b.ch, 0.9);
-    for (const c of canopy) {
-      const off = Math.round(Math.sin(t * 0.9 + c.x * 0.4) * 0.6 * wind);
-      block(c.x + off, c.y, pal.leaf[c.shade], c.ch, 0.95);
-    }
-    for (const r of rocks) block(r.x, r.y, pal.rock[r.shade], r.ch);
-
-    // Falling leaves that land, float and drift.
-    if (!reduceMotion && leaves.length < 14 && Math.random() < 0.06 && strands.length) {
-      const st = strands[Math.floor(Math.random() * strands.length)];
-      const k = Math.floor(Math.random() * st.len);
-      leaves.push({ x: st.x + sway(k, st.len, st.phase, t), y: st.y + k, vy: 0.08 + Math.random() * 0.08, ch: pick(",'`", Math.random()), floating: 0 });
-    }
-    for (const l of leaves) {
-      if (l.floating) {
-        l.x += 0.03 + wind * 0.05;
-        l.floating += 1;
-      } else {
-        l.y += l.vy;
-        l.x += wind * 0.18 + Math.sin(t * 2 + l.y) * 0.08;
-        if (l.y >= waterY) {
-          l.y = waterY;
-          l.floating = 1;
-          ripples.push({ x: Math.round(l.x), y: waterY + 1, t0: t, max: 5 });
-        }
-      }
-      glyph(Math.round(l.x), Math.round(l.y), pal.leaf[3], l.ch, l.floating ? Math.max(0, 1 - l.floating / 300) : 1);
-    }
-    leaves = leaves.filter((l) => l.floating < 300 && l.x < cols + 2);
-  }
-
-  // ---------- loop & input ----------
-  let start = performance.now();
-  let last = 0;
-  let raf = 0;
-  function frame(now: number) {
-    raf = requestAnimationFrame(frame);
-    if (now - last < 1000 / FPS) return;
-    last = now;
-    const t = (now - start) / 1000;
-    if (now - lastPointer > 2500) windTarget = 0;
-    const breeze = 0.55 * Math.sin(t * 0.31) + 0.25 * Math.sin(t * 0.83 + 1.3);
-    wind += (breeze + windTarget - wind) * 0.04;
-    draw(t);
-  }
-
-  function render() {
-    readTheme();
-    build();
-    if (reduceMotion) {
-      wind = 0.3;
-      draw(12);
+    theme();
+    pond.resize();
+    let last = 0;
+    let visible = true;
+    const frame = (now: number) => {
+      requestAnimationFrame(frame);
+      if (!visible || document.hidden || now - last < 1000 / 30) return;
+      const dt = last ? Math.min(0.1, (now - last) / 1000) : 1 / 30;
+      last = now;
+      pond.step(dt);
+      pond.render(dt);
+    };
+    new ResizeObserver(() => {
+      pond.resize();
+      if (reduceMotion) still();
+    }).observe(canvas.parentElement!);
+    new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(canvas);
+    window.addEventListener('themechange', () => {
+      theme();
+      if (reduceMotion) still();
+    });
+    if (reduceMotion) still();
+    else {
+      window.addEventListener('pointermove', (e) => pond.onMove(e));
+      canvas.parentElement!.addEventListener('pointerdown', (e) => pond.onDown(e));
+      requestAnimationFrame(frame);
     }
   }
-
-  window.addEventListener('resize', () => {
-    build();
-    if (reduceMotion) draw(12);
-  });
-  window.addEventListener('themechange', () => {
-    readTheme();
-    if (reduceMotion) draw(12);
-  });
-  window.addEventListener('pointermove', (e) => {
-    lastPointer = performance.now();
-    windTarget = ((e.clientX / cell - treeX) / cols) * 3;
-  });
-  window.addEventListener('pointerdown', (e) => {
-    const x = Math.round(e.clientX / cell);
-    const y = Math.round(e.clientY / cell);
-    if (y > waterY && (e.target as HTMLElement).tagName !== 'A') {
-      ripples.push({ x, y, t0: (performance.now() - start) / 1000, max: 9 });
-    }
-  });
-  document.addEventListener('visibilitychange', () => {
-    if (reduceMotion) return;
-    if (document.hidden) cancelAnimationFrame(raf);
-    else raf = requestAnimationFrame(frame);
-  });
-
-  render();
-  if (!reduceMotion) raf = requestAnimationFrame(frame);
 </script>

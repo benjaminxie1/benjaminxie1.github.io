@@ -5,9 +5,8 @@ import { site, nav } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
-  bare?: boolean;
 }
-const { title, description = site.description, bare = false } = Astro.props;
+const { title, description = site.description } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : site.name;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
@@ -26,31 +25,31 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <script is:inline>
-      try {
-        const t = localStorage.getItem('theme');
-        if (t) document.documentElement.dataset.theme = t;
-      } catch {}
+      let theme = null;
+      try { theme = localStorage.getItem('theme'); } catch {}
+      if (!theme) theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = theme;
     </script>
   </head>
-  <body class={bare ? 'bare' : undefined}>
-    <nav class="site-nav">
-      {nav.map((n) => (
-        <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
-      ))}
-      <button class="theme-toggle" type="button" aria-label="Toggle light and dark theme">☼</button>
-    </nav>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="/">{site.short}</a>
+      <nav>
+        {nav.map((n) => (
+          <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
+        ))}
+        <button class="theme-toggle" type="button" aria-label="Toggle light and dark theme">◐</button>
+      </nav>
+    </header>
     <slot />
-    {!bare && (
-      <footer class="site-footer">
-        © {new Date().getFullYear()} {site.name} · <a href={site.github}>github</a> ·{' '}
-        <a href={site.linkedin}>linkedin</a> · <a href="/rss.xml">rss</a>
-      </footer>
-    )}
+    <footer class="site-footer">
+      © {new Date().getFullYear()} {site.name} · <a href={site.github}>GitHub</a> · <a href={site.linkedin}>LinkedIn</a> ·
+      <a href="/rss.xml">RSS</a>
+    </footer>
     <script>
-      const btn = document.querySelector('.theme-toggle');
-      btn?.addEventListener('click', () => {
+      document.querySelector('.theme-toggle')?.addEventListener('click', () => {
         const root = document.documentElement;
-        const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
         root.dataset.theme = next;
         try { localStorage.setItem('theme', next); } catch {}
         window.dispatchEvent(new Event('themechange'));
