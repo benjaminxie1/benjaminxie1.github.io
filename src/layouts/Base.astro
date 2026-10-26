@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+import { site, nav } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  bare?: boolean;
+}
+const { title, description = site.description, bare = false } = Astro.props;
+const pageTitle = title ? `${title} · ${site.name}` : site.name;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('theme');
+        if (t) document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
+  </head>
+  <body class={bare ? 'bare' : undefined}>
+    <nav class="site-nav">
+      {nav.map((n) => (
+        <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
+      ))}
+      <button class="theme-toggle" type="button" aria-label="Toggle light and dark theme">☼</button>
+    </nav>
+    <slot />
+    {!bare && (
+      <footer class="site-footer">
+        © {new Date().getFullYear()} {site.name} · <a href={site.github}>github</a> ·{' '}
+        <a href={site.linkedin}>linkedin</a> · <a href="/rss.xml">rss</a>
+      </footer>
+    )}
+    <script>
+      const btn = document.querySelector('.theme-toggle');
+      btn?.addEventListener('click', () => {
+        const root = document.documentElement;
+        const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+        root.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch {}
+        window.dispatchEvent(new Event('themechange'));
+      });
+    </script>
+  </body>
+</html>

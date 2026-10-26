@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { projects } from '../data/projects';
+---
+
+<Base title="Projects">
+  <main class="wrap">
+    <h1>Projects</h1>
+    <ul class="list">
+      {projects.map((p) => (
+        <li>
+          <div class="row">
+            <h3>{p.name}</h3>
+            <span class="date">{p.date}</span>
+          </div>
+          {p.award && <div class="muted">{p.award}</div>}
+          <p style="margin: 8px 0 0">{p.blurb}</p>
+          <div class="tags">
+            {p.stack.join(' · ')}
+            {p.links.map((l) => (
+              <>
+                {' · '}
+                <a href={l.href}>{l.label}</a>
+              </>
+            ))}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>

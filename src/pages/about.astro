@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+const experience = [
+  {
+    org: 'Shell',
+    role: 'Backend & Security Developer',
+    date: 'Aug 2026 – now',
+    note: 'Node.js/Express services on AWS for energy wholesaler onboarding; auth with Cognito; Docker + GitHub Actions delivery.',
+  },
+  {
+    org: 'Air Force Research Laboratory',
+    role: 'Software Engineering Intern (VR/XR)',
+    date: 'Summer 2025',
+    note: 'Led a 3-person team building an Unreal Engine 5 biosafety training sim, now used by 3 AFRL facilities. Wrote the C++ airflow and contamination models.',
+  },
+  {
+    org: 'AgentAI',
+    role: 'Machine Learning Intern',
+    date: 'Summer 2024',
+    note: 'Document pipelines on Textract, Lambda and S3 over 10,000+ patient records; moved Postgres workloads to DynamoDB + Redis and cut read latency 25%.',
+  },
+];
+
+const awards = [
+  'Winner, Gemini 4 Argon Hackathon (Cerebral Valley), 2026',
+  '1st Place, a16z SpeedHacks, 2026',
+  '1st Place, Congressional App Challenge, 2024',
+  '1st Place, Lockheed Martin CodeQuest',
+  'National Merit Scholar · 3x AIME Qualifier',
+];
+---
+
+<Base title="About">
+  <main class="wrap prose">
+    <h1>About</h1>
+    <p>
+      I'm Ben, a student at UC Berkeley in the M.E.T. program (EECS + Business Administration, class of 2029).
+      I like building software with a physical footprint: wildfire cameras, lab simulators, power-plant agents.
+    </p>
+    <p>
+      Reach me at <a href={`mailto:${site.email}`}>{site.email}</a>, or on <a href={site.linkedin}>LinkedIn</a>.
+    </p>
+
+    <h2>experience</h2>
+    <ul class="list">
+      {experience.map((e) => (
+        <li>
+          <div class="row">
+            <h3>{e.org}</h3>
+            <span class="date">{e.date}</span>
+          </div>
+          <div class="muted">{e.role}</div>
+          <p style="margin: 6px 0 0">{e.note}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h2>awards</h2>
+    <ul>
+      {awards.map((a) => <li>{a}</li>)}
+    </ul>
+
+    <h2>tools</h2>
+    <p class="muted">
+      Python, TypeScript, C++, Java, SQL · React, Next.js, Node, PyTorch, OpenCV, Unreal Engine 5 · AWS, Postgres,
+      DynamoDB, Redis, Docker
+    </p>
+  </main>
+</Base>

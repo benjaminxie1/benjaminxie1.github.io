@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import WillowPond from '../components/WillowPond.astro';
+import { site } from '../data/site';
+---
+
+<Base bare>
+  <WillowPond />
+  <main class="intro">
+    <p class="tagline" title="Lu You, 12th century: past the dark willows, bright flowers, and another village">
+      柳暗花明又一村<br />
+      past the willows, another village
+    </p>
+    <p>你好, I'm Ben.</p>
+    <p>
+      EECS + Business @ <a href="https://met.berkeley.edu">UC Berkeley M.E.T.</a>, building things that work in the real world.
+    </p>
+    <p>Currently, backend &amp; security @ Shell.</p>
+    <p>
+      Recently, won the <a href="/projects">Gemini 4 Argon hackathon</a> and <a href="/projects">a16z SpeedHacks</a>.
+    </p>
+    <p class="links">
+      <a href={site.github}>github</a> / <a href={site.linkedin}>linkedin</a> / <a href={`mailto:${site.email}`}>email</a>
+    </p>
+  </main>
+</Base>
+
+<style>
+  :global(body.bare) {
+    overflow: hidden;
+  }
+  :global(body.bare .site-nav) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  .intro {
+    position: fixed;
+    z-index: 1;
+    left: clamp(20px, 16vw, 260px);
+    bottom: clamp(32px, 12vh, 140px);
+  }
+  @media (max-width: 700px) {
+    .intro {
+      bottom: 28px;
+      font-size: 13px;
+    }
+    max-width: min(560px, calc(100vw - 40px));
+    font-size: 14px;
+    line-height: 1.6;
+    pointer-events: none;
+    text-shadow: 0 0 6px var(--bg), 0 0 2px var(--bg);
+  }
+  .intro p {
+    margin: 0 0 0.35rem;
+  }
+  .intro a {
+    pointer-events: auto;
+  }
+  .tagline {
+    color: var(--muted);
+    margin-bottom: 1.6rem !important;
+  }
+  .links {
+    margin-top: 1.4rem !important;
+    color: var(--muted);
+  }
+  .links a {
+    color: var(--muted);
+  }
+  .links a:hover {
+    color: var(--ink);
+  }
+</style>

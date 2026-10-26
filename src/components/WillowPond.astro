@@ -1,0 +1,528 @@
+---
+// Full-viewport ASCII willow tree over a pond, drawn on a canvas as a grid of
+// character cells. Everything is procedural: tweak the constants below.
+---
+
+<canvas id="pond" aria-hidden="true"></canvas>
+
+<style>
+  #pond {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    display: block;
+    z-index: 0;
+  }
+</style>
+
+<script>
+  type RGB = [number, number, number];
+  type Palette = {
+    bg: RGB;
+    leaf: RGB[];
+    bark: RGB[];
+    rock: RGB[];
+    line: RGB;
+    water: RGB;
+    moon: RGB;
+    koiA: RGB;
+    koiB: RGB;
+    koiW: RGB;
+    lotus: RGB;
+    glyphOnLight: string;
+    glyphOnDark: string;
+  };
+
+  const PALETTES: Record<'dark' | 'light', Palette> = {
+    dark: {
+      bg: [25, 25, 24],
+      leaf: [
+        [52, 70, 46],
+        [74, 98, 62],
+        [98, 128, 80],
+        [128, 158, 104],
+        [160, 186, 132],
+      ],
+      bark: [
+        [58, 52, 46],
+        [74, 66, 58],
+        [92, 82, 72],
+      ],
+      rock: [
+        [56, 56, 54],
+        [74, 74, 71],
+        [96, 96, 92],
+      ],
+      line: [120, 112, 100],
+      water: [104, 128, 140],
+      moon: [222, 214, 196],
+      koiA: [208, 112, 47],
+      koiB: [181, 69, 47],
+      koiW: [206, 201, 192],
+      lotus: [214, 128, 140],
+      glyphOnLight: 'rgba(0,0,0,0.42)',
+      glyphOnDark: 'rgba(255,255,255,0.22)',
+    },
+    light: {
+      bg: [244, 241, 234],
+      leaf: [
+        [168, 190, 150],
+        [138, 166, 118],
+        [108, 140, 92],
+        [82, 114, 70],
+        [60, 88, 52],
+      ],
+      bark: [
+        [120, 104, 90],
+        [100, 86, 74],
+        [80, 70, 60],
+      ],
+      rock: [
+        [200, 196, 188],
+        [176, 172, 163],
+        [150, 146, 138],
+      ],
+      line: [140, 128, 112],
+      water: [96, 122, 136],
+      moon: [212, 196, 160],
+      koiA: [214, 110, 40],
+      koiB: [181, 69, 47],
+      koiW: [224, 218, 206],
+      lotus: [214, 110, 128],
+      glyphOnLight: 'rgba(0,0,0,0.38)',
+      glyphOnDark: 'rgba(255,255,255,0.4)',
+    },
+  };
+
+  const LEAF_CHARS = "|!;:i'l,|";
+  const BARK_CHARS = '%S8X#%&';
+  const ROCK_CHARS = 'o8O0@.';
+  const FPS = 24;
+
+  // Small deterministic PRNG so the tree is the same on every visit.
+  function mulberry32(seed: number) {
+    return () => {
+      seed |= 0;
+      seed = (seed + 0x6d2b79f5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const pick = <T,>(arr: ArrayLike<T>, r: number) => arr[Math.floor(r * arr.length) % arr.length];
+  const rgba = (c: RGB, a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+  const lum = (c: RGB) => 0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2];
+
+  type Strand = { x: number; y: number; len: number; phase: number; shades: number[]; chars: string[] };
+  type Solid = { x: number; y: number; shade: number; ch: string };
+  type Line = { x: number; y: number; ch: string };
+  type Leaf = { x: number; y: number; vy: number; ch: string; floating: number };
+  type Ripple = { x: number; y: number; t0: number; max: number };
+
+  const canvas = document.getElementById('pond') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d')!;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let pal: Palette = PALETTES.dark;
+  let cell = 13;
+  let cols = 0;
+  let rows = 0;
+  let waterY = 0;
+  let treeX = 0;
+  let moon = { x: 0, y: 0, r: 0 };
+  let trunk: Solid[] = [];
+  let rocks: Solid[] = [];
+  let branches: Line[] = [];
+  let canopy: Solid[] = [];
+  let strands: Strand[] = [];
+  let pads: { x: number; y: number; rx: number; lotus: boolean }[] = [];
+  let leaves: Leaf[] = [];
+  let ripples: Ripple[] = [];
+  let wind = 0;
+  let windTarget = 0;
+  let lastPointer = 0;
+
+  const narrow = () => cols < 70;
+
+  function readTheme() {
+    const t = document.documentElement.dataset.theme;
+    pal = t === 'light' ? PALETTES.light : PALETTES.dark;
+  }
+
+  function build() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cell = w < 600 ? 10 : 13;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.ceil(w / cell);
+    rows = Math.ceil(h / cell);
+
+    const isNarrow = narrow();
+    const rand = mulberry32(8);
+    waterY = Math.round(rows * (isNarrow ? 0.5 : 0.68));
+    treeX = Math.round(cols * (isNarrow ? 0.56 : 0.7));
+    const topY = Math.max(6, Math.round(rows * (isNarrow ? 0.2 : 0.24)));
+    moon = { x: Math.round(cols * (isNarrow ? 0.14 : 0.24)), y: Math.round(rows * (isNarrow ? 0.11 : 0.2)), r: isNarrow ? 3 : 4 };
+
+    // Trunk: a gnarled, tapering column that flares into roots at the bank.
+    trunk = [];
+    const trunkH = waterY - 1 - topY;
+    const trunkCx = (y: number) => {
+      const t = (y - topY) / trunkH;
+      return treeX + Math.round(2.2 * Math.sin(t * 3.4 + 0.6) * (1 - t * 0.4));
+    };
+    for (let y = topY; y < waterY; y++) {
+      const t = (y - topY) / trunkH;
+      const hw = 0.8 + t * 1.8 + (t > 0.82 ? (t - 0.82) * 22 : 0);
+      const cx = trunkCx(y);
+      for (let x = Math.round(cx - hw); x <= Math.round(cx + hw); x++) {
+        const edge = Math.abs(x - cx) > hw - 1;
+        trunk.push({ x, y, shade: edge ? 0 : 1 + Math.floor(rand() * 2), ch: pick(BARK_CHARS, rand()) });
+      }
+    }
+
+    // Branches: quadratic arcs leaving the crown and sagging at the tips.
+    branches = [];
+    canopy = [];
+    strands = [];
+    const crownX = trunkCx(topY);
+    const reach = isNarrow ? cols * 0.4 : Math.min(cols * 0.36, 46);
+    const specs = [
+      { dir: -1, len: 1.0, lift: 7 },
+      { dir: -1, len: 0.72, lift: 9 },
+      { dir: -1, len: 0.45, lift: 6 },
+      { dir: 1, len: 0.5, lift: 8 },
+      { dir: 1, len: 0.82, lift: 6 },
+      { dir: -1, len: 0.25, lift: 4 },
+      { dir: 1, len: 0.28, lift: 5 },
+    ];
+    const strandCols = new Map<number, number>();
+    for (const s of specs) {
+      const sx = crownX;
+      const sy = topY + Math.floor(rand() * 3);
+      const ex = sx + s.dir * reach * s.len;
+      const ey = topY - 1 + rand() * 4;
+      const qx = sx + s.dir * reach * s.len * 0.45;
+      const qy = topY - s.lift - rand() * 3;
+      let prev: [number, number] | null = null;
+      const steps = Math.ceil(reach * s.len * 3);
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const bx = (1 - t) ** 2 * sx + 2 * (1 - t) * t * qx + t * t * ex;
+        const by = (1 - t) ** 2 * sy + 2 * (1 - t) * t * qy + t * t * ey;
+        const cx = Math.round(bx);
+        const cy = Math.round(by);
+        if (prev && prev[0] === cx && prev[1] === cy) continue;
+        const dx = 2 * (1 - t) * (qx - sx) + 2 * t * (ex - qx);
+        const dy = 2 * (1 - t) * (qy - sy) + 2 * t * (ey - qy);
+        let ch = '_';
+        if (Math.abs(dy) > Math.abs(dx) * 0.45) ch = dy < 0 === dx > 0 ? '/' : '\\';
+        branches.push({ x: cx, y: cy, ch });
+        prev = [cx, cy];
+        // Foliage clumps along the upper branches.
+        for (let k = -1; k <= 1; k++) {
+          if (rand() < 0.4 - Math.abs(k) * 0.18) {
+            canopy.push({ x: cx + (rand() < 0.5 ? -1 : 1), y: cy + k, shade: 2 + Math.floor(rand() * 3), ch: pick(LEAF_CHARS, rand()) });
+          }
+        }
+        // Hanging strands, the willow's signature.
+        if (t > 0.1 && rand() < 0.55) {
+          const used = strandCols.get(cx) ?? 0;
+          if (used > 0 || strandCols.has(cx - 1) && rand() < 0.6) continue;
+          strandCols.set(cx, used + 1);
+          const room = waterY - cy - 1;
+          const dips = rand() < 0.12;
+          const len = Math.max(3, Math.round(dips ? room + 1 : room * (0.25 + 0.65 * rand() * (1 - t * 0.3))));
+          const shades: number[] = [];
+          const chars: string[] = [];
+          for (let k = 0; k < len; k++) {
+            const f = k / len;
+            shades.push(Math.min(4, Math.max(0, Math.round(3.4 - f * 3 + (rand() - 0.5) * 1.6))));
+            chars.push(pick(LEAF_CHARS, rand()));
+          }
+          strands.push({ x: cx, y: cy + 1, len, phase: rand() * Math.PI * 2, shades, chars });
+        }
+      }
+    }
+
+    // Scholar's rocks around the roots: a few overlapping boulders.
+    rocks = [];
+    const boulders = [
+      { x: treeX - 6, y: waterY - 1, rx: 4.5, ry: 2 },
+      { x: treeX + 4, y: waterY, rx: 3.5, ry: 1.6 },
+      { x: treeX - 1, y: waterY + 0.5, rx: 3, ry: 1.2 },
+    ];
+    const seenRock = new Set<number>();
+    for (const b of boulders) {
+      for (let y = Math.floor(b.y - b.ry); y <= Math.ceil(b.y + b.ry); y++) {
+        for (let x = Math.floor(b.x - b.rx); x <= Math.ceil(b.x + b.rx); x++) {
+          const d = ((x - b.x) / b.rx) ** 2 + ((y - b.y) / b.ry) ** 2;
+          if (d > 1.05 || seenRock.has(x * 9973 + y)) continue;
+          seenRock.add(x * 9973 + y);
+          const top = y < b.y ? 2 : y > b.y ? 0 : 1;
+          rocks.push({ x, y, shade: Math.max(0, Math.min(2, top + (rand() < 0.3 ? -1 : 0))), ch: pick(ROCK_CHARS, rand()) });
+        }
+      }
+    }
+
+    // Lily pads, one with a lotus, kept away from the intro text on the left.
+    const prand = mulberry32(21);
+    pads = [];
+    const padCount = isNarrow ? 2 : 4;
+    for (let i = 0; i < padCount; i++) {
+      pads.push({
+        x: Math.round(cols * (isNarrow ? 0.55 + i * 0.25 : 0.56 + i * 0.1 + prand() * 0.04)),
+        y: waterY + 3 + Math.floor(prand() * Math.max(1, rows - waterY - 6)),
+        rx: 2 + Math.floor(prand() * 2),
+        lotus: i === 1,
+      });
+    }
+
+    leaves = [];
+    ripples = [];
+  }
+
+  // ---------- drawing helpers ----------
+  function block(x: number, y: number, c: RGB, ch: string, a = 1) {
+    if (x < 0 || y < 0 || x >= cols || y >= rows) return;
+    const px = x * cell;
+    const py = y * cell;
+    ctx.fillStyle = rgba(c, a);
+    ctx.fillRect(px + 0.5, py + 0.5, cell - 1, cell - 1);
+    if (ch !== ' ') {
+      ctx.fillStyle = lum(c) > 110 ? pal.glyphOnLight : pal.glyphOnDark;
+      ctx.globalAlpha = a;
+      ctx.fillText(ch, px + cell / 2, py + cell / 2 + 1);
+      ctx.globalAlpha = 1;
+    }
+  }
+  function glyph(x: number, y: number, c: RGB, ch: string, a = 1) {
+    if (x < 0 || y < 0 || x >= cols || y >= rows) return;
+    ctx.fillStyle = rgba(c, a);
+    ctx.fillText(ch, x * cell + cell / 2, y * cell + cell / 2 + 1);
+  }
+
+  function sway(k: number, len: number, phase: number, t: number) {
+    const f = k / len;
+    return wind * 3.2 * f ** 1.6 * Math.min(1.4, len / 14) + 0.9 * Math.sin(t * 1.3 + phase + k * 0.28) * f;
+  }
+
+  function draw(t: number) {
+    ctx.fillStyle = rgba(pal.bg);
+    ctx.fillRect(0, 0, cols * cell, rows * cell);
+    ctx.font = `${Math.round(cell * 0.78)}px ui-monospace, 'SF Mono', Menlo, Consolas, monospace`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Moon and its broken reflection.
+    for (let y = moon.y - moon.r; y <= moon.y + moon.r; y++) {
+      for (let x = moon.x - moon.r; x <= moon.x + moon.r; x++) {
+        const d = Math.hypot(x - moon.x, y - moon.y);
+        if (d <= moon.r + 0.3) {
+          const crater = mulberry32(x * 131 + y * 17)() > 0.82;
+          block(x, y, pal.moon, crater ? 'o' : d > moon.r - 0.8 ? '.' : ' ', crater ? 0.75 : 0.9);
+        }
+      }
+    }
+    for (let k = 1; k < Math.min(9, rows - waterY); k++) {
+      const half = Math.max(0, Math.round(moon.r - k * 0.45 + Math.sin(t * 2 + k * 1.7) * 1.2));
+      const off = Math.round(Math.sin(t * 1.4 + k) * 1.2);
+      for (let x = -half; x <= half; x++) {
+        if (Math.sin(t * 3 + x * 1.9 + k * 2.3) > -0.3) glyph(moon.x + x + off, waterY + k, pal.moon, k % 2 ? '-' : '=', 0.5 - k * 0.04);
+      }
+    }
+
+    // Water surface texture.
+    for (let y = waterY; y < rows; y++) {
+      const depth = (y - waterY) / Math.max(1, rows - waterY);
+      for (let x = 0; x < cols; x++) {
+        const n = Math.sin(x * 0.23 + t * 0.6 + y * 1.37) * Math.sin(x * 0.071 - t * 0.33 + y * 0.53);
+        if (y === waterY) {
+          if (n > -0.2) glyph(x, y, pal.water, n > 0.3 ? '~' : '-', 0.55);
+        } else if (n > 0.5) {
+          glyph(x, y, pal.water, n > 0.72 ? '~' : '-', 0.32 - depth * 0.15);
+        }
+      }
+    }
+
+    // Ripples (clicks, falling leaves, strands touching the water).
+    ripples = ripples.filter((r) => t - r.t0 < r.max / 4);
+    for (const r of ripples) {
+      const rad = (t - r.t0) * 4;
+      const a = Math.max(0, 0.7 * (1 - rad / r.max));
+      const steps = Math.ceil(rad * 7) + 6;
+      const seen = new Set<number>();
+      for (let i = 0; i < steps; i++) {
+        const ang = (i / steps) * Math.PI * 2;
+        const x = Math.round(r.x + Math.cos(ang) * rad);
+        const y = Math.round(r.y + Math.sin(ang) * rad * 0.42);
+        if (y < waterY + 1 || seen.has(x * 9973 + y)) continue;
+        seen.add(x * 9973 + y);
+        const c = Math.abs(Math.cos(ang));
+        const ch = c > 0.85 ? (Math.cos(ang) > 0 ? ')' : '(') : c < 0.4 ? '-' : Math.sin(ang) * Math.cos(ang) > 0 ? '\\' : '/';
+        glyph(x, y, pal.water, ch, a);
+      }
+    }
+
+    // Reflections of the tree, wobbling with the water.
+    const reflect = (x: number, y: number, c: RGB, a: number, ch?: string) => {
+      const ry = 2 * waterY - y - 1;
+      if (ry <= waterY || ry >= rows) return;
+      const wob = Math.round(Math.sin(t * 1.8 + ry * 0.9) * 0.7);
+      const fade = a * (1 - (ry - waterY) / (rows - waterY + 4));
+      if (ch) glyph(x + wob, ry, c, ch, fade);
+      else block(x + wob, ry, c, ' ', fade);
+    };
+    for (const s of trunk) reflect(s.x, s.y, pal.bark[s.shade], 0.22);
+    for (const st of strands) {
+      for (let k = 0; k < st.len; k += 2) reflect(st.x + Math.round(sway(k, st.len, st.phase, t)), st.y + k, pal.leaf[3], 0.35, st.chars[k]);
+    }
+
+    // Koi: small horizontal sprites gliding along slow loops in the open water.
+    const W = 'W', O = 'O', R = 'R';
+    const koi = [
+      { w: 0.045, phase: 0, rows: [[0, 0, O, W, 0, 0], [W, O, W, O, W, W], [0, 0, W, O, 0, 0]] },
+      { w: 0.035, phase: 2.6, rows: [[0, 0, O, 0, 0], [O, R, O, O, W], [0, 0, O, 0, 0]] },
+    ];
+    const colorOf: Record<string, RGB> = { W: pal.koiW, O: pal.koiA, R: pal.koiB };
+    const span = cols * (narrow() ? 0.35 : 0.22);
+    const midX = cols * (narrow() ? 0.5 : 0.7);
+    const midY = waterY + (rows - waterY) * 0.55;
+    const ampY = Math.max(1, (rows - waterY) * 0.28);
+    for (const k of koi) {
+      const a = t * k.w * Math.PI * 2 + k.phase;
+      const x = Math.round(midX + Math.cos(a) * span);
+      const y = Math.round(midY + Math.sin(a * 2) * ampY);
+      const right = -Math.sin(a) > 0;
+      const len = k.rows[1].length;
+      const wag = Math.sin(t * 6 + k.phase) > 0 ? '/' : '\\';
+      k.rows.forEach((row, ry) => {
+        row.forEach((cc, i) => {
+          if (!cc) return;
+          const bx = right ? x + i - len + 1 : x - i + len - 1;
+          const head = i === len - 1 && ry === 1;
+          block(bx, y + ry - 1, colorOf[cc as string], head ? 'o' : pick('XS%8', ((i * 7 + ry * 3) % 10) / 10), 0.92);
+        });
+      });
+      const tailX = right ? x - len : x + len;
+      glyph(tailX, y, pal.koiW, right ? '<' : '>', 0.6);
+      glyph(tailX, y - 1, pal.koiW, wag, 0.4);
+    }
+
+    // Lily pads and a lotus.
+    for (const p of pads) {
+      for (let dx = -p.rx; dx <= p.rx; dx++) {
+        if (dx === 1) continue; // the notch
+        block(p.x + dx, p.y, pal.leaf[1 + (Math.abs(dx) % 2)], '.', 0.85);
+      }
+      block(p.x, p.y - 1, pal.leaf[2], ' ', 0.85);
+      if (p.lotus) {
+        block(p.x - 1, p.y - 1, pal.lotus, '*', 0.95);
+        block(p.x, p.y - 2, pal.lotus, '^', 0.95);
+        block(p.x + 1, p.y - 1, pal.lotus, '*', 0.95);
+      }
+    }
+
+    // Strands, then the trunk in front of them, then branches, foliage and rocks.
+    for (const st of strands) {
+      for (let k = 0; k < st.len; k++) {
+        const x = st.x + Math.round(sway(k, st.len, st.phase, t));
+        const y = st.y + k;
+        if (y >= waterY) {
+          if (Math.random() < 0.004) ripples.push({ x, y: waterY + 1, t0: t, max: 4 });
+          break;
+        }
+        const c = pal.leaf[st.shades[k]];
+        if (k < st.len * 0.35 && (st.phase * 10 + k) % 3 < 2) block(x, y, c, st.chars[k], 0.9);
+        else glyph(x, y, pal.leaf[Math.min(4, st.shades[k] + 1)], st.chars[k], 0.95 - (k / st.len) * 0.35);
+      }
+    }
+    for (const s of trunk) block(s.x, s.y, pal.bark[s.shade], s.ch);
+    for (const b of branches) glyph(b.x, b.y, pal.line, b.ch, 0.9);
+    for (const c of canopy) {
+      const off = Math.round(Math.sin(t * 0.9 + c.x * 0.4) * 0.6 * wind);
+      block(c.x + off, c.y, pal.leaf[c.shade], c.ch, 0.95);
+    }
+    for (const r of rocks) block(r.x, r.y, pal.rock[r.shade], r.ch);
+
+    // Falling leaves that land, float and drift.
+    if (!reduceMotion && leaves.length < 14 && Math.random() < 0.06 && strands.length) {
+      const st = strands[Math.floor(Math.random() * strands.length)];
+      const k = Math.floor(Math.random() * st.len);
+      leaves.push({ x: st.x + sway(k, st.len, st.phase, t), y: st.y + k, vy: 0.08 + Math.random() * 0.08, ch: pick(",'`", Math.random()), floating: 0 });
+    }
+    for (const l of leaves) {
+      if (l.floating) {
+        l.x += 0.03 + wind * 0.05;
+        l.floating += 1;
+      } else {
+        l.y += l.vy;
+        l.x += wind * 0.18 + Math.sin(t * 2 + l.y) * 0.08;
+        if (l.y >= waterY) {
+          l.y = waterY;
+          l.floating = 1;
+          ripples.push({ x: Math.round(l.x), y: waterY + 1, t0: t, max: 5 });
+        }
+      }
+      glyph(Math.round(l.x), Math.round(l.y), pal.leaf[3], l.ch, l.floating ? Math.max(0, 1 - l.floating / 300) : 1);
+    }
+    leaves = leaves.filter((l) => l.floating < 300 && l.x < cols + 2);
+  }
+
+  // ---------- loop & input ----------
+  let start = performance.now();
+  let last = 0;
+  let raf = 0;
+  function frame(now: number) {
+    raf = requestAnimationFrame(frame);
+    if (now - last < 1000 / FPS) return;
+    last = now;
+    const t = (now - start) / 1000;
+    if (now - lastPointer > 2500) windTarget = 0;
+    const breeze = 0.55 * Math.sin(t * 0.31) + 0.25 * Math.sin(t * 0.83 + 1.3);
+    wind += (breeze + windTarget - wind) * 0.04;
+    draw(t);
+  }
+
+  function render() {
+    readTheme();
+    build();
+    if (reduceMotion) {
+      wind = 0.3;
+      draw(12);
+    }
+  }
+
+  window.addEventListener('resize', () => {
+    build();
+    if (reduceMotion) draw(12);
+  });
+  window.addEventListener('themechange', () => {
+    readTheme();
+    if (reduceMotion) draw(12);
+  });
+  window.addEventListener('pointermove', (e) => {
+    lastPointer = performance.now();
+    windTarget = ((e.clientX / cell - treeX) / cols) * 3;
+  });
+  window.addEventListener('pointerdown', (e) => {
+    const x = Math.round(e.clientX / cell);
+    const y = Math.round(e.clientY / cell);
+    if (y > waterY && (e.target as HTMLElement).tagName !== 'A') {
+      ripples.push({ x, y, t0: (performance.now() - start) / 1000, max: 9 });
+    }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (reduceMotion) return;
+    if (document.hidden) cancelAnimationFrame(raf);
+    else raf = requestAnimationFrame(frame);
+  });
+
+  render();
+  if (!reduceMotion) raf = requestAnimationFrame(frame);
+</script>
