@@ -26,10 +26,10 @@ const experience: {
     role: 'Student',
     org: 'University of California, Berkeley · EECS & Business (M.E.T.)',
     href: 'https://met.berkeley.edu',
-    dates: 'Aug. 2025 - May 2029',
+    dates: 'Aug. 2026 - May 2030',
     span: 'expected',
     place: 'Berkeley, California, United States',
-    logo: { text: 'Cal', bg: '#003262', fg: '#FDB515' },
+    logo: { src: '/logos/berkeley.svg' },
   },
   {
     role: 'Software Engineering Intern (VR/XR)',
@@ -38,7 +38,7 @@ const experience: {
     dates: 'Jun. 2025 - Aug. 2025',
     span: '3 mo',
     place: 'Wright-Patterson AFB, Ohio, United States',
-    logo: { text: 'AFRL', bg: '#00308F', fg: '#ffffff' },
+    logo: { src: '/logos/afrl.svg' },
   },
   {
     role: 'Machine Learning Intern',
@@ -69,23 +69,6 @@ const wins = [
     blurb: 'An AI agent that drafts refund and insurance claims and makes user-approved calls.',
     href: 'https://www.tech-week.com/calendar/sf/events/speedhacks-the-official-speedrun-hackathon-30c239a4-638a-4bd6-8d51-e15259668f51',
   },
-  {
-    place: '1st Place',
-    event: 'Congressional App Challenge',
-    host: "Rep. Julia Brownley, CA-26",
-    date: '2024',
-    project: 'Sentinel',
-    blurb: 'A YOLO wildfire-detection camera network, presented at the U.S. Capitol.',
-    href: 'https://www.congressionalappchallenge.us/24-CA26/',
-  },
-  {
-    place: '1st Place',
-    event: 'Lockheed Martin CodeQuest',
-    host: 'Lockheed Martin',
-    date: 'High school',
-    project: 'Competitive programming',
-    blurb: 'Team programming competition run by Lockheed Martin.',
-  },
 ];
 ---
 
@@ -110,7 +93,7 @@ const wins = [
       ))}
     </ol>
 
-    <h2>Wins</h2>
+    <h2>Hackathon wins</h2>
     <ul class="wins">
       {wins.map((w) => {
         const body = (
