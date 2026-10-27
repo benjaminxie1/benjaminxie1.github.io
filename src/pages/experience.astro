@@ -39,7 +39,7 @@ const wins = [
     project: 'LabTwin',
     pitch: 'Digital twin world models for the wet lab. Test your experiment virtually before you run it.',
     badge: '$7.5k prize',
-    date: 'Oct. 2026',
+    date: '2026',
     image: '/projects/labtwin.jpg',
     links: [{ label: 'GitHub', href: 'https://github.com/benjaminxie1/argon-hacks' }],
   },
@@ -51,7 +51,7 @@ const wins = [
     project: 'Recourse',
     pitch: 'An agent that preps refund and insurance claims, then makes the call.',
     badge: '$1k prize',
-    date: 'Oct. 2026',
+    date: '2026',
     links: [{ label: 'GitHub', href: 'https://github.com/Will-code112223/Speedhacks' }],
   },
   {
@@ -70,6 +70,10 @@ const wins = [
     ],
   },
 ];
+const icons: Record<string, string> = {
+  GitHub: 'M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12',
+  YouTube: 'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z',
+};
 ---
 
 <Base title="Experience">
@@ -110,21 +114,29 @@ const wins = [
               )}
             </a>
             <div class="info">
-              <span class={w.sponsor.dark ? 'sponsor dark' : 'sponsor'}>
-                <img src={w.sponsor.src} alt={w.sponsor.alt} style={`height:${w.sponsor.h}px`} />
-                {w.sponsor.text && <span class="sponsor-text">{w.sponsor.text}</span>}
-              </span>
+              <div class="top">
+                <span class={w.sponsor.dark ? 'sponsor dark' : 'sponsor'}>
+                  <img src={w.sponsor.src} alt={w.sponsor.alt} style={`height:${w.sponsor.h}px`} />
+                </span>
+                <span class="year">{w.date}</span>
+              </div>
               <div class="line">
                 <a class="ev" href={w.href}>{w.event}</a><span class="dots"></span><span class="amt">1st Place</span>
               </div>
               <div class="meta muted small">
                 <span class="prize">{w.badge}</span>
-                <span><strong>{w.project}</strong> · {w.host} · {w.date}</span>
+                <span><strong>{w.project}</strong> · {w.host}</span>
               </div>
-              <p class="small pitch">
-                {w.pitch}
-                {w.links.map((l) => <> <a class="lk" href={l.href}>{l.label}&nbsp;↗</a></>)}
-              </p>
+              <div class="bottom">
+                <p class="small pitch">{w.pitch}</p>
+                <div class="icons">
+                  {w.links.map((l) => (
+                    <a class="ic" href={l.href} aria-label={`${w.project} on ${l.label}`} title={l.label}>
+                      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d={icons[l.label]} /></svg>
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </li>
@@ -227,6 +239,51 @@ const wins = [
     font-size: 17px;
     letter-spacing: -0.02em;
     color: #111111;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .top .sponsor {
+    margin-bottom: 0;
+  }
+  .year {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .bottom {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+  }
+  .bottom .pitch {
+    flex: 1;
+  }
+  .icons {
+    display: flex;
+    gap: 8px;
+    flex: none;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--rule);
+    border-radius: 9px;
+    background: #ffffff;
+    color: var(--ink);
+    transition: color 0.15s, border-color 0.15s, transform 0.15s;
+  }
+  .ic svg {
+    fill: currentColor;
+  }
+  .ic:hover {
+    color: var(--link);
+    border-color: color-mix(in srgb, var(--muted) 55%, transparent);
+    transform: translateY(-1px);
   }
   .lk {
     color: var(--ink);
