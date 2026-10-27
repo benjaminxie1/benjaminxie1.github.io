@@ -93,9 +93,9 @@ const wins = [
             </div>
             <div class="info">
               <div class="line">
-                <span class="ev">{w.event}</span><span class="dots"></span><span class="amt">{w.prize}</span>
+                <span class="ev">{w.event}</span><span class="dots"></span><span class="amt">1st Place</span>
               </div>
-              <div class="muted small">1st place with <strong>{w.project}</strong> · {w.host} · {w.date}</div>
+              <div class="muted small"><strong>{w.project}</strong> · {w.prize} prize · {w.host} · {w.date}</div>
               <p class="small pitch">{w.pitch}</p>
             </div>
           </a>
@@ -203,8 +203,9 @@ const wins = [
   }
   .amt {
     font-family: var(--hand);
-    font-size: 32px;
+    font-size: 30px;
     line-height: 1;
+    white-space: nowrap;
     color: var(--link);
   }
   .info strong {
