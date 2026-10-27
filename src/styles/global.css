@@ -1,4 +1,4 @@
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/comfortaa';
 @import '@fontsource/caveat/500.css';
 
 :root {
@@ -9,7 +9,7 @@
   --link: #2f6b45;
   --tag: #b5452f;
   --tile: #f4f1ea;
-  --sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --sans: 'Comfortaa Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --hand: 'Caveat', 'Bradley Hand', cursive;
   --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   color-scheme: light;
