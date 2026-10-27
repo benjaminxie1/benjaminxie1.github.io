@@ -49,28 +49,6 @@
     alpha: number;
   }
 
-  const DARK: Palette = {
-    bg: [25, 25, 24],
-    leaf: [[28, 46, 30], [44, 72, 42], [66, 102, 56], [98, 136, 74], [140, 172, 98], [188, 208, 136]],
-    bark: [[34, 28, 24], [56, 46, 38], [82, 68, 56], [112, 94, 78], [146, 126, 104]],
-    rock: [[44, 44, 44], [66, 66, 64], [94, 94, 90], [128, 126, 120], [164, 160, 152]],
-    moss: [86, 116, 64],
-    moon: [[150, 140, 118], [196, 186, 160], [232, 224, 202], [250, 244, 226]],
-    lotus: [[150, 60, 84], [206, 98, 120], [236, 150, 164], [250, 206, 212]],
-    pad: [[34, 60, 40], [56, 92, 56], [84, 124, 70], [118, 156, 92]],
-    koiWhite: [236, 228, 218],
-    koiRed: [[112, 22, 24], [168, 34, 28], [214, 58, 30], [240, 96, 34], [250, 138, 52], [255, 178, 96]],
-    koiBlack: [70, 68, 80],
-    water: [214, 226, 232],
-    pond: [70, 104, 120],
-    pondA: [0.16, 0.3],
-    shadow: [0, 0, 0],
-    shadowAlpha: 0.5,
-    tile: [0.62, 0.98],
-    ink: 0.45,
-    alpha: 0.92,
-  };
-
   const LIGHT: Palette = {
     bg: [244, 241, 234],
     leaf: [[22, 52, 30], [38, 84, 44], [62, 116, 58], [96, 148, 76], [142, 180, 104], [190, 212, 150]],
@@ -212,10 +190,6 @@
     constructor(canvas: HTMLCanvasElement) {
       this.canvas = canvas;
       this.ctx = canvas.getContext('2d')!;
-    }
-
-    setTheme(dark: boolean) {
-      this.pal = dark ? DARK : LIGHT;
     }
 
     resize() {
@@ -963,13 +937,11 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   for (const canvas of document.querySelectorAll<HTMLCanvasElement>('canvas.willow-pond')) {
     const pond = new WillowPond(canvas);
-    const theme = () => pond.setTheme(document.documentElement.dataset.theme === 'dark');
     const still = () => {
       pond.time = 0;
       for (let i = 0; i < 90; i++) pond.step(1 / 30);
       pond.render(1 / 30);
     };
-    theme();
     pond.resize();
     let last = 0;
     let visible = true;
@@ -986,10 +958,6 @@
       if (reduceMotion) still();
     }).observe(canvas.parentElement!);
     new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(canvas);
-    window.addEventListener('themechange', () => {
-      theme();
-      if (reduceMotion) still();
-    });
     if (reduceMotion) still();
     else {
       window.addEventListener('pointermove', (e) => pond.onMove(e));

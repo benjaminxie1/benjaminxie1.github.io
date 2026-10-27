@@ -14,16 +14,6 @@
   --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   color-scheme: light;
 }
-:root[data-theme='dark'] {
-  --bg: #191918;
-  --ink: #ebe7de;
-  --muted: #8f8a80;
-  --rule: #2c2b28;
-  --link: #9cc48a;
-  --tag: #e0814f;
-  --tile: #191918;
-  color-scheme: dark;
-}
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -46,8 +36,6 @@ img { max-width: 100%; height: auto; }
 .site-header nav { display: flex; align-items: center; gap: 22px; font-size: 15px; }
 .site-header nav a { color: var(--ink); }
 .site-header nav a[aria-current='page'] { color: var(--link); }
-.theme-toggle { display: inline-flex; background: none; border: 0; padding: 8px; margin: -8px; cursor: pointer; color: var(--ink); line-height: 0; }
-.theme-toggle:hover { color: var(--link); }
 
 main { flex: 1; width: 100%; max-width: 1040px; margin: 0 auto; padding: 40px 28px 56px; }
 main.narrow > * { max-width: 680px; }
