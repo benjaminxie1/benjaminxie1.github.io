@@ -34,8 +34,8 @@ const wins = [
   {
     event: 'Gemini 4 Argon Hackathon',
     href: 'https://cerebralvalley.ai/e/gemini-4-argon-sf',
-    icon: '/sponsors/google.svg',
-    iconAlt: 'Google DeepMind',
+    host: 'Cerebral Valley',
+    sponsor: { src: '/sponsors/google-deepmind.svg', alt: 'Google DeepMind', h: 22 },
     project: 'LabTwin',
     pitch: 'Digital twin world models for the wet lab. Test your experiment virtually before you run it.',
     badge: '$7.5k prize',
@@ -46,8 +46,8 @@ const wins = [
   {
     event: 'a16z SpeedHacks',
     href: 'https://www.tech-week.com/calendar/sf/events/speedhacks-the-official-speedrun-hackathon-30c239a4-638a-4bd6-8d51-e15259668f51',
-    icon: '/sponsors/speedrun.png',
-    iconAlt: 'a16z speedrun',
+    host: 'a16z speedrun',
+    sponsor: { src: '/sponsors/a16z-mark.png', alt: '', h: 20, text: 'a16z' },
     project: 'Recourse',
     pitch: 'An agent that preps refund and insurance claims, then makes the call.',
     badge: '$1k prize',
@@ -57,11 +57,11 @@ const wins = [
   {
     event: 'Congressional App Challenge',
     href: 'https://www.congressionalappchallenge.us/24-CA26/',
-    icon: '/sponsors/cac-icon.png',
-    iconAlt: 'Congressional App Challenge',
+    host: 'Rep. Julia Brownley, CA-26',
+    sponsor: { src: '/sponsors/cac.png', alt: 'Congressional App Challenge', h: 24, dark: true },
     project: 'Sentinel',
     pitch: 'A YOLO wildfire-detection camera network, piloted in the Santa Monica Mountains.',
-    badge: 'Presented at the Capitol',
+    badge: 'U.S. Capitol',
     date: '2024',
     image: '/projects/sentinel.jpg',
     links: [
@@ -110,16 +110,21 @@ const wins = [
               )}
             </a>
             <div class="info">
+              <span class={w.sponsor.dark ? 'sponsor dark' : 'sponsor'}>
+                <img src={w.sponsor.src} alt={w.sponsor.alt} style={`height:${w.sponsor.h}px`} />
+                {w.sponsor.text && <span class="sponsor-text">{w.sponsor.text}</span>}
+              </span>
               <div class="line">
-                <img class="icon" src={w.icon} alt={w.iconAlt} width="22" height="22" />
                 <a class="ev" href={w.href}>{w.event}</a><span class="dots"></span><span class="amt">1st Place</span>
               </div>
-              <p class="small pitch"><strong>{w.project}.</strong> {w.pitch}</p>
-              <div class="meta small">
+              <div class="meta muted small">
                 <span class="prize">{w.badge}</span>
-                {w.links.map((l) => <a class="lk" href={l.href}>{l.label} ↗</a>)}
-                <span class="muted">{w.date}</span>
+                <span><strong>{w.project}</strong> · {w.host} · {w.date}</span>
               </div>
+              <p class="small pitch">
+                {w.pitch}
+                {w.links.map((l) => <> <a class="lk" href={l.href}>{l.label}&nbsp;↗</a></>)}
+              </p>
             </div>
           </div>
         </li>
@@ -201,13 +206,27 @@ const wins = [
   .shot:hover {
     transform: scale(1.015);
   }
-  .icon {
-    width: 22px;
-    height: 22px;
-    border-radius: 5px;
-    object-fit: contain;
-    align-self: center;
-    flex: none;
+  .sponsor {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 6px;
+  }
+  .sponsor.dark {
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: #14284a;
+  }
+  .sponsor img {
+    display: block;
+    width: auto;
+  }
+  .sponsor-text {
+    font-family: system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: -0.02em;
+    color: #111111;
   }
   .lk {
     color: var(--ink);
@@ -257,8 +276,8 @@ const wins = [
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 6px 14px;
-    margin-top: 10px;
+    gap: 4px 10px;
+    margin-top: 6px;
   }
   .prize {
     display: inline-block;
@@ -276,7 +295,7 @@ const wins = [
     font-weight: 600;
   }
   .pitch {
-    margin: 8px 0 0;
+    margin: 6px 0 0;
     color: var(--muted);
     line-height: 1.65;
   }
