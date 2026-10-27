@@ -43,8 +43,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     </header>
     <slot />
     <footer class="site-footer">
-      © {new Date().getFullYear()} {site.name} · <a href={site.github}>GitHub</a> · <a href={site.linkedin}>LinkedIn</a> ·
-      <a href="/rss.xml">RSS</a>
+      © {new Date().getFullYear()} {site.name} · <a href={site.github}>GitHub</a> · <a href={site.linkedin}>LinkedIn</a> · <a href="/rss.xml">RSS</a>
     </footer>
     <script>
       document.querySelector('.theme-toggle')?.addEventListener('click', () => {
