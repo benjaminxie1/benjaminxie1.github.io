@@ -10,10 +10,10 @@ import { projects } from '../data/projects';
       {projects.map((p) => (
         <li>
           <div class="row">
-            <h3>{p.name}</h3>
+            <h3><a href={p.links[0]?.href}>{p.name}</a></h3>
             <span class="date">{p.date}</span>
           </div>
-          {p.award && <div class="muted">{p.award}</div>}
+          {p.award && <span class="tag" style="margin:4px 0 0">{p.award}</span>}
           <p style="margin: 8px 0 0">{p.blurb}</p>
           <div class="muted small" style="margin-top:6px">
             {p.stack.join(' · ')}

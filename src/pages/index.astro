@@ -10,11 +10,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .slice(0, 3);
 const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 
-const experience = [
-  { org: 'Shell', role: 'Backend & Security Developer', date: '2026–' },
-  { org: 'Air Force Research Lab', role: 'SWE Intern, VR/XR', date: '2025' },
-  { org: 'AgentAI', role: 'ML Intern', date: '2024' },
-];
 ---
 
 <Base>
@@ -22,18 +17,15 @@ const experience = [
     <section class="hero">
       <figure class="art" title="Click the water to feed the koi">
         <WillowPond />
-        <figcaption>柳暗花明又一村</figcaption>
+        <figcaption aria-label="柳暗花明又一村">{[...'柳暗花明又一村'].map((ch) => <span aria-hidden="true">{ch}</span>)}</figcaption>
       </figure>
       <div class="intro">
         <h1>Hi, I'm Ben.</h1>
-        <p>EECS + Business @ <a href="https://met.berkeley.edu">UC Berkeley</a> (M.E.T. '29), building things that touch the real world.</p>
-        <p>
-          Before that, <a href="/about">Air Force Research Lab</a> (intern), <a href="/about">AgentAI</a> (intern), and <a href="/projects">Sentinel</a>, a wildfire camera network I took to the U.S. Capitol.
-        </p>
+        <p>EECS + Business @ <a href="https://met.berkeley.edu">UC Berkeley</a> (M.E.T. '29).</p>
         <p>Currently, backend &amp; security @ <a href="https://www.shell.com">Shell</a>.</p>
-        <p>
-          Recently, won <a href="https://github.com/benjaminxie1/argon-hacks">Gemini 4 Argon Hacks</a> @ Cerebral Valley and <a href="https://github.com/Will-code112223/Speedhacks">a16z SpeedHacks</a>.
-        </p>
+        <p>Previously, <a href="/about">Air Force Research Lab</a> &amp; <a href="/about">AgentAI</a>.</p>
+        <p>Recently, won <a href="https://github.com/benjaminxie1/argon-hacks">Gemini 4 Argon Hacks</a> &amp; <a href="https://github.com/Will-code112223/Speedhacks">a16z SpeedHacks</a>.</p>
+        <p>Built <a href="/projects">Sentinel</a>, a wildfire camera network, and took it to the U.S. Capitol.</p>
         <p class="pills">
           <a class="pill" href={site.github}>GitHub</a>
           <a class="pill" href={site.linkedin}>LinkedIn</a>
@@ -55,23 +47,13 @@ const experience = [
       </ul>
     </section>
 
-    <section class="two">
-      <div>
-        <h2>Experience</h2>
-        <ul class="plain">
-          {experience.map((e) => (
-            <li><strong>{e.org}</strong> <span class="muted small">{e.role} · {e.date}</span></li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <h2>Writing</h2>
-        <ul class="plain">
-          {posts.map((p) => (
-            <li><a href={`/blog/${p.id}/`}>{p.data.title}</a> <span class="muted small">{fmt(p.data.date)}</span></li>
-          ))}
-        </ul>
-      </div>
+    <section class="writing">
+      <h2>Writing</h2>
+      <ul class="plain">
+        {posts.map((p) => (
+          <li><a href={`/blog/${p.id}/`}>{p.data.title}</a> <span class="muted small">· {fmt(p.data.date)}</span></li>
+        ))}
+      </ul>
     </section>
   </main>
 </Base>
@@ -82,7 +64,7 @@ const experience = [
     grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
     gap: 56px;
     align-items: center;
-    margin-bottom: 80px;
+    margin-bottom: 72px;
   }
   .art {
     position: relative;
@@ -96,21 +78,30 @@ const experience = [
   }
   .art figcaption {
     position: absolute;
+    top: 16px;
     right: 14px;
-    bottom: 10px;
-    font-size: 12px;
-    letter-spacing: 0.2em;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: 'Songti SC', 'Noto Serif CJK SC', 'Source Han Serif SC', serif;
+    font-size: 13px;
+    line-height: 1;
     color: var(--muted);
     pointer-events: none;
   }
   .intro p {
-    margin: 0 0 14px;
+    margin: 0 0 6px;
   }
   .pills {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 24px !important;
+  }
+  .projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 48px;
   }
   .projects li {
     padding: 10px 0;
@@ -122,10 +113,8 @@ const experience = [
     font-size: 15px;
     margin-top: 2px;
   }
-  .two {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
+  .writing {
+    max-width: 560px;
   }
   @media (max-width: 820px) {
     .hero {
@@ -136,9 +125,14 @@ const experience = [
       max-width: 440px;
       width: 100%;
     }
-    .two {
+    .art {
+      aspect-ratio: 5 / 4;
+    }
+    .art figcaption {
+      display: none;
+    }
+    .projects {
       grid-template-columns: 1fr;
-      gap: 0;
     }
   }
 </style>

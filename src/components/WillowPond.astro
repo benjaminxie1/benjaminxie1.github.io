@@ -37,6 +37,9 @@
     koiRed: Rgb[];
     koiBlack: Rgb;
     water: Rgb;
+    /** Tint of the pond body and how strongly it shows at the surface and the bottom. */
+    pond: Rgb;
+    pondA: [number, number];
     shadow: Rgb;
     shadowAlpha: number;
     /** How much colour a tile carries, from shadow to lit; the rest is page background. */
@@ -59,6 +62,8 @@
     koiRed: [[112, 22, 24], [168, 34, 28], [214, 58, 30], [240, 96, 34], [250, 138, 52], [255, 178, 96]],
     koiBlack: [70, 68, 80],
     water: [214, 226, 232],
+    pond: [70, 104, 120],
+    pondA: [0.16, 0.3],
     shadow: [0, 0, 0],
     shadowAlpha: 0.5,
     tile: [0.62, 0.98],
@@ -69,20 +74,22 @@
   const LIGHT: Palette = {
     bg: [244, 241, 234],
     leaf: [[22, 52, 30], [38, 84, 44], [62, 116, 58], [96, 148, 76], [142, 180, 104], [190, 212, 150]],
-    bark: [[40, 32, 26], [70, 56, 44], [102, 84, 66], [136, 116, 94], [170, 152, 128]],
-    rock: [[70, 68, 64], [102, 100, 94], [136, 132, 124], [168, 164, 154], [200, 196, 186]],
+    bark: [[52, 38, 28], [86, 62, 44], [118, 88, 62], [150, 118, 86], [182, 152, 118]],
+    rock: [[78, 82, 88], [104, 110, 118], [134, 140, 148], [164, 170, 176], [196, 200, 204]],
     moss: [92, 130, 70],
-    moon: [[196, 170, 112], [216, 194, 140], [232, 214, 170], [244, 232, 200]],
+    moon: [[178, 60, 40], [204, 84, 56], [226, 120, 88], [240, 160, 130]],
     lotus: [[170, 52, 80], [214, 92, 116], [234, 140, 156], [246, 192, 200]],
     pad: [[46, 92, 52], [70, 122, 64], [104, 150, 82], [146, 184, 116]],
-    koiWhite: [150, 144, 136],
+    koiWhite: [226, 214, 196],
     koiRed: [[138, 24, 22], [184, 38, 24], [222, 62, 28], [238, 100, 38], [244, 140, 66], [248, 176, 116]],
     koiBlack: [40, 36, 42],
     water: [52, 72, 84],
+    pond: [120, 152, 166],
+    pondA: [0.12, 0.24],
     shadow: [70, 66, 60],
     shadowAlpha: 0.22,
-    tile: [0.72, 0.5],
-    ink: 0.5,
+    tile: [0.82, 0.66],
+    ink: 0.42,
     alpha: 0.95,
   };
 
@@ -122,6 +129,7 @@
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
   }
+  const packRgb = (c: Rgb) => (c[0] << 16) | (c[1] << 8) | c[2];
   const mix = (a: Rgb, b: Rgb, k: number): Rgb => [
     (a[0] + (b[0] - a[0]) * k) | 0,
     (a[1] + (b[1] - a[1]) * k) | 0,
@@ -236,7 +244,7 @@
     build() {
       const { cols, rows } = this;
       const rand = seeded(8);
-      this.waterY = Math.round(rows * 0.7);
+      this.waterY = Math.round(rows * 0.66);
       this.treeX = Math.round(cols * 0.52);
       this.topY = Math.round(rows * 0.28);
       this.moon = { x: Math.round(cols * 0.15), y: Math.round(rows * 0.12), r: Math.max(3, Math.round(cols * 0.065)) };
@@ -248,15 +256,16 @@
       const reach = Math.min(cols * 0.44, 46);
       const lift = Math.min(1, rows / 60);
       const specs = [
-        [-1, 1.0, 7], [-1, 0.74, 10], [-1, 0.46, 6], [1, 0.52, 9],
-        [1, 0.86, 6], [-1, 0.26, 4], [1, 0.3, 5], [1, 0.66, 11],
+        [-1, 1.0, 3], [-1, 0.74, 5], [-1, 0.46, 8], [1, 0.52, 8],
+        [1, 0.86, 4], [-1, 0.26, 11], [1, 0.3, 11], [1, 0.66, 5],
       ];
       const taken = new Set<number>();
       for (const [dir, len, up] of specs) {
         const sx = crownX;
         const sy = this.topY + rand() * 2;
         const ex = sx + dir * reach * len;
-        const ey = this.topY + rand() * 3;
+        // Long branches droop at the tips so the crown reads as a dome.
+        const ey = this.topY + rand() * 2 + len * len * 5 * lift;
         const qx = sx + dir * reach * len * 0.45;
         const qy = this.topY - (up + rand() * 3) * lift;
         const steps = Math.ceil(reach * len * 4);
@@ -300,7 +309,7 @@
         for (let i = 0; i < 3; i++) this.koi.push(this.spawnKoi(i));
       }
       for (const k of this.koi) {
-        k.len = clamp(cols * 0.17, 9, 17);
+        k.len = clamp(cols * 0.24, 12, 20);
         this.keepInPond(k);
       }
       this.leaves = [];
@@ -332,11 +341,11 @@
 
     trunkCx(y: number) {
       const t = (y - this.topY) / Math.max(1, this.waterY - 1 - this.topY);
-      return this.treeX + 2.2 * Math.sin(t * 3.3 + 0.6) * (1 - t * 0.45);
+      return this.treeX + 3.2 * Math.sin(t * 3.3 + 0.6) * (1 - t * 0.45);
     }
     trunkHw(y: number) {
       const t = (y - this.topY) / Math.max(1, this.waterY - 1 - this.topY);
-      return 0.9 + t * 1.7 + (t > 0.8 ? (t - 0.8) ** 2 * 60 : 0);
+      return 1.5 + t * 1.6 + (t > 0.8 ? (t - 0.8) ** 2 * 60 : 0);
     }
 
     // ---------- buffers ----------
@@ -401,6 +410,9 @@
       const ex = Math.abs(k.x - mx) / ((p.x1 - p.x0) / 2);
       const ey = Math.abs(k.y - my) / Math.max(1, (p.y1 - p.y0) / 2);
       if (ex > 0.75 || ey > 0.7) desired = Math.atan2((my - k.y) * FLAT, mx - k.x);
+      // Koi read best side-on: pull steep headings back toward the horizontal.
+      const sn = Math.sin(desired);
+      if (Math.abs(sn) > 0.45) desired = Math.atan2(Math.sign(sn) * 0.45, Math.cos(desired) >= 0 ? 0.89 : -0.89);
       const diff = ((((desired - k.heading + Math.PI) % TAU) + TAU) % TAU) - Math.PI;
       k.heading += clamp(diff, -1.2, 1.2) * dt * 0.9;
       // Burst and coast: the tail beats in spells.
@@ -530,7 +542,7 @@
           const nz = Math.sqrt(1 - d2);
           const crater = noise(c * 0.9, rr * 1.1, 5) > 0.68 ? 0.22 : 0;
           const lum = clamp(0.25 + 0.6 * nz - 0.15 * dx - crater, 0, 1);
-          this.litTile(c, rr, this.pal.moon, lum, ETCH, c * 131 + rr, d2 > 0.82 ? 0.55 : 0.9);
+          this.litTile(c, rr, this.pal.moon, lum, "':. ", c * 131 + rr, d2 > 0.82 ? 0.55 : 0.9);
         }
       }
     }
@@ -592,9 +604,12 @@
         if (pad.lotus) {
           const cx = Math.round(pad.x - 0.5);
           const cy = Math.round(pad.y - ry - 0.5);
-          const petals: [number, number, number][] = [[-1, 0, 0.45], [0, 0, 0.7], [1, 0, 0.5], [0, -1, 0.95], [-1, -1, 0.6], [1, -1, 0.75]];
+          const petals: [number, number, number][] = [
+            [-2, -1, 0.4], [-1, -1, 0.6], [0, -1, 0.8], [1, -1, 0.65], [2, -1, 0.45],
+            [-1, -2, 0.75], [0, -2, 0.95], [1, -2, 0.8], [0, -3, 1],
+          ];
+          this.putGlyph(cx, cy, '|', ramp(p.pad, 0.6), p.alpha);
           for (const [dx, dy, lum] of petals) this.litTile(cx + dx, cy + dy, p.lotus, lum, ETCH, (cx + dx) * 7 + dy, 1);
-          this.putGlyph(cx, cy - 2, '^', ramp(p.lotus, 0.9), p.alpha * 0.8);
         }
       }
     }
@@ -730,18 +745,25 @@
             prevX = x;
             continue;
           }
-          if (f < 0.42 + s.lift * 0.15) {
+          // Strands drift a little away from the trunk as they fall, so the curtain isn't a grid of columns.
+          const drift = f * f * 1.5 * Math.sign(s.x - this.treeX);
+          const dc = Math.round(x + drift);
+          if (f < 0.7 + s.lift * 0.15) {
             // Upper strand: leafy tiles lit from above, with a sheen that runs through in gusts.
             const lum = clamp(
               0.8 - f * 0.9 + (noise(x * 0.5, y * 0.5, 9) - 0.5) * 0.5 - (front ? 0 : 0.18) + gustBand(x, y) * this.gust * 0.5,
               0,
               1,
             );
-            this.litTile(c, r, p.leaf, lum, LEAF_ETCH, (s.seed + k * 31) >>> 0, front ? 1 : 0.85);
+            this.litTile(dc, r, p.leaf, lum, LEAF_ETCH, (s.seed + k * 31) >>> 0, front ? 1 : 0.85);
+          } else if (f > 0.92) {
+            this.putGlyph(dc, r, k % 2 ? ',' : '.', ramp(p.leaf, front ? 0.55 : 0.4), p.alpha * 0.6);
+          } else if (k % 2 === 0) {
+            // Lower strand: sparser leaves toward the tip.
+            const lum = clamp(0.35 + (noise(x * 0.5, y * 0.5, 9) - 0.5) * 0.4 - (front ? 0 : 0.15), 0, 1);
+            this.litTile(dc, r, p.leaf, lum, LEAF_ETCH, (s.seed + k * 31) >>> 0, (front ? 1 : 0.85) * 0.6);
           } else {
-            // Lower strand: thin line glyphs that follow the sway, fading to flecks at the tip.
-            const g = f > 0.9 ? (k % 2 ? ',' : '.') : lineGlyph(x - prevX, 1);
-            this.putGlyph(c, r, g, ramp(p.leaf, front ? 0.55 : 0.4), p.alpha * (0.95 - f * 0.4));
+            this.putGlyph(dc, r, lineGlyph(x - prevX, 1), ramp(p.leaf, front ? 0.55 : 0.4), p.alpha * 0.5);
           }
           prevX = x;
         }
@@ -779,12 +801,12 @@
         if (seen.has(key)) continue;
         seen.add(key);
         if (tw.thick > 0.72) this.litTile(c, r, p.bark, 0.35 + tw.thick * 0.3, ETCH, key);
-        else this.putGlyph(c, r, lineGlyph(tw.dx, tw.dy), ramp(p.bark, 0.75), p.alpha * (0.55 + tw.thick * 0.5));
+        else if (tw.thick >= 0.4) this.putGlyph(c, r, lineGlyph(tw.dx, tw.dy), ramp(p.bark, 0.75), p.alpha * 0.35);
         // Foliage clusters along the upper branches.
         const h = hash(c, r, 77);
         if (h < 0.5) {
-          const dy = h < 0.25 ? -1 : 1;
-          const lum = clamp(0.75 - (dy > 0 ? 0.25 : 0) + (noise(c * 0.4, r * 0.4, 4) - 0.5) * 0.5, 0, 1);
+          const dy = 1;
+          const lum = clamp(0.62 + (noise(c * 0.4, r * 0.4, 4) - 0.5) * 0.5, 0, 1);
           this.litTile(c + (h < 0.12 ? -1 : 0), r + dy, p.leaf, lum, LEAF_ETCH, key * 3);
         }
       }
@@ -826,6 +848,13 @@
         ctx.fillText(g, c * cw + cw / 2, r * ch + ch / 2 + 1);
       };
       const t = this.time;
+      // The pond body: faint tiles that deepen toward the bottom, so the water reads as water.
+      for (let r = wy; r < rows; r++) {
+        const depth = (r - wy) / Math.max(1, rows - wy);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = this.style(packRgb(mix(p.bg, p.pond, p.pondA[0] + (p.pondA[1] - p.pondA[0]) * depth)));
+        ctx.fillRect(0, r * ch, cols * cw, ch + 1);
+      }
       for (let r = wy; r < rows; r++) {
         const depth = (r - wy) / Math.max(1, rows - wy);
         for (let c = 0; c < cols; c++) {
@@ -843,7 +872,7 @@
           const n = Math.sin(c * 0.23 + t * 0.6 + r * 1.37) * Math.sin(c * 0.071 - t * 0.33 + r * 0.53);
           if (r === wy) {
             if (n > -0.25) at(c, r, n > 0.3 ? '~' : '-', p.water, 0.45);
-          } else if (n > 0.55) at(c, r, n > 0.75 ? '~' : '-', p.water, 0.22 - depth * 0.1);
+          } else if (n > 0.55) at(c, r, n > 0.75 ? '~' : '-', p.water, 0.4 - depth * 0.15);
         }
       }
       // Ripples: an outer ring of line glyphs that follow the ring, an inner ring of dots.

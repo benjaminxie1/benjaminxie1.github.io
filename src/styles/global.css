@@ -4,9 +4,9 @@
 :root {
   --bg: #f8f6f1;
   --ink: #22211e;
-  --muted: #7a756b;
+  --muted: #67625a;
   --rule: #e6e1d6;
-  --link: #2f6db5;
+  --link: #2f6b45;
   --tag: #b5452f;
   --tile: #f4f1ea;
   --sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -19,7 +19,7 @@
   --ink: #ebe7de;
   --muted: #8f8a80;
   --rule: #2c2b28;
-  --link: #8fb3e0;
+  --link: #9cc48a;
   --tag: #e0814f;
   --tile: #191918;
   color-scheme: dark;
@@ -27,7 +27,7 @@
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 var(--sans); }
+body { margin: 0; min-height: 100dvh; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); font: 16px/1.65 var(--sans); }
 a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 h1, h2 { font-family: var(--hand); font-weight: 500; line-height: 1.05; }
@@ -40,35 +40,38 @@ code { font-family: var(--mono); font-size: 0.9em; }
 hr { border: 0; border-top: 1px solid var(--rule); margin: 40px 0; }
 img { max-width: 100%; height: auto; }
 
-.site-header { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 28px; }
+.site-header { width: 100%; max-width: 1040px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 28px; }
 .wordmark { font-family: var(--hand); font-size: 30px; color: var(--ink); line-height: 1; }
 .wordmark:hover { text-decoration: none; }
 .site-header nav { display: flex; align-items: center; gap: 22px; font-size: 15px; }
 .site-header nav a { color: var(--ink); }
 .site-header nav a[aria-current='page'] { color: var(--link); }
-.theme-toggle { background: none; border: 0; padding: 4px; cursor: pointer; color: var(--muted); font: inherit; font-size: 16px; line-height: 1; }
-.theme-toggle:hover { color: var(--ink); }
+.theme-toggle { display: inline-flex; background: none; border: 0; padding: 8px; margin: -8px; cursor: pointer; color: var(--ink); line-height: 0; }
+.theme-toggle:hover { color: var(--link); }
 
-main { max-width: 1040px; margin: 0 auto; padding: 40px 28px 96px; }
-main.narrow { max-width: 720px; }
+main { flex: 1; width: 100%; max-width: 1040px; margin: 0 auto; padding: 40px 28px 56px; }
+main.narrow > * { max-width: 680px; }
+.prose h2, main.narrow h2 { margin-top: 48px; }
 section { margin-bottom: 56px; }
 .muted { color: var(--muted); }
 .small { font-size: 14px; }
-.tag { display: inline-block; font-size: 12.5px; line-height: 1.6; color: var(--tag); border: 1px solid currentColor; border-radius: 6px; padding: 0 7px; margin-left: 6px; vertical-align: 1px; }
+.tag { display: inline-block; font-size: 12.5px; line-height: 1.6; color: var(--tag); background: color-mix(in srgb, var(--tag) 11%, transparent); border-radius: 4px; padding: 0 7px; margin-left: 6px; vertical-align: 1px; }
 .plain { list-style: none; padding: 0; margin: 0; }
 .plain > li { padding: 8px 0; }
 .row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
 .row .date { color: var(--muted); font-size: 14px; white-space: nowrap; }
-.pill { display: inline-block; border: 1px solid var(--rule); border-radius: 999px; padding: 4px 14px; font-size: 14px; color: var(--ink); }
-.pill:hover { text-decoration: none; border-color: var(--muted); }
+.pill { display: inline-block; border: 1px solid color-mix(in srgb, var(--muted) 45%, transparent); border-radius: 999px; padding: 4px 14px; font-size: 14px; color: var(--ink); }
+.pill:hover { text-decoration: none; border-color: var(--ink); }
 .prose ul { padding-left: 1.2rem; }
+.prose ul.plain { padding-left: 0; }
 .prose li { margin-bottom: 6px; }
-.site-footer { max-width: 1040px; margin: 0 auto; padding: 0 28px 40px; color: var(--muted); font-size: 13px; }
+.site-footer { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 28px 40px; color: var(--muted); font-size: 13px; }
 
 @media (max-width: 640px) {
   .site-header { padding: 16px 20px; }
   .site-header nav { gap: 14px; font-size: 14px; }
-  main { padding: 16px 20px 72px; }
+  main { padding: 16px 20px 56px; }
+  .site-footer { padding: 0 20px 32px; }
   h1 { font-size: 48px; }
   .row { flex-direction: column; gap: 0; }
 }
