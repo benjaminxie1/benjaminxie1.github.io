@@ -1,0 +1,239 @@
+---
+import Base from '../layouts/Base.astro';
+
+type Logo = { src: string } | { text: string; bg: string; fg: string };
+
+// Logos without a real image yet fall back to a lettered tile in the brand's colours.
+const experience: {
+  role: string;
+  org: string;
+  href?: string;
+  dates: string;
+  span: string;
+  place: string;
+  logo: Logo;
+}[] = [
+  {
+    role: 'Backend & Security Developer',
+    org: 'Shell',
+    href: 'https://www.shell.com',
+    dates: 'Aug. 2026 - Present',
+    span: '3 mo',
+    place: 'Berkeley, California, United States',
+    logo: { src: '/logos/shell.svg' },
+  },
+  {
+    role: 'Student',
+    org: 'University of California, Berkeley · EECS & Business (M.E.T.)',
+    href: 'https://met.berkeley.edu',
+    dates: 'Aug. 2025 - May 2029',
+    span: 'expected',
+    place: 'Berkeley, California, United States',
+    logo: { text: 'Cal', bg: '#003262', fg: '#FDB515' },
+  },
+  {
+    role: 'Software Engineering Intern (VR/XR)',
+    org: 'Air Force Research Laboratory',
+    href: 'https://www.afrl.af.mil',
+    dates: 'Jun. 2025 - Aug. 2025',
+    span: '3 mo',
+    place: 'Wright-Patterson AFB, Ohio, United States',
+    logo: { text: 'AFRL', bg: '#00308F', fg: '#ffffff' },
+  },
+  {
+    role: 'Machine Learning Intern',
+    org: 'AgentAI',
+    dates: 'Jun. 2024 - Aug. 2024',
+    span: '3 mo',
+    place: 'Woodland Hills, California, United States',
+    logo: { text: 'A', bg: '#22211e', fg: '#f8f6f1' },
+  },
+];
+
+const wins = [
+  {
+    place: '1st Place',
+    event: 'Gemini 4 Argon Hackathon',
+    host: 'Cerebral Valley',
+    date: 'Oct. 2026',
+    project: 'LabTwin',
+    blurb: 'Debugs biolab protocols with a MuJoCo digital twin of your bench, built from a photo.',
+    href: 'https://cerebralvalley.ai/e/gemini-4-argon-sf',
+  },
+  {
+    place: '1st Place',
+    event: 'a16z SpeedHacks',
+    host: 'a16z speedrun · SF Tech Week',
+    date: 'Oct. 2026',
+    project: 'Recourse',
+    blurb: 'An AI agent that drafts refund and insurance claims and makes user-approved calls.',
+    href: 'https://www.tech-week.com/calendar/sf/events/speedhacks-the-official-speedrun-hackathon-30c239a4-638a-4bd6-8d51-e15259668f51',
+  },
+  {
+    place: '1st Place',
+    event: 'Congressional App Challenge',
+    host: "Rep. Julia Brownley, CA-26",
+    date: '2024',
+    project: 'Sentinel',
+    blurb: 'A YOLO wildfire-detection camera network, presented at the U.S. Capitol.',
+    href: 'https://www.congressionalappchallenge.us/24-CA26/',
+  },
+  {
+    place: '1st Place',
+    event: 'Lockheed Martin CodeQuest',
+    host: 'Lockheed Martin',
+    date: 'High school',
+    project: 'Competitive programming',
+    blurb: 'Team programming competition run by Lockheed Martin.',
+  },
+];
+---
+
+<Base title="Experience">
+  <main class="narrow">
+    <h1>Experience</h1>
+    <ol class="jobs">
+      {experience.map((e) => (
+        <li>
+          {'src' in e.logo ? (
+            <img class="logo" src={e.logo.src} alt="" width="56" height="56" />
+          ) : (
+            <span class="logo tile" style={`background:${e.logo.bg};color:${e.logo.fg}`} aria-hidden="true">{e.logo.text}</span>
+          )}
+          <div>
+            {e.href ? <a class="role" href={e.href}>{e.role}</a> : <span class="role">{e.role}</span>}.
+            <div>{e.org}.</div>
+            <div>{e.dates}. <span class="muted small">({e.span})</span></div>
+            <div class="muted">{e.place}.</div>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <h2>Wins</h2>
+    <ul class="wins">
+      {wins.map((w) => {
+        const body = (
+          <>
+            <div class="win-top">
+              <span class="tag">{w.place}</span>
+              <span class="muted small">{w.date}</span>
+            </div>
+            <div class="event">{w.event}</div>
+            <div class="muted small">{w.host}</div>
+            <p class="small"><strong>{w.project}</strong>. {w.blurb}</p>
+            {w.href && <span class="go small">See the event ↗</span>}
+          </>
+        );
+        return <li>{w.href ? <a class="card" href={w.href}>{body}</a> : <div class="card">{body}</div>}</li>;
+      })}
+    </ul>
+  </main>
+</Base>
+
+<style>
+  .jobs,
+  .wins {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .jobs li {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.7;
+  }
+  .jobs li:first-child {
+    padding-top: 8px;
+  }
+  .logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+  .tile {
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+  }
+  .role {
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--muted);
+    text-underline-offset: 4px;
+  }
+  a.role:hover {
+    color: var(--link);
+  }
+  h2 {
+    margin-top: 56px;
+  }
+  .wins {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 18px 20px;
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    background: #fdfcf9;
+    color: var(--ink);
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  a.card:hover {
+    text-decoration: none;
+    border-color: var(--muted);
+    transform: translateY(-2px);
+  }
+  .win-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .win-top .tag {
+    margin-left: 0;
+  }
+  .event {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .card p {
+    margin: 10px 0 12px;
+    color: var(--muted);
+  }
+  .card p strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .go {
+    margin-top: auto;
+    color: var(--link);
+  }
+  @media (max-width: 640px) {
+    .jobs li {
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 16px;
+    }
+    .logo {
+      width: 44px;
+      height: 44px;
+    }
+    .wins {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

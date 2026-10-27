@@ -6,10 +6,11 @@ export const site = {
   email: 'benx@berkeley.edu',
   github: 'https://github.com/benjaminxie1',
   linkedin: 'https://www.linkedin.com/in/xie-benjamin',
+  x: 'https://x.com/_benjaminxie',
 };
 
 export const nav = [
   { href: '/', label: 'Home' },
-  { href: '/timeline', label: 'Timeline' },
+  { href: '/experience', label: 'Experience' },
   { href: '/contact', label: 'Contact' },
 ];

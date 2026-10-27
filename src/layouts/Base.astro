@@ -22,7 +22,6 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body>
@@ -36,7 +35,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     </header>
     <slot />
     <footer class="site-footer">
-      © {new Date().getFullYear()} {site.name} · <a href="/blog">Writing</a> · <a href="/rss.xml">RSS</a>
+      © {new Date().getFullYear()} {site.name}
     </footer>
   </body>
 </html>
