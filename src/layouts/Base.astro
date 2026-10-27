@@ -4,9 +4,11 @@ import { site, nav } from '../data/site';
 
 interface Props {
   title?: string;
+  /** Fit the page to one screen with no scrolling (desktop). */
+  fit?: boolean;
   description?: string;
 }
-const { title, description = site.description } = Astro.props;
+const { title, description = site.description, fit = false } = Astro.props;
 const pageTitle = title ? `${title} · ${site.short}` : site.short;
 const ogImage = new URL('/og.png', Astro.site).href;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -39,7 +41,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
-  <body>
+  <body class={fit ? 'fit' : undefined}>
     <header class="site-header">
       <a class="wordmark" href="/">{site.short}</a>
       <nav>

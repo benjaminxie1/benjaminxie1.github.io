@@ -1,32 +1,50 @@
 ---
 import Base from '../layouts/Base.astro';
+import VillaScene from '../components/VillaScene.astro';
 import { site } from '../data/site';
 ---
 
-<Base title="Contact">
-  <main class="narrow">
-    <h1>Contact</h1>
-    <p>The best way to reach me is email: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
-    <p class="links">
-      <a href={site.github}>GitHub</a>
-      <a href={site.linkedin}>LinkedIn</a>
-      <a href={site.x}>Twitter</a>
-    </p>
+<Base title="Contact" fit>
+  <main>
+    <section class="contact">
+      <h1>Contact</h1>
+      <p>The best way to reach me is email: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      <p class="links">
+        <a href={site.github}>GitHub</a>
+        <a href={site.linkedin}>LinkedIn</a>
+        <a href={site.x}>Twitter</a>
+      </p>
+    </section>
+    <section class="footer-art">
+      <VillaScene />
+    </section>
   </main>
 </Base>
 
 <style>
-  a {
+  .contact {
+    max-width: 640px;
+  }
+  .contact a {
     color: var(--ink);
     text-decoration: underline;
     text-decoration-color: var(--muted);
     text-underline-offset: 4px;
   }
-  a:hover {
+  .contact a:hover {
     color: var(--link);
   }
   .links {
     display: flex;
     gap: 22px;
   }
+  .footer-art {
+    margin-top: 40px;
+  }
+  @media (min-width: 961px) and (min-height: 560px) {
+    .footer-art { flex: 1; min-height: 0; margin-top: 24px; display: flex; flex-direction: column; justify-content: flex-end; }
+    .footer-art :global(.villa) { height: 100%; max-height: 640px; aspect-ratio: auto; }
+  }
+  @media (max-width: 820px) {
+      }
 </style>
