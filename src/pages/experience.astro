@@ -33,35 +33,41 @@ const experience = [
 const wins = [
   {
     event: 'Gemini 4 Argon Hackathon',
-    host: 'Cerebral Valley',
+    href: 'https://cerebralvalley.ai/e/gemini-4-argon-sf',
+    icon: '/sponsors/google.svg',
+    iconAlt: 'Google DeepMind',
     project: 'LabTwin',
     pitch: 'Digital twin world models for the wet lab. Test your experiment virtually before you run it.',
     badge: '$7.5k prize',
     date: 'Oct. 2026',
-    href: 'https://cerebralvalley.ai/e/gemini-4-argon-sf',
     image: '/projects/labtwin.jpg',
-    sponsor: { src: '/sponsors/gemini.svg', alt: 'Google Gemini', h: 20 },
+    links: [{ label: 'GitHub', href: 'https://github.com/benjaminxie1/argon-hacks' }],
   },
   {
     event: 'a16z SpeedHacks',
-    host: 'a16z speedrun',
+    href: 'https://www.tech-week.com/calendar/sf/events/speedhacks-the-official-speedrun-hackathon-30c239a4-638a-4bd6-8d51-e15259668f51',
+    icon: '/sponsors/speedrun.png',
+    iconAlt: 'a16z speedrun',
     project: 'Recourse',
     pitch: 'An agent that preps refund and insurance claims, then makes the call.',
     badge: '$1k prize',
     date: 'Oct. 2026',
-    href: 'https://www.tech-week.com/calendar/sf/events/speedhacks-the-official-speedrun-hackathon-30c239a4-638a-4bd6-8d51-e15259668f51',
-    sponsor: { src: '/sponsors/a16z.svg', alt: 'Andreessen Horowitz', h: 24 },
+    links: [{ label: 'GitHub', href: 'https://github.com/Will-code112223/Speedhacks' }],
   },
   {
     event: 'Congressional App Challenge',
-    host: 'Rep. Julia Brownley, CA-26',
-    project: 'Sentinel',
-    pitch: 'A YOLO wildfire-detection camera network, piloted at 2 sites in the Santa Monica Mountains.',
-    badge: 'Presented at the U.S. Capitol',
-    date: '2024',
     href: 'https://www.congressionalappchallenge.us/24-CA26/',
+    icon: '/sponsors/cac-icon.png',
+    iconAlt: 'Congressional App Challenge',
+    project: 'Sentinel',
+    pitch: 'A YOLO wildfire-detection camera network, piloted in the Santa Monica Mountains.',
+    badge: 'Presented at the Capitol',
+    date: '2024',
     image: '/projects/sentinel.jpg',
-    sponsor: { src: '/sponsors/cac.png', alt: 'Congressional App Challenge', h: 24, dark: true },
+    links: [
+      { label: 'YouTube', href: 'https://www.youtube.com/watch?v=MKWk8RUUmRI' },
+      { label: 'GitHub', href: 'https://github.com/benjaminxie1/sentinel-app' },
+    ],
   },
 ];
 ---
@@ -83,14 +89,14 @@ const wins = [
       ))}
     </ol>
 
-    <h2>Wins</h2>
+    <h2>Projects</h2>
     <ul class="wins">
       {wins.map((w) => (
         <li>
-          <a class="win" href={w.href}>
-            <div class="shot">
+          <div class="win">
+            <a class="shot" href={w.links[0].href} aria-label={`${w.project} on ${w.links[0].label}`}>
               {w.image ? (
-                <img src={w.image} alt={`${w.project} preview`} width="800" height="500" loading="lazy" />
+                <img src={w.image} alt="" width="800" height="500" loading="lazy" />
               ) : (
                 <div class="rc" aria-hidden="true">
                   <div class="rc-bar"><span></span><span></span><span></span></div>
@@ -102,18 +108,20 @@ const wins = [
                   </div>
                 </div>
               )}
-            </div>
+            </a>
             <div class="info">
-              <span class={w.sponsor.dark ? 'sponsor dark' : 'sponsor'}>
-                <img src={w.sponsor.src} alt={w.sponsor.alt} style={`height:${w.sponsor.h}px`} />
-              </span>
               <div class="line">
-                <span class="ev">{w.event}</span><span class="dots"></span><span class="amt">1st Place</span>
+                <img class="icon" src={w.icon} alt={w.iconAlt} width="22" height="22" />
+                <a class="ev" href={w.href}>{w.event}</a><span class="dots"></span><span class="amt">1st Place</span>
               </div>
-              <div class="meta muted small"><span class="prize">{w.badge}</span><strong>{w.project}</strong> · {w.host} · {w.date}</div>
-              <p class="small pitch">{w.pitch}</p>
+              <p class="small pitch"><strong>{w.project}.</strong> {w.pitch}</p>
+              <div class="meta small">
+                <span class="prize">{w.badge}</span>
+                {w.links.map((l) => <a class="lk" href={l.href}>{l.label} ↗</a>)}
+                <span class="muted">{w.date}</span>
+              </div>
             </div>
-          </a>
+          </div>
         </li>
       ))}
     </ul>
@@ -175,13 +183,10 @@ const wins = [
     border-radius: 16px;
     background: #fdfcf9;
     color: var(--ink);
-    transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+    transition: border-color 0.18s;
   }
   .win:hover {
-    text-decoration: none;
-    transform: translateY(-2px);
     border-color: color-mix(in srgb, var(--muted) 55%, transparent);
-    box-shadow: 0 10px 28px -14px rgba(34, 33, 30, 0.25);
   }
   .shot {
     aspect-ratio: 16 / 10;
@@ -190,21 +195,28 @@ const wins = [
     background: #2e3038;
   }
   .shot {
-    position: relative;
-  }
-  .sponsor {
-    display: inline-flex;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  .sponsor.dark {
-    padding: 4px 8px;
-    border-radius: 6px;
-    background: #14284a;
-  }
-  .sponsor img {
     display: block;
-    width: auto;
+    transition: transform 0.18s;
+  }
+  .shot:hover {
+    transform: scale(1.015);
+  }
+  .icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    object-fit: contain;
+    align-self: center;
+    flex: none;
+  }
+  .lk {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent);
+    text-underline-offset: 3px;
+  }
+  .lk:hover {
+    color: var(--link);
   }
   .shot > img {
     width: 100%;
@@ -223,6 +235,7 @@ const wins = [
   }
   .ev {
     font-size: 18px;
+    color: var(--ink);
     text-decoration: underline;
     text-decoration-thickness: 1.5px;
     text-underline-offset: 5px;
@@ -241,11 +254,14 @@ const wins = [
     color: var(--link);
   }
   .meta {
-    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+    margin-top: 10px;
   }
   .prize {
     display: inline-block;
-    margin-right: 10px;
     padding: 1px 10px;
     border-radius: 999px;
     background: color-mix(in srgb, var(--link) 13%, transparent);
@@ -260,8 +276,9 @@ const wins = [
     font-weight: 600;
   }
   .pitch {
-    margin: 6px 0 0;
+    margin: 8px 0 0;
     color: var(--muted);
+    line-height: 1.65;
   }
   /* Recourse mini-UI, in the app's own black-on-white style */
   .rc {
