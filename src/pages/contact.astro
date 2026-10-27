@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+---
+
+<Base title="Contact">
+  <main class="narrow">
+    <h1>Contact</h1>
+    <p>The best way to reach me is email: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+    <p class="links">
+      <a href={site.github}>GitHub</a>
+      <a href={site.linkedin}>LinkedIn</a>
+    </p>
+  </main>
+</Base>
+
+<style>
+  a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--muted);
+    text-underline-offset: 4px;
+  }
+  a:hover {
+    color: var(--link);
+  }
+  .links {
+    display: flex;
+    gap: 22px;
+  }
+</style>

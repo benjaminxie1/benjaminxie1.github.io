@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+
+const timeline = [
+  { when: 'Oct 2026', what: 'Won Gemini 4 Argon Hacks @ Cerebral Valley', note: 'LabTwin: debugs biolab protocols with a MuJoCo digital twin of your bench, built from a photo.', href: 'https://github.com/benjaminxie1/argon-hacks' },
+  { when: 'Oct 2026', what: 'Won a16z SpeedHacks', note: 'Recourse: an AI agent that drafts refund and insurance claims and makes user-approved calls.', href: 'https://github.com/Will-code112223/Speedhacks' },
+  { when: 'Oct 2026', what: 'Recursive Agents Hackathon', note: 'GridTwin: power-plant agents that won’t say “done” until a verifier proves it.', href: 'https://github.com/benjaminxie1/recursiveagents' },
+  { when: 'Aug 2026', what: 'Backend & security developer @ Shell', note: 'Node.js services on AWS for energy wholesaler onboarding.' },
+  { when: 'Summer 2025', what: 'Software engineering intern @ Air Force Research Lab', note: 'Led a 3-person team building an Unreal Engine 5 biosafety training sim, now used at 3 AFRL facilities.' },
+  { when: 'Fall 2025', what: 'Started EECS + Business @ UC Berkeley (M.E.T.)', href: 'https://met.berkeley.edu' },
+  { when: 'Summer 2024', what: 'Machine learning intern @ AgentAI', note: 'Document pipelines over 10,000+ patient records; cut read latency 25%.' },
+  { when: '2024', what: 'Won the Congressional App Challenge', note: 'Sentinel: a YOLO wildfire-detection camera network, presented at the U.S. Capitol.', href: 'https://github.com/benjaminxie1/sentinel-app' },
+];
+---
+
+<Base title="Timeline">
+  <main class="narrow">
+    <h1>Timeline</h1>
+    <ol class="timeline">
+      {timeline.map((t) => (
+        <li>
+          <span class="when">{t.when}</span>
+          <div>
+            {t.href ? <a href={t.href}>{t.what}</a> : <span>{t.what}</span>}
+            {t.note && <div class="muted small">{t.note}</div>}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </main>
+</Base>
+
+<style>
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 20px;
+    padding: 14px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .when {
+    color: var(--muted);
+    font-size: 14px;
+    padding-top: 2px;
+  }
+  .timeline a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--muted);
+    text-underline-offset: 4px;
+  }
+  .timeline a:hover {
+    color: var(--link);
+  }
+  @media (max-width: 640px) {
+    .timeline li {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+</style>
