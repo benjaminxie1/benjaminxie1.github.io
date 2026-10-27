@@ -1,0 +1,189 @@
+---
+// Home artwork: Ben's classical bust, upscaled and printed as a light dot screen
+// (public/art/home-art.png). A WebGL pass adds a slow, ambient breathing sway.
+---
+
+<figure class="homeart">
+  <img src="/art/home-art.png" alt="Print-style drawing of a blindfolded classical marble bust" width="1056" height="1760" />
+  <canvas aria-hidden="true"></canvas>
+</figure>
+
+<script>
+  const root = document.querySelector<HTMLElement>('figure.homeart');
+  // The visible <img> is a pre-baked light still; the shader samples the original.
+  const img = new Image();
+  img.decoding = 'async';
+  img.src = '/art/home-tone.png';
+  const canvas = root?.querySelector('canvas');
+  const gl = canvas?.getContext('webgl', { premultipliedAlpha: false, antialias: false });
+
+  const VERT = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }`;
+  const FRAG = `
+    precision highp float;
+    uniform sampler2D tex;
+    uniform vec2 res;       // canvas size in device px
+    uniform vec2 cover;     // uv scale for object-fit: cover
+    uniform vec2 shift;     // uv offset for object-position
+    uniform float t;
+    uniform float motion;   // 0 = still, 1 = alive
+    uniform float px;       // device px per dither cell
+
+    float bayer4(vec2 c) {
+      vec2 a = mod(floor(c), 4.0);
+      float i = a.x + a.y * 4.0;
+      // 4x4 Bayer matrix, row-major
+      float m[16];
+      m[0]=0.;m[1]=8.;m[2]=2.;m[3]=10.;m[4]=12.;m[5]=4.;m[6]=14.;m[7]=6.;
+      m[8]=3.;m[9]=11.;m[10]=1.;m[11]=9.;m[12]=15.;m[13]=7.;m[14]=13.;m[15]=5.;
+      float v = 0.0;
+      for (int k = 0; k < 16; k++) { if (float(k) == i) v = m[k]; }
+      return (v + 0.5) / 16.0;
+    }
+    float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+    float noise(vec2 p){
+      vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
+      return mix(mix(hash(i), hash(i+vec2(1,0)), f.x), mix(hash(i+vec2(0,1)), hash(i+vec2(1,1)), f.x), f.y);
+    }
+
+    void main() {
+      vec2 frag = vec2(gl_FragCoord.x, res.y - gl_FragCoord.y);
+      vec2 uv = frag / res * cover + shift;          // image uv (0..1), y down
+      vec2 d = vec2(0.0);
+      // slow, whole-scene breathing: a gentle sway that grows toward the top
+      float lift = 1.0 - uv.y;
+      d.x += motion * lift * 0.0035 * sin(t * 0.35 + uv.y * 3.0);
+      d.y += motion * 0.0012 * sin(t * 0.27 + uv.x * 4.0);
+      d.x += motion * 0.0012 * (noise(uv * 4.0 + vec2(t * 0.05, 0.0)) - 0.5);
+
+      vec4 c = texture2D(tex, uv + d);
+      float inside = step(0.0, uv.x + d.x) * step(uv.x + d.x, 1.0) * step(0.0, uv.y + d.y) * step(uv.y + d.y, 1.0);
+      // live halftone at device resolution: crisp dots, never scaled
+      float breathe = 1.0 + motion * 0.04 * sin(t * 0.45);
+      // random (non-periodic) threshold per cell: no moiré at any display scaling
+      vec2 cell = floor(frag / px);
+      float th = fract(sin(dot(cell, vec2(12.9898, 78.233))) * 43758.5453);
+      th = 0.08 + th * 0.92;
+      float dotOn = step(th, c.r * 0.80 * breathe);
+      vec3 inkTone = vec3(0.33, 0.30, 0.27);
+      gl_FragColor = vec4(inkTone, dotOn * c.a * inside * 0.85);
+    }`;
+
+  if (root && img && canvas && gl) {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const sh = (type: number, src: string) => {
+      const s = gl.createShader(type)!;
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      return s;
+    };
+    const prog = gl.createProgram()!;
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, VERT));
+    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      canvas.remove(); // fall back to the plain image
+    } else {
+      gl.useProgram(prog);
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      const U = (n: string) => gl.getUniformLocation(prog, n);
+      const u = { res: U('res'), cover: U('cover'), shift: U('shift'), t: U('t'), motion: U('motion'), px: U('px') };
+
+      const tex = gl.createTexture();
+      let ready = false;
+      const upload = () => {
+        gl.bindTexture(gl.TEXTURE_2D, tex);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+        ready = true;
+        root.classList.add('live');
+        frame(performance.now());
+      };
+      // object-fit: cover; object-position: 100% 60% (matches the CSS on the <img>)
+      let cw = 0, ch = 0, dpr = 1;
+      const cover = [1, 1], shift = [0, 0];
+      const resize = () => {
+        const r = root.getBoundingClientRect();
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        cw = Math.max(1, Math.round(r.width * dpr));
+        ch = Math.max(1, Math.round(r.height * dpr));
+        canvas.width = cw;
+        canvas.height = ch;
+        gl.viewport(0, 0, cw, ch);
+        const boxA = r.width / r.height;
+        // object-fit: contain, anchored right; areas outside the image stay transparent
+        const srcA = 528 / 880;
+        if (boxA > srcA) { cover[0] = boxA / srcA; cover[1] = 1; }
+        else { cover[0] = 1; cover[1] = srcA / boxA; }
+        shift[0] = (1 - cover[0]) * 1.0;
+        shift[1] = (1 - cover[1]) * 0.55;
+        if (ready) frame(performance.now());
+      };
+      new ResizeObserver(resize).observe(root);
+      resize();
+
+      let raf = 0, visible = true;
+      function frame(now: number) {
+        if (!ready) return;
+        const t = now / 1000;
+        gl.uniform2f(u.res, cw, ch);
+        gl.uniform2f(u.cover, cover[0], cover[1]);
+        gl.uniform2f(u.shift, shift[0], shift[1]);
+        gl.uniform1f(u.t, t);
+        gl.uniform1f(u.motion, reduced.matches ? 0 : 1);
+        gl.uniform1f(u.px, Math.max(2, Math.round(1.5 * dpr)));
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      }
+      function loop(now: number) {
+        frame(now);
+        raf = requestAnimationFrame(loop);
+      }
+      const schedule = () => {
+        cancelAnimationFrame(raf);
+        if (visible && !document.hidden && !reduced.matches) raf = requestAnimationFrame(loop);
+      };
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; schedule(); }).observe(root);
+      document.addEventListener('visibilitychange', schedule);
+      reduced.addEventListener('change', () => { schedule(); frame(performance.now()); });
+      if (img.complete && img.naturalWidth) upload();
+      else img.addEventListener('load', upload, { once: true });
+      schedule();
+    }
+  }
+</script>
+
+<style>
+  .homeart {
+    position: relative;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    
+  }
+  .homeart img,
+  .homeart canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .homeart img {
+    object-fit: contain;
+    object-position: 100% 55%;
+  }
+  .homeart canvas {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .homeart.live canvas {
+    opacity: 1;
+  }
+</style>

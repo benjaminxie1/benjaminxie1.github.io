@@ -1,0 +1,16 @@
+{
+  "name": "ben-xie-site",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/comfortaa": "^5.3.0",
+    "@fontsource/caveat": "^5.3.0",
+    "astro": "^7.4.1"
+  }
+}

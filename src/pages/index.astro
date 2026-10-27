@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import HomeArt from '../components/HomeArt.astro';
+import { site } from '../data/site';
+---
+
+<Base fit>
+  <main class="home">
+    <section class="intro">
+      <h1>Hi, I'm Ben.</h1>
+      <p>Currently building in energy.</p>
+      <p>I'm a student studying Electrical Engineering &amp; Computer Sciences (EECS) and Business @ <a href="https://www.berkeley.edu">UC Berkeley</a> in the <a href="https://met.berkeley.edu">M.E.T. program</a>.</p>
+      <p>Before that, I interned at the <a href="https://www.afrl.af.mil">Air Force Research Lab</a> as a software engineering intern, and at AgentAI as a machine learning intern.</p>
+      <p>Recently, I won <a href="https://github.com/benjaminxie1/argon-hacks">Gemini 4 Argon Hacks</a> @ Cerebral Valley and <a href="https://github.com/Will-code112223/Speedhacks">a16z SpeedHacks</a>.</p>
+      <p class="links">
+        <a href={site.github}>GitHub</a>
+        <a href={site.linkedin}>LinkedIn</a>
+        <a href={site.x}>Twitter</a>
+        <a href={`mailto:${site.email}`}>Email</a>
+      </p>
+    </section>
+    <div class="art"><HomeArt /></div>
+  </main>
+</Base>
+
+<style>
+  .home {
+    position: relative;
+  }
+  @media (min-width: 961px) and (min-height: 560px) {
+    .home .intro { flex: 1; min-height: 0; }
+    .intro h1 { font-size: clamp(52px, 8.5vh, 72px); margin-bottom: clamp(14px, 2.6vh, 28px); }
+    .intro p { margin-bottom: clamp(8px, 1.6vh, 16px); }
+  }
+  /* Art fills the open space right of the text, out to the page edge, behind nothing. */
+  .art {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 600px;
+    right: calc(min(0px, (1040px - 100vw) / 2) + 48px);
+    max-width: 820px;
+    margin-left: auto;
+    pointer-events: none;
+  }
+  @media (max-width: 1100px) {
+    .art { left: 520px; }
+  }
+  @media (max-width: 960px) {
+    .art {
+      position: relative;
+      left: auto;
+      right: auto;
+      height: 70vw;
+      max-height: 520px;
+      margin: 8px -28px 0;
+    }
+    .intro { min-height: auto; padding-top: 24px; }
+  }
+  .intro {
+    position: relative;
+    z-index: 1;
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+  .intro h1 {
+    font-size: 72px;
+    margin-bottom: 28px;
+  }
+  .intro p {
+    margin: 0 0 16px;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 24px !important;
+  }
+  .links a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--muted);
+    text-underline-offset: 4px;
+  }
+  .links a:hover {
+    color: var(--link);
+    text-decoration-color: currentColor;
+  }
+  @media (max-width: 640px) {
+    .intro {
+      min-height: auto;
+      padding-top: 24px;
+      font-size: 16px;
+    }
+    .intro h1 {
+      font-size: 56px;
+    }
+  }
+</style>
