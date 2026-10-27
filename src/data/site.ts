@@ -2,7 +2,7 @@ export const site = {
   name: 'Benjamin Xie',
   short: 'Ben Xie',
   description:
-    'Benjamin Xie — EECS + Business in the M.E.T. program at UC Berkeley.',
+    'EECS & Business in the M.E.T. program at UC Berkeley. Currently building in energy.',
   email: 'benx@berkeley.edu',
   github: 'https://github.com/benjaminxie1',
   linkedin: 'https://www.linkedin.com/in/xie-benjamin',
