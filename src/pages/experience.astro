@@ -33,15 +33,25 @@ const experience = [
 const wins = [
   {
     event: 'Gemini 4 Argon Hackathon',
+    host: 'Cerebral Valley',
+    project: 'LabTwin',
+    pitch: 'A MuJoCo digital twin of your lab bench, built from one photo.',
+    prize: '$7.5k',
     date: 'Oct. 2026',
     href: 'https://cerebralvalley.ai/e/gemini-4-argon-sf',
+    visual: 'labtwin',
   },
   {
     event: 'a16z SpeedHacks',
+    host: 'a16z speedrun',
+    project: 'Recourse',
+    pitch: 'An agent that preps refund and insurance claims, then makes the call.',
+    prize: '$1k',
     date: 'Oct. 2026',
     href: 'https://www.tech-week.com/calendar/sf/events/speedhacks-the-official-speedrun-hackathon-30c239a4-638a-4bd6-8d51-e15259668f51',
+    visual: 'recourse',
   },
-];
+]
 ---
 
 <Base title="Experience">
@@ -62,17 +72,36 @@ const wins = [
     </ol>
 
     <h2>Hackathons</h2>
-    <ol class="timeline">
+    <ul class="wins">
       {wins.map((w) => (
-        <li class="win">
-          <span class="medal" aria-hidden="true">1st</span>
-          <div>
-            <a class="role" href={w.href}>{w.event}</a>.
-            <div>1st Place. <span class="muted small">({w.date})</span></div>
-          </div>
+        <li>
+          <a class="win" href={w.href}>
+            <div class="shot">
+              {w.visual === 'labtwin' ? (
+                <img src="/projects/labtwin.jpg" alt="LabTwin's simulated lab bench" width="800" height="498" loading="lazy" />
+              ) : (
+                <div class="rc" aria-hidden="true">
+                  <div class="rc-bar"><span></span><span></span><span></span></div>
+                  <div class="rc-msg">Ridgeline charged me twice but I lost the receipt</div>
+                  <div class="rc-card">
+                    <div class="rc-row"><span class="rc-k">Refund request</span><span class="rc-v">$214.00</span></div>
+                    <div class="rc-row"><span class="rc-k">Support line</span><span class="rc-pill">Ready</span></div>
+                    <div class="rc-btn">Approve this call</div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div class="info">
+              <div class="line">
+                <span class="ev">{w.event}</span><span class="dots"></span><span class="amt">{w.prize}</span>
+              </div>
+              <div class="muted small">1st place with <strong>{w.project}</strong> · {w.host} · {w.date}</div>
+              <p class="small pitch">{w.pitch}</p>
+            </div>
+          </a>
         </li>
       ))}
-    </ol>
+    </ul>
   </main>
 </Base>
 
@@ -113,20 +142,142 @@ const wins = [
   h2 {
     margin-top: 64px;
   }
+  .wins {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    max-width: 780px;
+    display: grid;
+    gap: 18px;
+  }
   .win {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 26px;
+    align-items: center;
+    padding: 14px;
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    background: #fdfcf9;
+    color: var(--ink);
+    transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+  }
+  .win:hover {
+    text-decoration: none;
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--muted) 55%, transparent);
+    box-shadow: 0 10px 28px -14px rgba(34, 33, 30, 0.25);
+  }
+  .shot {
+    aspect-ratio: 16 / 10;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #2e3038;
+  }
+  .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .info {
+    padding-right: 10px;
+    line-height: 1.75;
+  }
+  .line {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .ev {
+    font-size: 18px;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 5px;
+  }
+  .dots {
+    flex: 1;
+    min-width: 16px;
+    border-bottom: 2px dotted color-mix(in srgb, var(--muted) 45%, transparent);
+    transform: translateY(-5px);
+  }
+  .amt {
+    font-family: var(--hand);
+    font-size: 32px;
+    line-height: 1;
+    color: var(--link);
+  }
+  .info strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .pitch {
+    margin: 6px 0 0;
+    color: var(--muted);
+  }
+  /* Recourse mini-UI, in the app's own black-on-white style */
+  .rc {
+    height: 100%;
+    background: #ffffff;
+    color: #111111;
+    font: 10.5px/1.4 system-ui, -apple-system, sans-serif;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+  }
+  .rc-bar {
+    display: flex;
+    gap: 4px;
+  }
+  .rc-bar span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #dddddd;
+  }
+  .rc-msg {
+    align-self: flex-end;
+    max-width: 82%;
+    background: #111111;
+    color: #f2f2f2;
+    padding: 6px 9px;
+    border-radius: 10px 10px 2px 10px;
+  }
+  .rc-card {
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 7px 10px;
+    display: grid;
+    gap: 4px;
+  }
+  .rc-row {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
   }
-  .medal {
-    display: grid;
-    place-items: center;
-    width: 52px;
-    height: 52px;
-    margin: 0 4px;
-    border-radius: 50%;
-    background: #e9c46a;
-    color: #5c4813;
-    font-weight: 700;
-    font-size: 14px;
+  .rc-k {
+    color: #666666;
+  }
+  .rc-v {
+    font-weight: 600;
+  }
+  .rc-pill {
+    font-size: 9.5px;
+    padding: 1px 7px;
+    border-radius: 99px;
+    background: #e8f3ec;
+    color: #2f6b45;
+  }
+  .rc-btn {
+    margin-top: 2px;
+    text-align: center;
+    background: #111111;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-weight: 600;
   }
   @media (max-width: 640px) {
     .timeline li {
@@ -137,11 +288,18 @@ const wins = [
       width: 44px;
       height: 44px;
     }
-    .medal {
-      width: 40px;
-      height: 40px;
-      margin: 0 2px;
-      font-size: 12px;
+    .win {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .info {
+      padding: 0 4px 4px;
+    }
+    .line {
+      justify-content: space-between;
+    }
+    .dots {
+      display: none;
     }
   }
 </style>
