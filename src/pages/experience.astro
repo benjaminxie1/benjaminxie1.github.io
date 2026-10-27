@@ -35,23 +35,35 @@ const wins = [
     event: 'Gemini 4 Argon Hackathon',
     host: 'Cerebral Valley',
     project: 'LabTwin',
-    pitch: 'A MuJoCo digital twin of your lab bench, built from one photo.',
-    prize: '$7.5k',
+    pitch: 'Digital twin world models for the wet lab. Test your experiment virtually before you run it.',
+    badge: '$7.5k prize',
     date: 'Oct. 2026',
     href: 'https://cerebralvalley.ai/e/gemini-4-argon-sf',
-    visual: 'labtwin',
+    image: '/projects/labtwin.jpg',
+    sponsor: { src: '/sponsors/gemini.svg', alt: 'Google Gemini', h: 20 },
   },
   {
     event: 'a16z SpeedHacks',
     host: 'a16z speedrun',
     project: 'Recourse',
     pitch: 'An agent that preps refund and insurance claims, then makes the call.',
-    prize: '$1k',
+    badge: '$1k prize',
     date: 'Oct. 2026',
     href: 'https://www.tech-week.com/calendar/sf/events/speedhacks-the-official-speedrun-hackathon-30c239a4-638a-4bd6-8d51-e15259668f51',
-    visual: 'recourse',
+    sponsor: { src: '/sponsors/a16z.svg', alt: 'Andreessen Horowitz', h: 24 },
   },
-]
+  {
+    event: 'Congressional App Challenge',
+    host: 'Rep. Julia Brownley, CA-26',
+    project: 'Sentinel',
+    pitch: 'A YOLO wildfire-detection camera network, piloted at 2 sites in the Santa Monica Mountains.',
+    badge: 'Presented at the U.S. Capitol',
+    date: '2024',
+    href: 'https://www.congressionalappchallenge.us/24-CA26/',
+    image: '/projects/sentinel.jpg',
+    sponsor: { src: '/sponsors/cac.png', alt: 'Congressional App Challenge', h: 24, dark: true },
+  },
+];
 ---
 
 <Base title="Experience">
@@ -71,14 +83,14 @@ const wins = [
       ))}
     </ol>
 
-    <h2>Hackathons</h2>
+    <h2>Wins</h2>
     <ul class="wins">
       {wins.map((w) => (
         <li>
           <a class="win" href={w.href}>
             <div class="shot">
-              {w.visual === 'labtwin' ? (
-                <img src="/projects/labtwin.jpg" alt="LabTwin's simulated lab bench" width="800" height="498" loading="lazy" />
+              {w.image ? (
+                <img src={w.image} alt={`${w.project} preview`} width="800" height="500" loading="lazy" />
               ) : (
                 <div class="rc" aria-hidden="true">
                   <div class="rc-bar"><span></span><span></span><span></span></div>
@@ -92,10 +104,13 @@ const wins = [
               )}
             </div>
             <div class="info">
+              <span class={w.sponsor.dark ? 'sponsor dark' : 'sponsor'}>
+                <img src={w.sponsor.src} alt={w.sponsor.alt} style={`height:${w.sponsor.h}px`} />
+              </span>
               <div class="line">
                 <span class="ev">{w.event}</span><span class="dots"></span><span class="amt">1st Place</span>
               </div>
-              <div class="meta muted small"><span class="prize">{w.prize} prize</span><strong>{w.project}</strong> · {w.host} · {w.date}</div>
+              <div class="meta muted small"><span class="prize">{w.badge}</span><strong>{w.project}</strong> · {w.host} · {w.date}</div>
               <p class="small pitch">{w.pitch}</p>
             </div>
           </a>
@@ -174,7 +189,24 @@ const wins = [
     overflow: hidden;
     background: #2e3038;
   }
-  .shot img {
+  .shot {
+    position: relative;
+  }
+  .sponsor {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .sponsor.dark {
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: #14284a;
+  }
+  .sponsor img {
+    display: block;
+    width: auto;
+  }
+  .shot > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -241,7 +273,7 @@ const wins = [
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 7px;
+    gap: 6px;
   }
   .rc-bar {
     display: flex;
