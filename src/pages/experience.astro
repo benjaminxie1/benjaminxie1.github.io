@@ -95,7 +95,7 @@ const wins = [
               <div class="line">
                 <span class="ev">{w.event}</span><span class="dots"></span><span class="amt">1st Place</span>
               </div>
-              <div class="muted small"><strong>{w.project}</strong> · {w.prize} prize · {w.host} · {w.date}</div>
+              <div class="meta muted small"><span class="prize">{w.prize} prize</span><strong>{w.project}</strong> · {w.host} · {w.date}</div>
               <p class="small pitch">{w.pitch}</p>
             </div>
           </a>
@@ -207,6 +207,21 @@ const wins = [
     line-height: 1;
     white-space: nowrap;
     color: var(--link);
+  }
+  .meta {
+    margin-top: 6px;
+  }
+  .prize {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 1px 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--link) 13%, transparent);
+    color: var(--link);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.7;
+    vertical-align: 1px;
   }
   .info strong {
     color: var(--ink);
