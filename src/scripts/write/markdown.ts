@@ -10,6 +10,7 @@ import { strikethrough } from 'turndown-plugin-gfm';
 import { Marked, type Tokens } from 'marked';
 import YAML from 'yaml';
 import { type Doc, today, toSite } from './lib';
+import { embedTurndownRule, canonicalizeEmbeds, stripEmbeds } from './markdown-embed';
 
 /** Thrown by toMarkdown when the HTML still references a local (blob:/data:) image. */
 export class UnsavedImageError extends Error {
@@ -134,6 +135,7 @@ td.addRule('listItem', {
   },
 });
 td.keep(['sub', 'sup']);
+td.addRule('embed', embedTurndownRule); // video embeds: see markdown-embed.ts
 
 /** HTML → markdown body (no frontmatter). Throws UnsavedImageError on blob:/data: images. */
 export function htmlToMarkdown(html: string): string {
@@ -182,11 +184,12 @@ md.use({
 
 /** Markdown body → editor HTML. */
 export function markdownToHtml(body: string): string {
-  return md.parse(body || '', { async: false }) as string;
+  return canonicalizeEmbeds(md.parse(body || '', { async: false }) as string);
 }
 
 /** Things in this HTML that the editor can't represent (and would be lost on save). */
 export function unsupportedIn(html: string): string[] {
+  html = stripEmbeds(html); // allowlisted video embeds are supported
   const found = new Set<string>();
   const checks: Array<[RegExp, string]> = [
     [/<table[\s>]/i, 'a table'], [/<(iframe|video|audio|embed|object)[\s>]/i, 'an embed (video/iframe)'],

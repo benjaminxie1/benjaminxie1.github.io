@@ -168,3 +168,22 @@
     .post .head { margin-bottom: 36px; }
     .post .body { font-size: 16px; }
   }
+  /* --- embeds --- */
+  /* Video embeds (YouTube/Vimeo/Loom): <div class="embed"> or <figure class="embed"> + figcaption */
+  .post .body .embed {
+    clear: both;
+    margin: 36px 0;
+    text-align: center;
+  }
+  .post .body .embed iframe,
+  .post .body .embed .ed-embed-stage {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: 10px;
+    background: var(--tile, #f4f1ea);
+    overflow: hidden;
+  }
+  /* --- /embeds --- */
