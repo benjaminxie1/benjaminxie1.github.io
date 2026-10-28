@@ -18,6 +18,7 @@ import { FakeSelection, createLinkUI, normalizeUrl } from './editor/link';
 import { createBubble, createMobileBar, createPlus, formatCommands, shouldShowBubble, shouldShowPlus } from './editor/menus';
 import { openShortcuts as openSheet, destroyShortcuts } from './editor/shortcuts';
 import { isCompact } from './editor/ui';
+import { Footnote } from './editor/footnote';
 
 export { normalizeUrl };
 
@@ -92,6 +93,7 @@ export function createEditor(opts: {
       }),
       EdCodeBlock,
       Figure.configure({ uploads }),
+      Footnote,
       Typography.configure({
         // Only the typographer's essentials: smart quotes, em dash, ellipsis.
         multiplication: false, oneHalf: false, oneQuarter: false, threeQuarters: false,

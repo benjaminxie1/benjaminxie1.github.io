@@ -240,3 +240,33 @@ html.ed-mbar-on .post .body.ProseMirror { padding-bottom: 72px; }
   .ed-sheet[open] { animation: none; }
   .ed-figure[data-state='uploading'] .ed-fig-status > span:last-child::before { animation-duration: 2.4s; }
 }
+
+/* --- footnotes --- */
+/* Ref in the text: number from the live numbering decoration (data-n). */
+.post .body sup.ed-fn { cursor: pointer; color: var(--link, #2f6b45); padding: 0 0.14em; border-radius: 3px; font-variant-numeric: tabular-nums; -webkit-user-select: none; user-select: none; }
+.post .body sup.ed-fn::after { content: attr(data-n); }
+.post .body sup.ed-fn:hover { background: color-mix(in srgb, var(--link) 10%, transparent); }
+.post .body sup.ed-fn.ProseMirror-selectednode { background: color-mix(in srgb, var(--link) 16%, transparent); box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--link) 45%, transparent); outline: none; }
+.post .body sup.ed-fn.is-empty { color: var(--tag, #b5452f); }
+/* The popover */
+.ed-fn-pop { width: 340px; max-width: calc(100vw - 24px); padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+.ed-fn-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 0 2px; }
+.ed-fn-title { font-weight: 600; font-size: 12px; color: var(--ink); }
+.ed-fn-hint { color: var(--muted); font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ed-fn-input {
+  width: 100%; min-height: 54px; resize: none; box-sizing: border-box; font: var(--ed-ui) / 1.45 var(--sans); color: var(--ink); background: #fff;
+  border: 1px solid var(--rule); border-radius: 7px; padding: 7px 9px; outline: none;
+}
+.ed-fn-input:focus { border-color: var(--ed-ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--link) 14%, transparent); }
+.ed-fn-actions { display: flex; align-items: center; }
+.ed-fn-actions .ed-btn:first-child { color: var(--muted); }
+.ed-fn-actions .ed-btn:first-child:hover { color: var(--tag, #b5452f); }
+.ed-fn-actions .ed-btn[hidden] { display: none; }
+.ed-fn-gap { flex: 1; }
+/* The live Notes list under the post (styled by post.css .footnotes) */
+.post .ed-notes[hidden] { display: none; }
+.post .ed-notes .ed-note-text { cursor: text; border-radius: 4px; outline: none; }
+.post .ed-notes .ed-note-text:hover { background: color-mix(in srgb, var(--ink) 4%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ink) 4%, transparent); }
+.post .ed-notes .ed-note-text:focus-visible { box-shadow: 0 0 0 2px var(--ed-ring); }
+.post .ed-notes .ed-note-empty { font-style: italic; color: color-mix(in srgb, var(--muted) 70%, transparent); }
+@media (pointer: coarse) { .ed-fn-actions .ed-btn { height: 40px; } }

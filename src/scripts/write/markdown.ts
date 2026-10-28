@@ -10,6 +10,7 @@ import { strikethrough } from 'turndown-plugin-gfm';
 import { Marked, type Tokens } from 'marked';
 import YAML from 'yaml';
 import { type Doc, today, toSite } from './lib';
+import { footnoteRule, withFootnotesMd, withFootnotesHtml, stripFootnoteRefs } from './markdown-footnotes';
 
 /** Thrown by toMarkdown when the HTML still references a local (blob:/data:) image. */
 export class UnsavedImageError extends Error {
@@ -133,11 +134,12 @@ td.addRule('listItem', {
     return prefix + body + (last ? '' : listLoose ? '\n\n' : '\n');
   },
 });
+footnoteRule(td); // before keep(): footnote refs are <sup data-footnote>
 td.keep(['sub', 'sup']);
 
 /** HTML → markdown body (no frontmatter). Throws UnsavedImageError on blob:/data: images. */
 export function htmlToMarkdown(html: string): string {
-  return td.turndown(html || '').replace(/\n{3,}/g, '\n\n').trim();
+  return withFootnotesMd(() => td.turndown(html || '').replace(/\n{3,}/g, '\n\n').trim());
 }
 
 // ---------- markdown -> HTML ----------
@@ -182,12 +184,13 @@ md.use({
 
 /** Markdown body → editor HTML. */
 export function markdownToHtml(body: string): string {
-  return md.parse(body || '', { async: false }) as string;
+  return withFootnotesHtml(body || '', (b) => md.parse(b, { async: false }) as string);
 }
 
 /** Things in this HTML that the editor can't represent (and would be lost on save). */
 export function unsupportedIn(html: string): string[] {
   const found = new Set<string>();
+  html = stripFootnoteRefs(html); // footnotes are supported
   const checks: Array<[RegExp, string]> = [
     [/<table[\s>]/i, 'a table'], [/<(iframe|video|audio|embed|object)[\s>]/i, 'an embed (video/iframe)'],
     [/<(div|span|section|details|aside)[\s>]/i, 'raw HTML'], [/<script[\s>]/i, 'a script'],

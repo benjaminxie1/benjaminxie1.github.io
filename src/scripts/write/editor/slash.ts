@@ -3,6 +3,7 @@ import { Extension, type Editor, type Range } from '@tiptap/core';
 import Suggestion, { type SuggestionProps } from '@tiptap/suggestion';
 import { PluginKey } from '@tiptap/pm/state';
 import { h, icons } from './ui';
+import { footnoteSlashItem } from './footnote';
 
 export type SlashItem = { id: string; title: string; hint: string; keywords: string; icon: string; run: (editor: Editor, range: Range) => void };
 
@@ -19,6 +20,7 @@ export function slashItems(pickImages: (editor: Editor) => void): SlashItem[] {
     { id: 'image', title: 'Image', hint: 'drop', keywords: 'photo picture figure upload img', icon: icons.image, run: (e, r) => { blk(e, r).run(); pickImages(e); } },
     { id: 'code', title: 'Code block', hint: '```', keywords: 'pre snippet program', icon: icons.codeBlock, run: (e, r) => blk(e, r).setNode('codeBlock').run() },
     { id: 'hr', title: 'Divider', hint: '---', keywords: 'hr rule separator break line', icon: icons.hr, run: (e, r) => blk(e, r).setHorizontalRule().run() },
+    footnoteSlashItem,
   ];
 }
 
