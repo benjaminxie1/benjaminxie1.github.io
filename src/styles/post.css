@@ -49,10 +49,70 @@
   .post .body li p {
     margin: 0;
   }
+  .post .body li p + p {
+    margin-top: 0.6em;
+  }
   .post .body img {
     max-width: 100%;
     border-radius: 10px;
     margin: 8px 0;
+  }
+  /* Image figures: same markup on the post page (rehype-figure) and in the editor */
+  .post .body figure {
+    margin: 36px 0;
+    text-align: center;
+  }
+  .post .body figure img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+  .post .body figcaption {
+    margin: 10px auto 0;
+    max-width: 520px;
+    font-family: var(--hand);
+    font-size: 21px;
+    line-height: 1.25;
+    color: var(--muted);
+  }
+  /* Code: inline, and fenced blocks (Shiki on the site; plain pre>code in the editor) */
+  .post .body code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    padding: 0.12em 0.38em;
+    border-radius: 5px;
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+  .post .body pre,
+  .post .body pre.astro-code {
+    margin: 28px 0;
+    padding: 16px 18px;
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background-color: color-mix(in srgb, var(--ink) 3.5%, var(--bg)) !important;
+    font: 14px/1.6 var(--mono);
+    color: var(--ink);
+    tab-size: 2;
+  }
+  .post .body pre code {
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    font-size: inherit;
+    color: inherit;
+    overflow-wrap: normal;
+    white-space: pre;
+  }
+  .post .body s,
+  .post .body del {
+    text-decoration-thickness: 1px;
+    text-decoration-color: color-mix(in srgb, var(--muted) 80%, transparent);
+    color: var(--muted);
   }
   .post .body a {
     color: var(--link);
@@ -85,7 +145,7 @@
   }
   .post .draft-tag {
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 6px;
     padding: 1px 9px;
     border-radius: 999px;
     background: var(--tag);
