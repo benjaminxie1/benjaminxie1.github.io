@@ -5,6 +5,7 @@
 import { mountBanner } from '../banner';
 import { $, type Doc, blank, today, toDisplay, slugify, slugOf, store, OWNER, REPO } from './lib';
 import { createEditor } from './editor';
+import { smartPunctuation } from './editor/typing';
 import { ConflictError, token, savePost, loadPost, deletePost, uploadImage, deployStatus } from './github';
 import { saveLocal, loadLocal, keyOf, clearLocal, lastOpened, setLastOpened } from './local';
 import { toMarkdown, unsupportedIn } from './markdown';
@@ -137,6 +138,8 @@ function flushLocal() {
   paint();
 }
 for (const el of [titleIn, dekIn]) el.addEventListener('input', () => { grow(el); changed(); });
+smartPunctuation(titleIn);
+smartPunctuation(dekIn);
 titleIn.addEventListener('input', () => { paintMeta(); seedSoon(); });
 titleIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); dekIn.focus(); } });
 dekIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); ed.focusStart(); } });

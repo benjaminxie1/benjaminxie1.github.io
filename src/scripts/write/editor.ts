@@ -13,6 +13,7 @@ import { EditorState } from '@tiptap/pm/state';
 import '../../styles/write-editor.css';
 import { Figure, Uploads, insertFiles, pickFiles, stripPending, IMAGE_TYPES } from './editor/figure';
 import { EdCodeBlock } from './editor/codeblock';
+import { Dashes, SmartPaste } from './editor/typing';
 import { SlashMenu, slashItems, openSlash } from './editor/slash';
 import { FakeSelection, createLinkUI, normalizeUrl } from './editor/link';
 import { createBubble, createMobileBar, createPlus, formatCommands, shouldShowBubble, shouldShowPlus } from './editor/menus';
@@ -99,6 +100,8 @@ export function createEditor(opts: {
         laquo: false, raquo: false, copyright: false, trademark: false, servicemark: false,
         registeredTrademark: false, leftArrow: false, rightArrow: false,
       }),
+      Dashes,
+      SmartPaste,
       Placeholder.configure({
         includeChildren: false,
         showOnlyCurrent: true,
