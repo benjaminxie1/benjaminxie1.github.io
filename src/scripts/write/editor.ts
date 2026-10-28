@@ -11,7 +11,8 @@ import BubbleMenu from '@tiptap/extension-bubble-menu';
 import FloatingMenu from '@tiptap/extension-floating-menu';
 import { EditorState } from '@tiptap/pm/state';
 import '../../styles/write-editor.css';
-import { Figure, Uploads, insertFiles, pickFiles, stripPending, IMAGE_TYPES } from './editor/figure';
+import { Figure, Uploads, insertFiles, pasteFiles, pickFiles, stripPending, IMAGE_TYPES } from './editor/figure';
+import { Gallery, GalleryCaption, gallerySlashItem } from './editor/gallery';
 import { EdCodeBlock } from './editor/codeblock';
 import { Dashes, MarkdownHabits, LineStartFix, SmartPaste } from './editor/typing';
 import { LeadWord } from './editor/leadword';
@@ -98,6 +99,8 @@ export function createEditor(opts: {
       }),
       EdCodeBlock,
       Figure.configure({ uploads }),
+      Gallery.configure({ uploads }),
+      GalleryCaption,
       Embed,
       EmbedPaste,
       ...QuoteBlocks,
@@ -127,11 +130,11 @@ export function createEditor(opts: {
       }),
       CharacterCount,
       FakeSelection,
-      SlashMenu.configure({ items: withVideo(slashItems((ed) => chooseImages(ed))) }),
+      SlashMenu.configure({ items: withVideo(slashItems((ed) => chooseImages(ed), gallerySlashItem(() => uploads))) }),
       FileHandler.configure({
         allowedMimeTypes: IMAGE_TYPES,
-        onPaste: (ed, files) => insertFiles(ed, uploads, files),
-        onDrop: (ed, files, pos) => insertFiles(ed, uploads, files, pos),
+        onPaste: (ed, files, html) => pasteFiles(ed, uploads, files, html),
+        onDrop: (ed, files, pos) => insertFiles(ed, uploads, files, pos, 'auto'),
       }),
       BubbleMenu.configure({
         pluginKey: 'edBubble',
