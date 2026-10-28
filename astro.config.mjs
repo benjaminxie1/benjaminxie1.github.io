@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-// Astro 7's default Markdown processor. It ships with astro (exact-pinned
+// Astro 7's default Markdown processor (used here to add the figure plugin).
 import { satteri } from '@astrojs/markdown-satteri';
 import { figurePlugin } from './src/plugins/figure.mjs';
 
