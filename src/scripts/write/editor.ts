@@ -13,11 +13,16 @@ import { EditorState } from '@tiptap/pm/state';
 import '../../styles/write-editor.css';
 import { Figure, Uploads, insertFiles, pickFiles, stripPending, IMAGE_TYPES } from './editor/figure';
 import { EdCodeBlock } from './editor/codeblock';
+import { Dashes, MarkdownHabits, LineStartFix, SmartPaste } from './editor/typing';
+import { LeadWord } from './editor/leadword';
+import { Embed, EmbedPaste, withVideo } from './editor/embed';
+import { QuoteBlocks } from './editor/blocks';
 import { SlashMenu, slashItems, openSlash } from './editor/slash';
 import { FakeSelection, createLinkUI, normalizeUrl } from './editor/link';
 import { createBubble, createMobileBar, createPlus, formatCommands, shouldShowBubble, shouldShowPlus } from './editor/menus';
 import { openShortcuts as openSheet, destroyShortcuts } from './editor/shortcuts';
 import { isCompact } from './editor/ui';
+import { Footnote } from './editor/footnote';
 
 export { normalizeUrl };
 
@@ -26,7 +31,7 @@ export type EditorHandle = {
   getHTML(): string;
   setHTML(html: string): void;
   isUploading(): boolean;
-  stats(): { words: number; minutes: number };
+  stats(): { words: number; minutes: number; selected: number };
   focusStart(): void;
   openShortcuts(): void;
   destroy(): void;
@@ -38,6 +43,7 @@ export function createEditor(opts: {
   upload: (file: File) => Promise<{ src: string; preview: string }>;
   onUploadsChange?: (pending: number) => void;
   onMessage?: (msg: string, kind?: 'info' | 'error') => void;
+  onSelectionChange?: () => void;
 }): EditorHandle {
   // eslint-disable-next-line prefer-const
   let editor: Editor = undefined as unknown as Editor; // assigned below; plugin callbacks guard on it
@@ -92,13 +98,23 @@ export function createEditor(opts: {
       }),
       EdCodeBlock,
       Figure.configure({ uploads }),
+      Embed,
+      EmbedPaste,
+      ...QuoteBlocks,
+      Footnote,
       Typography.configure({
-        // Only the typographer's essentials: smart quotes, em dash, ellipsis.
+        // Only the typographer's essentials: smart quotes, em dash, ellipsis, arrows (-> →).
+        // (c) stays off: "(a) (b) (c)" lists are more common in prose than ©.
         multiplication: false, oneHalf: false, oneQuarter: false, threeQuarters: false,
         superscriptTwo: false, superscriptThree: false, plusMinus: false, notEqual: false,
         laquo: false, raquo: false, copyright: false, trademark: false, servicemark: false,
-        registeredTrademark: false, leftArrow: false, rightArrow: false,
+        registeredTrademark: false,
       }),
+      Dashes,
+      MarkdownHabits,
+      LineStartFix,
+      LeadWord,
+      SmartPaste,
       Placeholder.configure({
         includeChildren: false,
         showOnlyCurrent: true,
@@ -111,7 +127,7 @@ export function createEditor(opts: {
       }),
       CharacterCount,
       FakeSelection,
-      SlashMenu.configure({ items: slashItems((ed) => chooseImages(ed)) }),
+      SlashMenu.configure({ items: withVideo(slashItems((ed) => chooseImages(ed))) }),
       FileHandler.configure({
         allowedMimeTypes: IMAGE_TYPES,
         onPaste: (ed, files) => insertFiles(ed, uploads, files),
@@ -133,7 +149,7 @@ export function createEditor(opts: {
       EditorKeys,
     ],
     editorProps: {
-      attributes: { class: 'body', spellcheck: 'true', role: 'textbox', 'aria-multiline': 'true', 'aria-label': 'Post body', 'aria-expanded': 'false' },
+      attributes: { class: 'body', spellcheck: 'true', autocapitalize: 'sentences', autocorrect: 'on', role: 'textbox', 'aria-multiline': 'true', 'aria-label': 'Post body', 'aria-expanded': 'false' },
     },
     onUpdate: () => opts.onChange(),
   });
@@ -148,6 +164,7 @@ export function createEditor(opts: {
     link?.refresh();
   };
   editor.on('selectionUpdate', sync);
+  editor.on('selectionUpdate', () => opts.onSelectionChange?.());
   editor.on('transaction', ({ transaction }) => { if (transaction.docChanged || transaction.storedMarksSet) sync(); });
   editor.on('focus', () => { mbar.update(); sync(); });
   editor.on('blur', () => mbar.update());
@@ -183,9 +200,12 @@ export function createEditor(opts: {
     },
     isUploading: () => uploads.pending() > 0,
     stats() {
-      const text = editor.state.doc.textBetween(0, editor.state.doc.content.size, ' ', ' ');
-      const words = (text.match(/[\p{L}\p{N}][\p{L}\p{N}'’_-]*/gu) || []).length;
-      return { words, minutes: words ? Math.max(1, Math.round(words / 230)) : 0 };
+      const { doc, selection } = editor.state;
+      // "it’s", "e-mail", "U.S.", "3.5" and "2019–2020" are one word each, like Google Docs counts them
+      const count = (text: string) => (text.match(/[\p{L}\p{N}]+(?:['’._–-][\p{L}\p{N}]+)*/gu) || []).length;
+      const words = count(doc.textBetween(0, doc.content.size, ' ', ' '));
+      const selected = selection.empty ? 0 : count(doc.textBetween(selection.from, selection.to, ' ', ' '));
+      return { words, minutes: words ? Math.max(1, Math.round(words / 230)) : 0, selected };
     },
     focusStart() {
       editor.view.focus();

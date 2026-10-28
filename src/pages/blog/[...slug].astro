@@ -38,6 +38,21 @@ const published = +d === 0 ? 'no date set' : `${month} ${day}${suffix}, ${d.getU
         <p class="published">Published {published}</p>
       )}
       <div class="body"><Content /></div>
+      <script is:inline>
+        // Opening word in accent italics, after the drop cap (same as the /write editor).
+        (function () {
+          var p = document.currentScript.previousElementSibling.firstElementChild;
+          if (!p || p.tagName !== 'P' || !p.firstChild || p.firstChild.nodeType !== 3) return;
+          var t = p.firstChild, m = /^(\S)([^\s.,;:!?—–-]*)/.exec(t.data);
+          if (!m || !m[2]) return;
+          var span = document.createElement('span');
+          span.className = 'lead-word';
+          span.textContent = m[2];
+          t.data = t.data.slice(m[0].length);
+          p.insertBefore(document.createTextNode(m[1]), t);
+          p.insertBefore(span, t);
+        })();
+      </script>
       <p class="back"><a href="/blog">← All posts</a></p>
     </article>
   </main>

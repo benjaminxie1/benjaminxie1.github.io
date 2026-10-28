@@ -3,6 +3,8 @@ import { Extension, type Editor, type Range } from '@tiptap/core';
 import Suggestion, { type SuggestionProps } from '@tiptap/suggestion';
 import { PluginKey } from '@tiptap/pm/state';
 import { h, icons } from './ui';
+import { blockSlashItems } from './blocks';
+import { footnoteSlashItem } from './footnote';
 
 export type SlashItem = { id: string; title: string; hint: string; keywords: string; icon: string; run: (editor: Editor, range: Range) => void };
 
@@ -14,11 +16,13 @@ export function slashItems(pickImages: (editor: Editor) => void): SlashItem[] {
     { id: 'h2', title: 'Heading', hint: '##', keywords: 'h2 title section large', icon: icons.heading, run: (e, r) => blk(e, r).setNode('heading', { level: 2 }).run() },
     { id: 'h3', title: 'Subheading', hint: '###', keywords: 'h3 small heading', icon: icons.sub, run: (e, r) => blk(e, r).setNode('heading', { level: 3 }).run() },
     { id: 'quote', title: 'Quote', hint: '>', keywords: 'blockquote citation', icon: icons.quote, run: (e, r) => blk(e, r).setNode('paragraph').toggleBlockquote().run() },
+    ...blockSlashItems(blk),
     { id: 'ul', title: 'Bulleted list', hint: '-', keywords: 'bullet unordered ul points', icon: icons.ul, run: (e, r) => blk(e, r).setNode('paragraph').toggleBulletList().run() },
     { id: 'ol', title: 'Numbered list', hint: '1.', keywords: 'ordered ol numbers steps', icon: icons.ol, run: (e, r) => blk(e, r).setNode('paragraph').toggleOrderedList().run() },
     { id: 'image', title: 'Image', hint: 'drop', keywords: 'photo picture figure upload img', icon: icons.image, run: (e, r) => { blk(e, r).run(); pickImages(e); } },
     { id: 'code', title: 'Code block', hint: '```', keywords: 'pre snippet program', icon: icons.codeBlock, run: (e, r) => blk(e, r).setNode('codeBlock').run() },
     { id: 'hr', title: 'Divider', hint: '---', keywords: 'hr rule separator break line', icon: icons.hr, run: (e, r) => blk(e, r).setHorizontalRule().run() },
+    footnoteSlashItem,
   ];
 }
 
@@ -56,6 +60,7 @@ export const SlashMenu = Extension.create<{ items: SlashItem[] }>({
           const $from = state.doc.resolve(range.from);
           if ($from.parent.type.spec.code) return false;
           if ($from.parent.type.name === 'figure') return false;
+          if ($from.parent.type.name === 'detailsSummary') return false;
           return true;
         },
         items: ({ query }) => filter(all, query),

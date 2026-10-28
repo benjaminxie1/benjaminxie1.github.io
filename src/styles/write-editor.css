@@ -56,7 +56,8 @@
   box-shadow: 0 0 0 2px var(--link, #2f6b45);
 }
 .post .body :where(.ed-figure) figcaption {
-  margin-top: 10px; text-align: center; color: var(--muted, #67625a); font-size: 14px; line-height: 1.6; min-height: 1.6em; outline: none;
+  /* size, italics and color come from post.css, so captions match the live post */
+  margin-top: 10px; text-align: center; min-height: 1.5em; outline: none;
 }
 .post .body .ed-figure figcaption.is-empty::before { content: attr(data-placeholder); color: color-mix(in srgb, var(--muted) 55%, transparent); pointer-events: none; }
 
@@ -240,3 +241,88 @@ html.ed-mbar-on .post .body.ProseMirror { padding-bottom: 72px; }
   .ed-sheet[open] { animation: none; }
   .ed-figure[data-state='uploading'] .ed-fig-status > span:last-child::before { animation-duration: 2.4s; }
 }
+
+/* --- embeds --- */
+.post .body .ed-embed { position: relative; }
+.post .body .ed-embed .ed-embed-media { position: relative; border-radius: 12px; line-height: 0; cursor: default; }
+.post .body .ed-embed.is-selected .ed-embed-media::after,
+.post .body .ed-embed .ed-embed-media:focus-within::after {
+  content: ''; position: absolute; inset: -4px; border-radius: 14px; pointer-events: none; box-shadow: 0 0 0 2px var(--link, #2f6b45);
+}
+.post .body .ed-embed-stage { position: relative; }
+.post .body .ed-embed-stage.is-playing iframe { width: 100%; height: 100%; border: 0; display: block; }
+.ed-embed-poster { position: absolute; inset: 0; display: grid; place-items: center; background: var(--tile, #f4f1ea); }
+.ed-embed-poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; margin: 0; border-radius: 0; }
+.ed-embed-play {
+  position: relative; width: 58px; height: 58px; border-radius: 50%; border: 0; cursor: pointer; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--bg, #f8f6f1) 92%, transparent); color: var(--ink, #22211e); box-shadow: var(--ed-shadow);
+  transition: transform 0.15s, background 0.15s;
+}
+.ed-embed-play svg { margin-left: 3px; }
+.ed-embed-play:hover { transform: scale(1.05); background: var(--ed-surface); }
+.ed-embed-play:focus-visible { outline: 2px solid var(--ed-ring); outline-offset: 2px; }
+.ed-embed-label {
+  position: absolute; left: 10px; bottom: 10px; padding: 4px 9px; border-radius: 999px; line-height: 1.2;
+  background: color-mix(in srgb, var(--bg, #f8f6f1) 92%, transparent); color: var(--muted, #67625a); font: 12px/1.2 var(--sans);
+}
+.post .body .ed-embed .ed-embed-cap { cursor: text; }
+.post .body .ed-embed .ed-embed-cap[hidden] { display: none; }
+.ed-embed:hover .ed-embed-bar, .ed-embed.is-selected .ed-embed-bar, .ed-embed-bar:focus-within { opacity: 1; transform: none; pointer-events: auto; }
+.ed-embed.is-alt-open .ed-embed-bar { opacity: 0; pointer-events: none; }
+.ed-embed-field { z-index: 70; width: min(380px, calc(100vw - 32px)); padding: 6px; box-sizing: border-box; }
+.ed-embed-row { display: flex; gap: 6px; }
+.ed-embed-input { flex: 1; min-width: 0; }
+.ed-embed-err { padding: 7px 4px 2px; color: var(--tag, #b5452f); font-size: 12px; line-height: 1.35; }
+.ed-embed-err[hidden] { display: none; }
+@media (max-width: 640px), (pointer: coarse) {
+  .ed-embed:not(.is-selected) .ed-embed-bar { opacity: 0; pointer-events: none; }
+}
+/* --- /embeds --- */
+/* --- quotes & callouts --- */
+/* Quote source placeholder: an untouched "— " line */
+.post .body blockquote .quote-source.is-source-empty::after {
+  content: attr(data-source-placeholder);
+  pointer-events: none;
+  color: color-mix(in srgb, var(--muted, #67625a) 62%, transparent);
+}
+/* Toggle: open while writing; the ▸ marker folds it */
+.post .body .ed-summary.is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--muted, #67625a) 62%, transparent);
+  font-weight: 400;
+}
+.post .body .ed-summary { cursor: text; }
+.post .body .ed-summary::after { cursor: pointer; pointer-events: none; }
+.post .body .ed-details:not(.is-open) > :not(.ed-summary) { display: none; }
+/* --- footnotes --- */
+/* Ref in the text: number from the live numbering decoration (data-n). */
+.post .body sup.ed-fn { cursor: pointer; color: var(--link, #2f6b45); padding: 0 0.14em; border-radius: 3px; font-variant-numeric: tabular-nums; -webkit-user-select: none; user-select: none; }
+.post .body sup.ed-fn::after { content: attr(data-n); }
+.post .body sup.ed-fn:hover { background: color-mix(in srgb, var(--link) 10%, transparent); }
+.post .body sup.ed-fn.ProseMirror-selectednode { background: color-mix(in srgb, var(--link) 16%, transparent); box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--link) 45%, transparent); outline: none; }
+.post .body sup.ed-fn.is-empty { color: var(--tag, #b5452f); }
+/* The popover */
+.ed-fn-pop { width: 340px; max-width: calc(100vw - 24px); padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+.ed-fn-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 0 2px; }
+.ed-fn-title { font-weight: 600; font-size: 12px; color: var(--ink); }
+.ed-fn-hint { color: var(--muted); font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ed-fn-input {
+  width: 100%; min-height: 54px; resize: none; box-sizing: border-box; font: var(--ed-ui) / 1.45 var(--sans); color: var(--ink); background: #fff;
+  border: 1px solid var(--rule); border-radius: 7px; padding: 7px 9px; outline: none;
+}
+.ed-fn-input:focus { border-color: var(--ed-ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--link) 14%, transparent); }
+.ed-fn-actions { display: flex; align-items: center; }
+.ed-fn-actions .ed-btn:first-child { color: var(--muted); }
+.ed-fn-actions .ed-btn:first-child:hover { color: var(--tag, #b5452f); }
+.ed-fn-actions .ed-btn[hidden] { display: none; }
+.ed-fn-gap { flex: 1; }
+/* The live Notes list under the post (styled by post.css .footnotes) */
+.post .ed-notes[hidden] { display: none; }
+.post .ed-notes .ed-note-text { cursor: text; border-radius: 4px; outline: none; }
+.post .ed-notes .ed-note-text:hover { background: color-mix(in srgb, var(--ink) 4%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ink) 4%, transparent); }
+.post .ed-notes .ed-note-text:focus-visible { box-shadow: 0 0 0 2px var(--ed-ring); }
+.post .ed-notes .ed-note-empty { font-style: italic; color: color-mix(in srgb, var(--muted) 70%, transparent); }
+@media (pointer: coarse) { .ed-fn-actions .ed-btn { height: 40px; } }

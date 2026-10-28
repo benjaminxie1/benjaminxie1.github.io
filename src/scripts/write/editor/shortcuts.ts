@@ -14,6 +14,7 @@ const KEYS: Array<[string, string]> = [
   ['Mod-Shift-8', 'Bulleted list'],
   ['Mod-Shift-7', 'Numbered list'],
   ['Mod-Alt-c', 'Code block'],
+  ['Mod-Alt-f', 'Footnote / citation'],
   ['Shift-Enter', 'Line break'],
   ['Mod-z', 'Undo'],
   ['Mod-Shift-z', 'Redo'],
@@ -22,17 +23,23 @@ const KEYS: Array<[string, string]> = [
 ];
 const MD: Array<[string, string]> = [
   ['/', 'Insert menu'],
-  ['## ', 'Heading'],
+  ['# or ## ', 'Heading'],
   ['### ', 'Subheading'],
   ['> ', 'Quote'],
   ['- ', 'Bulleted list'],
   ['1. ', 'Numbered list'],
   ['```', 'Code block'],
-  ['---', 'Divider'],
+  ['---', 'Divider (on an empty line)'],
+  ['-- or ---', 'Em dash — (in a sentence)'],
+  ['2019--2020', 'En dash – between numbers'],
+  ['->', 'Arrow →'],
+  ['...', 'Ellipsis …'],
+  ['"quotes"', 'Curly “quotes”'],
   ['**bold**', 'Bold'],
   ['*italic*', 'Italic'],
   ['~~strike~~', 'Strikethrough'],
   ['`code`', 'Inline code'],
+  ['[text](url)', 'Link'],
 ];
 
 let dialog: HTMLDialogElement | null = null;
