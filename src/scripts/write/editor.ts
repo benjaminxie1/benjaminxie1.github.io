@@ -14,6 +14,7 @@ import '../../styles/write-editor.css';
 import { Figure, Uploads, insertFiles, pickFiles, stripPending, IMAGE_TYPES } from './editor/figure';
 import { EdCodeBlock } from './editor/codeblock';
 import { Dashes, SmartPaste } from './editor/typing';
+import { LeadWord } from './editor/leadword';
 import { Embed, EmbedPaste, withVideo } from './editor/embed';
 import { QuoteBlocks } from './editor/blocks';
 import { SlashMenu, slashItems, openSlash } from './editor/slash';
@@ -108,6 +109,7 @@ export function createEditor(opts: {
         registeredTrademark: false, leftArrow: false, rightArrow: false,
       }),
       Dashes,
+      LeadWord,
       SmartPaste,
       Placeholder.configure({
         includeChildren: false,
