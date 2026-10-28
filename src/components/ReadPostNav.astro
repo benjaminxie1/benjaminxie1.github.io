@@ -1,13 +1,15 @@
 ---
 // End of a post: the older and newer published posts, and a quiet "All posts".
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { type CollectionEntry } from 'astro:content';
+import { livePosts, isLive } from '../data/posts';
 
 interface Props {
   post: CollectionEntry<'blog'>;
 }
 const { post } = Astro.props;
-const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date);
-const i = post.data.draft ? -1 : posts.findIndex((p) => p.id === post.id);
+// live posts only: drafts and scheduled posts never appear as neighbours
+const posts = [...(await livePosts())].sort((a, b) => +b.data.date - +a.data.date);
+const i = isLive(post) ? posts.findIndex((p) => p.id === post.id) : -1;
 const newer = i > 0 ? posts[i - 1] : undefined;
 const older = i >= 0 && i < posts.length - 1 ? posts[i + 1] : undefined;
 ---
