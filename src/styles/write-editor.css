@@ -326,3 +326,77 @@ html.ed-mbar-on .post .body.ProseMirror { padding-bottom: 72px; }
 .post .ed-notes .ed-note-text:focus-visible { box-shadow: 0 0 0 2px var(--ed-ring); }
 .post .ed-notes .ed-note-empty { font-style: italic; color: color-mix(in srgb, var(--muted) 70%, transparent); }
 @media (pointer: coarse) { .ed-fn-actions .ed-btn { height: 40px; } }
+
+/* --- workflow r3 --- */
+/* Find & replace bar (⌘F) */
+.post .body .ed-find-hit { background: color-mix(in srgb, #e9c85b 42%, transparent); border-radius: 2px; box-shadow: 0 0 0 1px color-mix(in srgb, #e9c85b 42%, transparent); }
+.post .body .ed-find-hit.is-cur { background: color-mix(in srgb, var(--tag, #b5452f) 26%, transparent); box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--tag, #b5452f) 55%, transparent); }
+.ed-find {
+  position: fixed; top: 62px; right: max(16px, calc(50% - 504px)); z-index: 35; width: 392px; max-width: calc(100vw - 32px);
+  display: flex; flex-direction: column; gap: 6px; padding: 7px; box-sizing: border-box;
+  background: var(--ed-surface); border: 1px solid var(--rule); border-radius: 12px; box-shadow: var(--ed-shadow);
+  font: var(--ed-ui) / 1.2 var(--sans); color: var(--ink);
+  animation: ed-find-in .14s ease-out;
+}
+@keyframes ed-find-in { from { opacity: 0; transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .ed-find { animation: none; } }
+.ed-find[hidden], .ed-find-row[hidden] { display: none; }
+.ed-find-row { display: flex; align-items: center; gap: 3px; }
+.ed-find-in {
+  flex: 1; min-width: 0; height: 32px; box-sizing: border-box; font: 13.5px var(--sans); color: var(--ink); background: #fff;
+  border: 1px solid var(--rule); border-radius: 8px; padding: 0 9px; outline: none;
+}
+.ed-find-in:focus { border-color: var(--ed-ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--link) 14%, transparent); }
+.ed-find-in::-webkit-search-cancel-button { display: none; }
+.ed-find.is-none .ed-find-row:first-child .ed-find-in { border-color: color-mix(in srgb, var(--tag) 45%, var(--rule)); }
+.ed-find-count { flex: none; min-width: 52px; padding: 0 4px; text-align: center; color: var(--muted); font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ed-find.is-none .ed-find-count { color: var(--tag); }
+.ed-find-btn {
+  flex: none; height: 32px; min-width: 30px; padding: 0 7px; font: 13px var(--sans); color: var(--muted); background: none;
+  border: 1px solid transparent; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+}
+.ed-find-btn:hover:not(:disabled) { background: var(--ed-hover); color: var(--ink); }
+.ed-find-btn:focus-visible { outline: 2px solid var(--ed-ring); outline-offset: 1px; }
+.ed-find-btn:disabled { opacity: .4; cursor: default; }
+.ed-find-btn.ico { font-size: 15px; }
+.ed-find-btn.x { font-size: 19px; }
+.ed-find-btn.case { font-weight: 700; font-size: 12.5px; }
+.ed-find-btn[aria-pressed='true'], .ed-find-btn.txt.on { background: var(--ed-press); color: var(--link); }
+.ed-find-rep .ed-find-btn.txt { border-color: var(--rule); color: var(--ink); }
+@media (max-width: 640px) {
+  .ed-find { top: 56px; left: 8px; right: 8px; width: auto; max-width: none; }
+  .ed-find-in { height: 38px; font-size: 16px; }
+  .ed-find-btn { height: 38px; min-width: 34px; padding: 0 5px; }
+  .ed-find-row:first-child .ed-find-btn.txt { padding: 0 8px; }
+  .ed-find-count { min-width: 44px; }
+}
+
+/* Outline in the left margin (wide screens) */
+.ed-outline {
+  position: fixed; top: 116px; left: max(20px, calc(50% - 300px - 270px)); width: 208px; z-index: 5;
+  max-height: calc(100vh - 160px); overflow: auto; scrollbar-width: none;
+  font: 12.5px/1.4 var(--sans); color: var(--muted); opacity: .62; transition: opacity .2s;
+}
+.ed-outline::-webkit-scrollbar { display: none; }
+.ed-outline:hover, .ed-outline:focus-within { opacity: 1; }
+.ed-outline[hidden] { display: none; }
+.ed-outline-h { margin: 0 0 8px 12px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: color-mix(in srgb, var(--muted) 75%, transparent); }
+.ed-outline-list { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--rule); }
+.ed-outline-item {
+  display: block; width: 100%; text-align: left; font: inherit; color: inherit; background: none; border: 0; cursor: pointer;
+  padding: 4px 8px 4px 12px; margin-left: -1px; border-left: 2px solid transparent; border-radius: 0 6px 6px 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ed-outline-item.lv3 { padding-left: 24px; font-size: 12px; }
+.ed-outline-item:hover { color: var(--ink); background: var(--ed-hover); }
+.ed-outline-item:focus-visible { outline: 2px solid var(--ed-ring); outline-offset: -2px; }
+.ed-outline-item.is-cur { color: var(--ink); border-left-color: var(--link); }
+.ed-outline-item.is-empty { font-style: italic; opacity: .7; }
+
+/* Focus mode: dim everything but the block you're in (only while typing in the body) */
+.post .body.ProseMirror > * { transition: opacity .25s ease; }
+html.is-focus .post .body.ProseMirror-focused > :not(.ed-current) { opacity: .3; }
+html.is-focus .ed-outline { display: none; }
+@media (prefers-reduced-motion: reduce) { .post .body.ProseMirror > * { transition: none; } }
+/* Typewriter scrolling: room to keep the last line mid-screen */
+html.is-typewriter .post .body.ProseMirror { padding-bottom: 45vh; }

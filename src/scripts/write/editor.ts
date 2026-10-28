@@ -23,6 +23,8 @@ import { createBubble, createMobileBar, createPlus, formatCommands, shouldShowBu
 import { openShortcuts as openSheet, destroyShortcuts } from './editor/shortcuts';
 import { isCompact } from './editor/ui';
 import { Footnote } from './editor/footnote';
+import { FindPlugin } from './editor/find'; // workflow r3
+import { FocusPlugin } from './editor/focus'; // workflow r3
 
 export { normalizeUrl };
 
@@ -147,6 +149,7 @@ export function createEditor(opts: {
         options: { placement: 'left', offset: 14, flip: false, shift: false },
       }),
       EditorKeys,
+      FindPlugin, FocusPlugin, // workflow r3: find bar + focus mode (wired in main.ts)
     ],
     editorProps: {
       attributes: { class: 'body', spellcheck: 'true', autocapitalize: 'sentences', autocorrect: 'on', role: 'textbox', 'aria-multiline': 'true', 'aria-label': 'Post body', 'aria-expanded': 'false' },
