@@ -4,5 +4,5 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://benxie.garden',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/blog/draft/') && !page.includes('/write') })],
 });

@@ -12,6 +12,12 @@
     "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/comfortaa": "^5.3.0",
     "@fontsource/caveat": "^5.3.0",
-    "astro": "^7.4.1"
+    "@tiptap/core": "^3.32.0",
+    "@tiptap/extension-image": "^3.32.0",
+    "@tiptap/extension-placeholder": "^3.32.0",
+    "@tiptap/starter-kit": "^3.32.0",
+    "astro": "^7.4.1",
+    "marked": "^18.1.2",
+    "turndown": "^7.2.4"
   }
 }
