@@ -3,6 +3,10 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import PostBanner from '../../components/PostBanner.astro';
 import '../../styles/post.css';
+import '../../styles/reading.css';
+import ReadMeta from '../../components/ReadMeta.astro';
+import ReadToc from '../../components/ReadToc.astro';
+import ReadPostNav from '../../components/ReadPostNav.astro';
 
 export async function getStaticPaths() {
   // Published posts live at /blog/<slug>. Drafts get an unlisted (not secret)
@@ -32,28 +36,30 @@ const published = +d === 0 ? 'no date set' : `${month} ${day}${suffix}, ${d.getU
         <h1>{post.data.title}</h1>
         {post.data.description && <p class="dek">{post.data.description}</p>}
       </header>
-      {post.data.draft ? (
-        <p class="published"><span class="draft-tag">Draft preview</span>· {published}</p>
-      ) : (
-        <p class="published">Published {published}</p>
-      )}
-      <div class="body"><Content /></div>
-      <script is:inline>
-        // Opening word in accent italics, after the drop cap (same as the /write editor).
-        (function () {
-          var p = document.currentScript.previousElementSibling.firstElementChild;
-          if (!p || p.tagName !== 'P' || !p.firstChild || p.firstChild.nodeType !== 3) return;
-          var t = p.firstChild, m = /^(\S)([^\s.,;:!?—–-]*)/.exec(t.data);
-          if (!m || !m[2]) return;
-          var span = document.createElement('span');
-          span.className = 'lead-word';
-          span.textContent = m[2];
-          t.data = t.data.slice(m[0].length);
-          p.insertBefore(document.createTextNode(m[1]), t);
-          p.insertBefore(span, t);
-        })();
-      </script>
-      <p class="back"><a href="/blog">← All posts</a></p>
+      <ReadMeta post={post} published={published} />
+      <div class="read-main">
+        <ReadToc post={post} />
+        <div class="body"><Content /></div>
+        <script is:inline>
+          // Opening word in accent italics, after the drop cap (same as the /write editor).
+          (function () {
+            var p = document.currentScript.previousElementSibling.firstElementChild;
+            if (!p || p.tagName !== 'P' || !p.firstChild || p.firstChild.nodeType !== 3) return;
+            var t = p.firstChild, m = /^(\S)([^\s.,;:!?—–-]*)/.exec(t.data);
+            if (!m || !m[2]) return;
+            var span = document.createElement('span');
+            span.className = 'lead-word';
+            span.textContent = m[2];
+            t.data = t.data.slice(m[0].length);
+            p.insertBefore(document.createTextNode(m[1]), t);
+            p.insertBefore(span, t);
+          })();
+        </script>
+      </div>
+      <ReadPostNav post={post} />
     </article>
   </main>
+  <script>
+    import '../../scripts/read/index';
+  </script>
 </Base>

@@ -1,0 +1,40 @@
+---
+// "Contents" for long posts (3+ sections). Inline and collapsible under the
+// header; on wide screens it opens into a sticky margin rail (src/scripts/read/toc.ts).
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+const { post } = Astro.props;
+const { headings } = await render(post);
+const items: { id: string; text: string; subs: { id: string; text: string }[] }[] = [];
+for (const h of headings) {
+  if (!h.slug || h.slug === 'footnote-label') continue;
+  if (h.depth === 2) items.push({ id: h.slug, text: h.text, subs: [] });
+  else if (h.depth === 3 && items.length) items[items.length - 1].subs.push({ id: h.slug, text: h.text });
+}
+const show = items.length >= 3;
+---
+
+{show && (
+  <nav class="read-toc" aria-label="Contents">
+    <details>
+      <summary>Contents</summary>
+      <ol>
+        {items.map((it) => (
+          <li>
+            <a href={`#${it.id}`}>{it.text}</a>
+            {it.subs.length > 0 && (
+              <ol>
+                {it.subs.map((s) => (
+                  <li><a href={`#${s.id}`}>{s.text}</a></li>
+                ))}
+              </ol>
+            )}
+          </li>
+        ))}
+      </ol>
+    </details>
+  </nav>
+)}

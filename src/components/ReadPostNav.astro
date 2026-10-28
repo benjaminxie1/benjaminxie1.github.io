@@ -1,0 +1,33 @@
+---
+// End of a post: the older and newer published posts, and a quiet "All posts".
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+const { post } = Astro.props;
+const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date);
+const i = post.data.draft ? -1 : posts.findIndex((p) => p.id === post.id);
+const newer = i > 0 ? posts[i - 1] : undefined;
+const older = i >= 0 && i < posts.length - 1 ? posts[i + 1] : undefined;
+---
+
+<nav class="read-postnav" aria-label="More posts">
+  {(older || newer) && (
+    <div class="read-postnav-pair">
+      {older ? (
+        <a class="read-postnav-link is-older" href={`/blog/${older.id}`} rel="prev">
+          <span class="read-postnav-label">← Older</span>
+          <span class="read-postnav-title">{older.data.title}</span>
+        </a>
+      ) : <span />}
+      {newer && (
+        <a class="read-postnav-link is-newer" href={`/blog/${newer.id}`} rel="next">
+          <span class="read-postnav-label">Newer →</span>
+          <span class="read-postnav-title">{newer.data.title}</span>
+        </a>
+      )}
+    </div>
+  )}
+  <p class="back"><a href="/blog">← All posts</a></p>
+</nav>
