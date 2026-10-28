@@ -36,6 +36,7 @@ img { max-width: 100%; height: auto; }
 .site-header nav { display: flex; align-items: center; gap: 22px; font-size: 15px; }
 .site-header nav a { color: var(--ink); }
 .site-header nav a[aria-current='page'] { color: var(--link); }
+.site-header .wordmark { white-space: nowrap; }
 
 main { flex: 1; width: 100%; max-width: 1040px; margin: 0 auto; padding: 40px 28px 56px; }
 main.narrow > * { max-width: 680px; }
@@ -57,7 +58,7 @@ section { margin-bottom: 56px; }
 
 @media (max-width: 640px) {
   .site-header { padding: 16px 20px; }
-  .site-header nav { gap: 14px; font-size: 14px; }
+  .site-header nav { gap: 12px; font-size: 14px; }
   main { padding: 16px 20px 56px; }
   .site-footer { padding: 0 20px 32px; }
   h1 { font-size: 48px; }

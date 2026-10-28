@@ -1,8 +1,17 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+// Astro 7's default Markdown processor (used here to add the figure plugin).
+import { satteri } from '@astrojs/markdown-satteri';
+import { figurePlugin } from './src/plugins/figure.mjs';
 
 export default defineConfig({
   site: 'https://benxie.garden',
   integrations: [sitemap({ filter: (page) => !page.includes('/blog/draft/') && !page.includes('/write') })],
+  markdown: {
+    // ![alt](src "caption") alone in a paragraph → <figure><img><figcaption>
+    processor: satteri({ hastPlugins: [figurePlugin] }),
+    // calm, light code highlighting on the paper background (background overridden in post.css)
+    shikiConfig: { theme: 'github-light' },
+  },
 });

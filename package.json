@@ -8,16 +8,26 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/markdown-satteri": "^0.4.4",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/comfortaa": "^5.3.0",
     "@fontsource/caveat": "^5.3.0",
     "@tiptap/core": "^3.32.0",
+    "@tiptap/extension-bubble-menu": "^3.32.0",
+    "@tiptap/extension-file-handler": "^3.32.0",
+    "@tiptap/extension-floating-menu": "^3.32.0",
     "@tiptap/extension-image": "^3.32.0",
     "@tiptap/extension-placeholder": "^3.32.0",
+    "@tiptap/extension-typography": "^3.32.0",
+    "@tiptap/extensions": "^3.32.0",
+    "@tiptap/pm": "^3.32.0",
     "@tiptap/starter-kit": "^3.32.0",
+    "@tiptap/suggestion": "^3.32.0",
     "astro": "^7.4.1",
     "marked": "^18.1.2",
-    "turndown": "^7.2.4"
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2",
+    "yaml": "^2.9.1"
   }
 }
