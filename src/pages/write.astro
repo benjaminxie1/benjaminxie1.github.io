@@ -1,37 +1,39 @@
 ---
 // /write — Ben's private blog editor. You type directly into the post as it
-// will appear on the site (same banner, title, drop cap, styles). Drafts
-// autosave on this device; Save/Publish commit the post to GitHub, which
-// redeploys the site. Needs a fine-grained GitHub token (Contents: read/write
-// on this repo only), stored in this browser.
+// will appear on the site (same banner, title, drop cap, styles). Writing
+// autosaves on this device, per post; saving a draft or publishing commits the
+// post to GitHub, which redeploys the site. Needs a fine-grained GitHub token
+// (Contents: read/write on this repo only), stored in this browser.
+// Formatting UI lives in the editor module; this page is the app shell.
 import Base from '../layouts/Base.astro';
 import PostBanner from '../components/PostBanner.astro';
 import '../styles/post.css';
+import '../scripts/write/ui/app.css';
 const today = new Date().toISOString().slice(0, 10);
 ---
 
 <Base title="Write" noindex>
-  <div class="bar" role="toolbar" aria-label="Editor">
-    <div class="bar-in">
-      <div class="fmt">
-        <button data-cmd="bold" title="Bold (⌘B)"><b>B</b></button>
-        <button data-cmd="italic" title="Italic (⌘I)"><i>I</i></button>
-        <button data-cmd="h2" title="Heading">H2</button>
-        <button data-cmd="h3" title="Subheading">H3</button>
-        <button data-cmd="quote" title="Quote">“ ”</button>
-        <button data-cmd="ul" title="Bulleted list">• List</button>
-        <button data-cmd="ol" title="Numbered list">1. List</button>
-        <button data-cmd="link" title="Link (⌘K)">Link</button>
-        <button data-cmd="image" title="Insert image">Image</button>
-        <button data-cmd="hr" title="Section break">· · ·</button>
-        <button data-cmd="cover" title="Set a cover image (drives the banner)">Cover</button>
+  <div class="wbar" role="region" aria-label="Post actions">
+    <div class="wbar-in">
+      <button type="button" class="wb-btn wb-posts" data-act="posts" title="All posts">
+        <svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>
+        <span class="lbl">Posts</span>
+      </button>
+      <div class="wb-state" data-kind="idle">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="st-text">New post</span>
       </div>
-      <div class="act">
-        <span class="status" aria-live="polite"></span>
-        <button class="ghost" data-act="posts">Posts</button>
-        <button class="ghost" data-act="secondary">Save draft</button>
-        <button class="primary" data-act="primary">Publish</button>
-        <button class="ghost icon" data-act="settings" title="Settings" aria-label="Settings">⚙</button>
+      <span class="wb-gap"></span>
+      <span class="wb-stats" aria-label="Length"></span>
+      <button type="button" class="wb-btn wb-preview" data-act="preview">
+        Preview
+        <svg class="ico" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <button type="button" class="wb-btn wb-primary" data-act="primary">Publish…</button>
+      <div class="wb-more-wrap">
+        <button type="button" class="wb-btn wb-more" data-act="more" aria-label="More actions" aria-haspopup="menu" aria-expanded="false" title="More">
+          <svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="6" cy="12" r="1.6" fill="currentColor"></circle><circle cx="12" cy="12" r="1.6" fill="currentColor"></circle><circle cx="18" cy="12" r="1.6" fill="currentColor"></circle></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -39,212 +41,33 @@ const today = new Date().toISOString().slice(0, 10);
   <main class="post-main write">
     <PostBanner seed="new-post" manual />
     <article class="post">
+      <div class="notices">
+        <aside class="note onboard" aria-label="Getting started" hidden>
+          <p><b>Your writing saves on this device.</b> To publish, connect GitHub once.</p>
+          <div class="note-btns">
+            <button type="button" class="btn btn-primary" data-act="connect">Connect GitHub</button>
+            <button type="button" class="btn btn-quiet" data-act="dismiss-onboard">Not now</button>
+          </div>
+        </aside>
+        <aside class="note remote" aria-label="Newer version available" hidden></aside>
+      </div>
       <header class="head">
         <h1><textarea class="title-in" rows="1" placeholder="Title" aria-label="Title"></textarea></h1>
         <p class="dek"><textarea class="dek-in" rows="1" placeholder="A one-line summary (optional)" aria-label="Summary"></textarea></p>
       </header>
-      <p class="published">
-        <span class="draft-tag" hidden>Draft</span>Published
-        <input class="date-in" type="date" value={today} aria-label="Date" />
-      </p>
+      <div class="meta">
+        <p class="published">
+          <span class="m-state">Draft ·</span>
+          <button type="button" class="m-date" aria-label="Change date"></button>
+          <input class="date-in" type="date" value={today} tabindex="-1" aria-label="Date" />
+        </p>
+        <p class="url-line"></p>
+      </div>
       <div class="editor"></div>
     </article>
   </main>
-
-  <input class="file-image" type="file" accept="image/*" hidden />
-  <input class="file-cover" type="file" accept="image/*" hidden />
-
-  <dialog class="panel posts-panel">
-    <div class="panel-head">
-      <h2>Posts</h2>
-      <button class="ghost" data-act="close">Close</button>
-    </div>
-    <button class="primary new-post">+ New post</button>
-    <ul class="post-list"><li class="muted">Loading…</li></ul>
-  </dialog>
-
-  <dialog class="panel settings-panel">
-    <div class="panel-head">
-      <h2>Connect to GitHub</h2>
-      <button class="ghost" data-act="close">Close</button>
-    </div>
-    <p>Saving and publishing commit your post to the site's repo, so this browser needs a GitHub key. One-time setup:</p>
-    <ol>
-      <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → new fine-grained token</a>.</li>
-      <li>Name it <b>blog editor</b>, set expiration to a year.</li>
-      <li>Repository access: <b>Only select repositories</b> → <b>benjaminxie1.github.io</b>.</li>
-      <li>Permissions → Repository → <b>Contents: Read and write</b>.</li>
-      <li>Generate, copy, paste below.</li>
-    </ol>
-    <input class="token-in" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false" />
-    <div class="row-btns">
-      <button class="primary save-token">Save &amp; test</button>
-      <button class="ghost forget-token">Forget key</button>
-    </div>
-    <p class="token-msg small muted"></p>
-  </dialog>
 </Base>
 
 <script>
   import '../scripts/write/main';
 </script>
-
-<style>
-  /* ---- toolbar ---- */
-  .bar {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--rule);
-  }
-  .bar-in {
-    max-width: 1040px;
-    margin: 0 auto;
-    padding: 8px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .fmt, .act {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex-wrap: wrap;
-  }
-  .bar button, .panel button {
-    font: inherit;
-    font-size: 13px;
-    color: var(--ink);
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    padding: 5px 9px;
-    cursor: pointer;
-    line-height: 1.2;
-    white-space: nowrap;
-  }
-  .fmt button:hover, .ghost:hover { background: var(--tile); }
-  .fmt button.on { background: var(--rule); }
-  .bar .ghost, .panel .ghost { border-color: var(--rule); }
-  .bar .primary, .panel .primary {
-    background: var(--ink);
-    color: var(--bg);
-    border-color: var(--ink);
-  }
-  .bar .primary:hover, .panel .primary:hover { background: var(--link); border-color: var(--link); }
-  .icon { font-size: 15px !important; padding: 3px 8px !important; }
-  .status {
-    font-size: 12px;
-    color: var(--muted);
-    margin-right: 8px;
-    max-width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .status :global(a) { color: var(--link); text-decoration: underline; }
-
-  /* ---- the page you write on ---- */
-  .write { padding-top: 40px; }
-  .write textarea {
-    display: block;
-    width: 100%;
-    border: 0;
-    outline: 0;
-    resize: none;
-    overflow: hidden;
-    background: transparent;
-    color: inherit;
-    font: inherit;
-    text-align: inherit;
-    line-height: inherit;
-    padding: 0;
-    margin: 0;
-  }
-  .write textarea::placeholder { color: color-mix(in srgb, var(--muted) 55%, transparent); }
-  .date-in {
-    font: inherit;
-    color: inherit;
-    background: transparent;
-    border: 0;
-    border-bottom: 1px dashed var(--rule);
-    padding: 0 2px;
-    cursor: pointer;
-  }
-  .write .draft-tag {
-    display: inline-block;
-    margin-right: 10px;
-    padding: 1px 9px;
-    border-radius: 999px;
-    background: var(--tag);
-    color: #fff;
-    font-size: 12px;
-  }
-  .write .draft-tag[hidden] { display: none; }
-  .editor { min-height: 50vh; }
-  .editor :global(.ProseMirror) { outline: none; padding-bottom: 30vh; }
-  .editor :global(p.is-editor-empty:first-child::before) {
-    content: attr(data-placeholder);
-    float: left;
-    height: 0;
-    pointer-events: none;
-    color: color-mix(in srgb, var(--muted) 55%, transparent);
-  }
-  .editor :global(img.ProseMirror-selectednode) { outline: 2px solid var(--link); }
-  .editor :global(hr.ProseMirror-selectednode::after) { color: var(--link); }
-
-  /* ---- panels ---- */
-  .panel {
-    border: 1px solid var(--rule);
-    border-radius: 14px;
-    background: var(--bg);
-    color: var(--ink);
-    width: min(520px, calc(100vw - 32px));
-    padding: 22px 24px 24px;
-    font-size: 15px;
-    line-height: 1.6;
-  }
-  .panel::backdrop { background: rgba(34, 33, 30, 0.25); }
-  .panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .panel h2 { margin: 0; font-size: 32px; }
-  .panel a { color: var(--link); text-decoration: underline; }
-  .panel ol { padding-left: 20px; margin: 8px 0 16px; }
-  .token-in {
-    width: 100%;
-    font: inherit;
-    font-size: 14px;
-    padding: 9px 11px;
-    border: 1px solid var(--rule);
-    border-radius: 9px;
-    background: #fff;
-    color: var(--ink);
-  }
-  .row-btns { display: flex; gap: 8px; margin-top: 10px; }
-  .new-post { margin: 4px 0 12px; }
-  .post-list { list-style: none; padding: 0; margin: 0; max-height: 60vh; overflow: auto; }
-  .post-list li { border-top: 1px solid var(--rule); }
-  .post-item {
-    width: 100%;
-    text-align: left;
-    display: flex !important;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 12px 6px !important;
-    border-radius: 0 !important;
-    font-size: 15px !important;
-  }
-  .post-item:hover { background: var(--tile) !important; }
-  .pi-meta { color: var(--muted); font-size: 13px; white-space: nowrap; }
-
-  @media (max-width: 640px) {
-    .bar-in { padding: 8px 12px; gap: 6px; }
-    .fmt { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; }
-    .status { order: 10; width: 100%; max-width: none; white-space: normal; }
-    .write { padding-top: 16px; }
-  }
-</style>
