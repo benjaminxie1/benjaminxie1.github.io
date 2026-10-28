@@ -8,8 +8,8 @@
     margin: 8px 0 56px;
   }
   .post .head h1 {
-    font-size: clamp(44px, 6vw, 64px);
-    line-height: 1.05;
+    font-size: clamp(32px, 4.2vw, 42px);
+    line-height: 1.15;
     margin: 0 0 22px;
   }
   .post .dek {
