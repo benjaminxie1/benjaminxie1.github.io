@@ -408,3 +408,79 @@
   color: var(--link);
   text-decoration: none;
 }
+
+/* --- images r3 --- */
+/* Image widths: ![a](x.webp#small|#wide|#full) → figure.size-*. The editor shows the same widths. */
+.post .body figure.size-small {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.post .body figure.size-small img { width: 100%; }
+.post .body :is(figure.size-wide, .gallery.size-wide) {
+  /* centered on the column, up to 900px, never wider than the window (minus a gutter) */
+  --bleed: max(0px, calc(min(450px, 50vw - 24px) - 50%));
+  margin-left: calc(-1 * var(--bleed));
+  margin-right: calc(-1 * var(--bleed));
+}
+.post .body :is(figure.size-full, .gallery.size-full) {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+.post .body :is(figure.size-wide, figure.size-full) img { width: 100%; }
+.post .body figure.size-full img,
+.post .body .gallery.size-full img { border-radius: 0; }
+.post .body figure.size-full figcaption { padding: 0 20px; }
+.post .body .gallery.size-full { --cap-pad: 20px; }
+/* a full-bleed image must not add a sideways scrollbar where the window's scrollbar takes space */
+.post-main:has(.size-full) { overflow-x: clip; }
+
+/* Side-by-side images: one row, every image the same height (flex grows by aspect ratio --r). */
+.post .body .gallery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 36px 0;
+  clear: both;
+}
+.post .body .gallery > figure,
+.post .body .gallery > .ed-gallery-items > figure {
+  flex: var(--r, 1) 1 0;
+  min-width: 0;
+  margin: 0;
+}
+.post .body .gallery figure img {
+  width: 100%;
+  border-radius: 8px;
+}
+.post .body .gallery figcaption {
+  font-size: 14px;
+  margin-top: 8px;
+}
+.post .body .gallery-caption {
+  flex: 0 0 100%; /* its own line under the images */
+  margin: 2px 0 0;
+  padding: 0 max(var(--cap-pad, 0px), calc((100% - 520px) / 2));
+  text-wrap: balance;
+  text-align: center;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+@media (max-width: 640px) {
+  .post .body figure.size-small { width: 78%; }
+  /* on a phone, wide and full images both run edge to edge */
+  .post .body :is(figure.size-wide, figure.size-full, .gallery.size-wide, .gallery.size-full) {
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+  .post .body :is(figure.size-wide, figure.size-full) img,
+  .post .body :is(.gallery.size-wide, .gallery.size-full) img { border-radius: 0; }
+  .post .body figure.size-wide figcaption { padding: 0 20px; }
+  .post .body .gallery.size-wide { --cap-pad: 20px; }
+  .post .body .gallery { gap: 6px; }
+  .post .body .gallery figure img { border-radius: 6px; }
+  .post .body .gallery figcaption { font-size: 13px; }
+}

@@ -13,6 +13,7 @@ import { type Doc, today, toSite } from './lib';
 import { embedTurndownRule, canonicalizeEmbeds, stripEmbeds } from './markdown-embed';
 import { addBlockRules, withoutKnownBlocks } from './markdown-blocks';
 import { footnoteRule, withFootnotesMd, withFootnotesHtml, stripFootnoteRefs } from './markdown-footnotes';
+import { addImageRules, figureHtml, galleryHtml, sizeFragment, sizeOfClass, withoutGalleries } from './markdown-images';
 
 /** Thrown by toMarkdown when the HTML still references a local (blob:/data:) image. */
 export class UnsavedImageError extends Error {
@@ -52,11 +53,12 @@ td.escape = (s: string) => baseEscape(s)
   .replace(/&(?=#?[a-z0-9]+;)/gi, '&amp;')
   .replace(/<(?=[a-z/!?])/gi, '&lt;');
 
-function imageMd(img: Element, caption: string) {
+/** `frag` is a layout fragment (#wide, #row… see markdown-images.ts), appended to the src. */
+function imageMd(img: Element, caption: string, frag = '') {
   const src = siteSrc(img.getAttribute('src') || '');
   const alt = esc.alt(img.getAttribute('alt') || '');
   const cap = caption.trim() ? ` "${esc.title(caption)}"` : '';
-  return `![${alt}](${esc.url(src)}${cap})`;
+  return `![${alt}](${esc.url(src)}${frag}${cap})`;
 }
 td.addRule('figure', {
   filter: 'figure',
@@ -65,9 +67,10 @@ td.addRule('figure', {
     const img = el.querySelector('img');
     if (!img) return '\n\n' + td.turndown(el.innerHTML) + '\n\n';
     const cap = el.querySelector('figcaption')?.textContent || img.getAttribute('title') || '';
-    return '\n\n' + imageMd(img, cap) + '\n\n';
+    return '\n\n' + imageMd(img, cap, sizeFragment(sizeOfClass(el))) + '\n\n';
   },
 });
+addImageRules(td, imageMd); // side-by-side galleries
 td.addRule('img', {
   filter: 'img',
   replacement: (_c, node) => {
@@ -149,8 +152,7 @@ export function htmlToMarkdown(html: string): string {
 // ---------- markdown -> HTML ----------
 const attr = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const text = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const figure = (href: string, alt: string, title: string | null | undefined) =>
-  `<figure><img src="${attr(toSite(href))}" alt="${attr(alt)}">${title ? `<figcaption>${text(title)}</figcaption>` : ''}</figure>`;
+const figure = figureHtml; // layout fragments (#wide…) → figure size classes; see markdown-images.ts
 const isBlank = (t: Tokens.Generic) => (t.type === 'text' && !String(t.raw).trim()) || t.type === 'br';
 
 const md = new Marked({ gfm: true, breaks: false });
@@ -160,6 +162,8 @@ md.use({
     paragraph(this: any, tok: Tokens.Paragraph) {
       const toks = tok.tokens || [];
       if (!toks.some((t) => t.type === 'image')) return `<p>${this.parser.parseInline(toks)}</p>\n`;
+      const row = galleryHtml(toks, (t) => this.parser.parseInline(t));
+      if (row) return row;
       // split around images: text runs become paragraphs, images become figures
       let out = '', run: Tokens.Generic[] = [];
       const flush = () => {
@@ -202,7 +206,7 @@ export function unsupportedIn(html: string): string[] {
     [/<h1[\s>]/i, 'a top-level heading (# …)'], [/<(h4|h5|h6)[\s>]/i, 'a small heading (#### …)'],
     [/<input[^>]+checkbox/i, 'a task list'], [/<(sup|sub)[\s>]/i, 'super/subscript'],
   ];
-  const rest = withoutKnownBlocks(html); // pull quotes, callouts and toggles are fine
+  const rest = withoutKnownBlocks(withoutGalleries(html)); // pull quotes, callouts and toggles are fine
   for (const [re, label] of checks) if (re.test(rest)) found.add(label);
   return [...found];
 }
