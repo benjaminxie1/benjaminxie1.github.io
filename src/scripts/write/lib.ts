@@ -26,6 +26,8 @@ export type Doc = {
   draft: boolean; // status in the repo
   published: boolean; // whether the repo copy is live
   html: string;
+  slug?: string; // desired slug for a not-yet-saved post
+  extra?: Record<string, unknown>; // unknown frontmatter keys, preserved on save
 };
 export const today = () => new Date().toLocaleDateString('en-CA');
 export const blank = (): Doc => ({ path: null, sha: null, title: '', description: '', date: today(), cover: '', draft: true, published: false, html: '' });
