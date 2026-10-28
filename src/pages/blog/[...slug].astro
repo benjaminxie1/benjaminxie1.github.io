@@ -4,8 +4,13 @@ import Base from '../../layouts/Base.astro';
 import PostBanner from '../../components/PostBanner.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+  // Published posts live at /blog/<slug>. Drafts get a private, unlisted
+  // preview at /blog/draft/<slug> (not in the list, RSS, sitemap or search).
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.data.draft ? `draft/${post.id}` : post.id },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
@@ -17,7 +22,7 @@ const month = d.toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
 const published = `${month} ${day}${suffix}, ${d.getUTCFullYear()}`;
 ---
 
-<Base title={post.data.title} description={post.data.description || undefined}>
+<Base title={post.data.title} description={post.data.description || undefined} noindex={post.data.draft}>
   <main class="post-main">
     <PostBanner seed={post.id} cover={post.data.cover} />
     <article class="post">
@@ -25,7 +30,7 @@ const published = `${month} ${day}${suffix}, ${d.getUTCFullYear()}`;
         <h1>{post.data.title}</h1>
         {post.data.description && <p class="dek">{post.data.description}</p>}
       </header>
-      <p class="published">Published {published}</p>
+      <p class="published">{post.data.draft ? <span class="draft-tag">Draft preview</span> : null}Published {published}</p>
       <div class="body"><Content /></div>
       <p class="back"><a href="/blog">← All posts</a></p>
     </article>
@@ -113,6 +118,15 @@ const published = `${month} ${day}${suffix}, ${d.getUTCFullYear()}`;
     content: '· · ·';
     color: var(--muted);
     letter-spacing: 0.4em;
+  }
+  .draft-tag {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 1px 9px;
+    border-radius: 999px;
+    background: var(--tag);
+    color: #fff;
+    font-size: 12px;
   }
   .back {
     margin-top: 56px;

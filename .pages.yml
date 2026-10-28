@@ -33,7 +33,7 @@ content:
         label: Cover image (optional)
         type: image
       - name: draft
-        label: Draft (hidden from the site)
+        label: "Draft (hidden; preview at benxie.garden/blog/draft/<file name>)"
         type: boolean
         default: true
       - name: body

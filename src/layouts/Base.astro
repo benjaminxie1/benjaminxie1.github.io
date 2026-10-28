@@ -7,8 +7,10 @@ interface Props {
   /** Fit the page to one screen with no scrolling (desktop). */
   fit?: boolean;
   description?: string;
+  /** Keep this page out of search engines (draft previews). */
+  noindex?: boolean;
 }
-const { title, description = site.description, fit = false } = Astro.props;
+const { title, description = site.description, fit = false, noindex = false } = Astro.props;
 const pageTitle = title ? `${title} · ${site.short}` : site.short;
 const ogImage = new URL('/og.png', Astro.site).href;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -23,6 +25,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
