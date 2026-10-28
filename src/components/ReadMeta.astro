@@ -1,0 +1,65 @@
+---
+// The line under a post's header: published date, reading time, and an
+// "Updated" date when the post's frontmatter has `updated:`.
+import { readFileSync } from 'node:fs';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  /** The page's formatted published date ("October 27th, 2026"). */
+  published: string;
+}
+const { post, published } = Astro.props;
+
+const ordinal = (d: Date) => {
+  const day = d.getUTCDate();
+  const s = day % 10 === 1 && day !== 11 ? 'st' : day % 10 === 2 && day !== 12 ? 'nd' : day % 10 === 3 && day !== 13 ? 'rd' : 'th';
+  return `${d.toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' })} ${day}${s}, ${d.getUTCFullYear()}`;
+};
+
+// `updated` from the schema if it has one, else straight from the file's frontmatter.
+let updated: Date | undefined;
+const fromData = (post.data as { updated?: unknown }).updated;
+let raw: unknown = fromData;
+if (raw == null && post.filePath) {
+  try {
+    const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(readFileSync(post.filePath, 'utf8'));
+    raw = fm && /^updated:\s*["']?([^"'\r\n]+)["']?\s*$/m.exec(fm[1])?.[1];
+  } catch {}
+}
+if (raw) {
+  const u = raw instanceof Date ? raw : new Date(String(raw));
+  // only worth showing when it's a different day from (and after) the publish date
+  if (!isNaN(+u) && +post.data.date !== 0 && u.toISOString().slice(0, 10) > post.data.date.toISOString().slice(0, 10)) updated = u;
+}
+
+// Reading time: ~230 words a minute for prose, code counts for less, ~10s per image.
+const md = post.body ?? '';
+const code = md.match(/```[\s\S]*?```/g) ?? [];
+const prose = md
+  .replace(/```[\s\S]*?```/g, ' ')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+  .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+  .replace(/^\[\^[^\]]+\]:/gm, ' ');
+const words = (prose.match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu) ?? []).length;
+const codeWords = code.join(' ').split(/\s+/).filter(Boolean).length;
+const images = (md.match(/!\[[^\]]*\]\(/g) ?? []).length + (md.match(/<img\b/gi) ?? []).length;
+const minutes = Math.max(1, Math.round(words / 230 + codeWords / 460 + images / 6));
+const iso = (d: Date) => d.toISOString().slice(0, 10);
+const hasDate = +post.data.date !== 0;
+---
+
+<p class="published read-meta">
+  {post.data.draft ? <span class="draft-tag">Draft preview</span> : <span>Published </span>}
+  {post.data.draft && <span aria-hidden="true">· </span>}
+  {hasDate ? <time datetime={iso(post.data.date)}>{published}</time> : <span>{published}</span>}
+  <span class="read-meta-sep" aria-hidden="true">·</span>
+  <span>{minutes} min read</span>
+  {updated && (
+    <>
+      <span class="read-meta-sep" aria-hidden="true">·</span>
+      <span>Updated <time datetime={iso(updated)}>{ordinal(updated)}</time></span>
+    </>
+  )}
+</p>

@@ -2,7 +2,7 @@
 import { h } from './dom';
 
 export type MenuItem =
-  | { label: string; hint?: string; run: () => void; disabled?: boolean; danger?: boolean; note?: string }
+  | { label: string; hint?: string; run: () => void; disabled?: boolean; danger?: boolean; note?: string; checked?: boolean }
   | { sep: true }
   | { info: string };
 
@@ -11,14 +11,15 @@ export function attachMenu(button: HTMLButtonElement, build: () => MenuItem[]) {
   menu.id = 'more-menu';
   button.setAttribute('aria-controls', menu.id);
   button.after(menu);
-  const items = () => [...menu.querySelectorAll<HTMLButtonElement>('[role=menuitem]:not([disabled])')];
+  const items = () => [...menu.querySelectorAll<HTMLButtonElement>('[role^=menuitem]:not([disabled])')];
 
   function open(focusLast = false) {
     menu.replaceChildren();
     for (const it of build()) {
       if ('sep' in it) { menu.append(h('div', { class: 'menu-sep', role: 'separator' })); continue; }
       if ('info' in it) { menu.append(h('div', { class: 'menu-info', text: it.info })); continue; }
-      const b = h('button', { type: 'button', role: 'menuitem', tabindex: '-1', class: 'menu-item' + (it.danger ? ' danger' : ''), disabled: !!it.disabled },
+      const check = it.checked !== undefined;
+      const b = h('button', { type: 'button', role: check ? 'menuitemcheckbox' : 'menuitem', 'aria-checked': check ? String(!!it.checked) : undefined, tabindex: '-1', class: 'menu-item' + (it.danger ? ' danger' : '') + (check ? ' is-check' : ''), disabled: !!it.disabled },
         h('span', { class: 'mi-l' }, h('span', { text: it.label }), it.note ? h('span', { class: 'mi-note', text: it.note }) : null),
         it.hint ? h('kbd', { text: it.hint }) : null,
       );

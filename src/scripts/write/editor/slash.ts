@@ -10,7 +10,7 @@ export type SlashItem = { id: string; title: string; hint: string; keywords: str
 
 export const slashKey = new PluginKey('edSlash');
 
-export function slashItems(pickImages: (editor: Editor) => void): SlashItem[] {
+export function slashItems(pickImages: (editor: Editor) => void, gallery?: SlashItem): SlashItem[] {
   const blk = (e: Editor, r: Range) => e.chain().focus().deleteRange(r);
   return [
     { id: 'h2', title: 'Heading', hint: '##', keywords: 'h2 title section large', icon: icons.heading, run: (e, r) => blk(e, r).setNode('heading', { level: 2 }).run() },
@@ -20,6 +20,7 @@ export function slashItems(pickImages: (editor: Editor) => void): SlashItem[] {
     { id: 'ul', title: 'Bulleted list', hint: '-', keywords: 'bullet unordered ul points', icon: icons.ul, run: (e, r) => blk(e, r).setNode('paragraph').toggleBulletList().run() },
     { id: 'ol', title: 'Numbered list', hint: '1.', keywords: 'ordered ol numbers steps', icon: icons.ol, run: (e, r) => blk(e, r).setNode('paragraph').toggleOrderedList().run() },
     { id: 'image', title: 'Image', hint: 'drop', keywords: 'photo picture figure upload img', icon: icons.image, run: (e, r) => { blk(e, r).run(); pickImages(e); } },
+    ...(gallery ? [gallery] : []),
     { id: 'code', title: 'Code block', hint: '```', keywords: 'pre snippet program', icon: icons.codeBlock, run: (e, r) => blk(e, r).setNode('codeBlock').run() },
     { id: 'hr', title: 'Divider', hint: '---', keywords: 'hr rule separator break line', icon: icons.hr, run: (e, r) => blk(e, r).setHorizontalRule().run() },
     footnoteSlashItem,

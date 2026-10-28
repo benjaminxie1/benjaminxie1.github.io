@@ -1,0 +1,29 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PostList from '../../../components/PostList.astro';
+import TagBar from '../../../components/TagBar.astro';
+import { livePosts, tagsOf, type Tag } from '../../../data/posts';
+
+export async function getStaticPaths() {
+  const posts = await livePosts();
+  const tags = tagsOf(posts);
+  return tags.map((tag) => ({ params: { tag: tag.slug }, props: { tag, tags, total: posts.length } }));
+}
+const { tag, tags, total } = Astro.props as { tag: Tag; tags: Tag[]; total: number };
+const n = tag.posts.length;
+---
+
+<Base title={`Posts tagged “${tag.name}”`} description={`${n} ${n === 1 ? 'post' : 'posts'} by Ben Xie about ${tag.name}.`}>
+  <main class="narrow">
+    <h1>{tag.name}</h1>
+    <TagBar tags={tags} current={tag.slug} total={total} />
+    <PostList posts={tag.posts} current={tag.slug} />
+    <p class="small back"><a href="/blog/">← All posts</a></p>
+  </main>
+</Base>
+
+<style>
+  .back {
+    margin-top: 32px;
+  }
+</style>

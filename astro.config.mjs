@@ -6,6 +6,9 @@ import { satteri } from '@astrojs/markdown-satteri';
 import { figurePlugin } from './src/plugins/figure.mjs';
 import { quotePlugin } from './src/plugins/quote.mjs';
 
+// Drafts and scheduled posts are built under /blog/draft/ (see src/data/posts.ts),
+// so leaving that folder out keeps them out of the sitemap.
+
 export default defineConfig({
   site: 'https://benxie.garden',
   integrations: [sitemap({ filter: (page) => !page.includes('/blog/draft/') && !page.includes('/write') })],

@@ -1,0 +1,126 @@
+---
+// The blog's list of posts, grouped by year: title, date, summary, reading
+// time and tags. Used by /blog and /blog/tags/<tag>.
+import { postTags, readingMinutes, tagsOf, type Post } from '../data/posts';
+
+interface Props {
+  posts: Post[];
+  /** tag slug to leave unlinked (the tag page we're on) */
+  current?: string;
+}
+const { posts, current } = Astro.props;
+// one spelling per tag (the most recent), even if older posts wrote it differently
+const names = new Map(tagsOf(posts).map((t) => [t.slug, t.name]));
+const years = new Map<number, Post[]>();
+for (const p of posts) {
+  const y = p.data.date.getUTCFullYear();
+  years.set(y, [...(years.get(y) ?? []), p]);
+}
+const iso = (d: Date) => d.toISOString().slice(0, 10);
+// the year is the group heading, so rows show just the day
+const monthDay = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+
+{[...years].map(([year, list]) => (
+  <section class="year" aria-labelledby={`y-${year}`}>
+    <h2 class="year-h" id={`y-${year}`}>{year}</h2>
+    <ul class="posts">
+      {list.map((p) => (
+        <li>
+          <a class="title" href={`/blog/${p.id}/`}>{p.data.title}</a>
+          <time class="date" datetime={iso(p.data.date)}>{monthDay(p.data.date)}</time>
+          {p.data.description && <p class="desc">{p.data.description}</p>}
+          <p class="meta">
+            <span>{readingMinutes(p.body)} min read</span>
+            {postTags(p).map((t) =>
+              t.slug === current ? <span class="chip on">{names.get(t.slug) ?? t.name}</span> : <a class="chip" href={`/blog/tags/${t.slug}/`}>{names.get(t.slug) ?? t.name}</a>,
+            )}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </section>
+))}
+
+<style>
+  .year {
+    margin: 0 0 8px;
+  }
+  .year-h {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 28px 0 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .year:first-child .year-h {
+    margin-top: 4px;
+  }
+  .posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .posts li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .year:not(:last-child) .posts li:last-child {
+    border-bottom: 0;
+  }
+  .title {
+    font-size: 18px;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--muted);
+    text-underline-offset: 5px;
+  }
+  .title:hover {
+    color: var(--link);
+  }
+  .date {
+    color: var(--muted);
+    font-size: 14px;
+    white-space: nowrap;
+    padding-top: 3px;
+  }
+  .desc {
+    grid-column: 1 / -1;
+    margin: 6px 0 0;
+    color: var(--muted);
+  }
+  .meta {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .chip {
+    display: inline-block;
+    font-size: 12.5px;
+    line-height: 1.7;
+    padding: 0 9px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--muted);
+  }
+  a.chip:hover {
+    color: var(--link);
+    border-color: color-mix(in srgb, var(--link) 45%, transparent);
+    text-decoration: none;
+  }
+  .chip.on {
+    color: var(--ink);
+    border-color: color-mix(in srgb, var(--ink) 35%, transparent);
+  }
+</style>
