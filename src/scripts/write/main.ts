@@ -472,6 +472,9 @@ const sheetHost: SheetHost = {
   setCover(src, preview) { doc.cover = src; coverPreview = preview; changed(); paintBanner(); },
   removeCover() { doc.cover = ''; coverPreview = null; changed(); paintBanner(); toast('Cover removed'); },
   publish: () => commit('publish'),
+  // tags / updated live in doc.extra (frontmatter keys the editor doesn't otherwise know)
+  meta: (k) => doc.extra?.[k],
+  setMeta(k, v) { const x = { ...doc.extra }; if (v == null) delete x[k]; else x[k] = v; doc.extra = Object.keys(x).length ? x : undefined; changed(); },
 };
 
 async function openPublish() {

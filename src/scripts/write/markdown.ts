@@ -227,6 +227,8 @@ export function normaliseDate(raw: unknown): string | null {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 const q = (s: string) => JSON.stringify(s); // JSON strings are valid YAML double-quoted scalars
+/** A string as a YAML flow-sequence item: bare when that reads back the same, else double-quoted. */
+const flowItem = (t: string) => (/^[\p{L}\p{N}][\p{L}\p{N} ._'’-]*$/u.test(t) && !/^(true|false|null|yes|no|on|off|~|[-+]?[\d.]+(e[-+]?\d+)?|\d{4}-\d\d?-\d\d?.*)$/i.test(t) && !/\s$/.test(t) ? t : q(t));
 const safeBare = (s: string) => /^\d{4}-\d{2}-\d{2}([T ][\d:.]+(Z|[+-]\d{2}:?\d{2})?)?$/.test(s);
 
 export function toMarkdown(doc: Doc): string {
@@ -246,7 +248,10 @@ export function toMarkdown(doc: Doc): string {
   const extra = doc.extra || {};
   for (const k of Object.keys(extra)) {
     if (KNOWN.includes(k)) continue;
-    lines.push(YAML.stringify({ [k]: extra[k] }, { lineWidth: 0 }).replace(/\n$/, ''));
+    const v = extra[k];
+    // tags: [energy, "policy & law"] on one line (written by the publish sheet)
+    if (k === 'tags' && Array.isArray(v) && v.every((t) => typeof t === 'string')) lines.push(`tags: [${v.map(flowItem).join(', ')}]`);
+    else lines.push(YAML.stringify({ [k]: v }, { lineWidth: 0 }).replace(/\n$/, ''));
   }
   lines.push('---', '');
   return lines.join('\n') + '\n' + body + '\n';

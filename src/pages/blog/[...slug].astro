@@ -1,20 +1,27 @@
 ---
 import { getCollection, render } from 'astro:content';
+import { routeOf, isScheduled, postTags, readingMinutes, excerpt } from '../../data/posts';
 import Base from '../../layouts/Base.astro';
 import PostBanner from '../../components/PostBanner.astro';
 import '../../styles/post.css';
 
 export async function getStaticPaths() {
-  // Published posts live at /blog/<slug>. Drafts get an unlisted (not secret)
-  // preview at /blog/draft/<slug> (not in the list, RSS, sitemap or search).
+  // Published posts live at /blog/<slug>. Drafts and scheduled (future-dated)
+  // posts get an unlisted (not secret) preview at /blog/draft/<slug> (not in
+  // the list, RSS, sitemap or search). See src/data/posts.ts.
   const posts = await getCollection('blog');
-  return posts.map((post) => ({
-    params: { slug: post.data.draft ? `draft/${post.id}` : post.id },
-    props: { post },
+  return posts.map((p) => ({
+    params: { slug: routeOf(p) },
+    // a scheduled post previews exactly like a draft until its day comes
+    props: { post: isScheduled(p) ? { ...p, data: { ...p.data, draft: true } } : p, scheduled: isScheduled(p) },
   }));
 }
 
-const { post } = Astro.props;
+const { post, scheduled } = Astro.props;
+// for the post body: tags (with /blog/tags/<slug> links), last edit, reading time
+const tags = postTags(post);
+const updated = post.data.updated && +post.data.updated > +post.data.date ? post.data.updated : undefined;
+const minutes = readingMinutes(post.body);
 const { Content } = await render(post);
 const d = post.data.date;
 const day = d.getUTCDate();
@@ -24,7 +31,13 @@ const month = d.toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
 const published = +d === 0 ? 'no date set' : `${month} ${day}${suffix}, ${d.getUTCFullYear()}`;
 ---
 
-<Base title={post.data.title} description={post.data.description || undefined} noindex={post.data.draft}>
+<Base
+  title={post.data.title}
+  description={post.data.description || excerpt(post.body) || undefined}
+  noindex={post.data.draft}
+  image={post.data.cover}
+  article={post.data.draft ? undefined : { published: post.data.date, modified: updated, tags: tags.map((t) => t.name), minutes }}
+>
   <main class="post-main">
     <PostBanner seed={post.id} cover={post.data.cover} />
     <article class="post">
