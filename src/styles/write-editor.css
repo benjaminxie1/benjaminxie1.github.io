@@ -240,3 +240,40 @@ html.ed-mbar-on .post .body.ProseMirror { padding-bottom: 72px; }
   .ed-sheet[open] { animation: none; }
   .ed-figure[data-state='uploading'] .ed-fig-status > span:last-child::before { animation-duration: 2.4s; }
 }
+
+/* --- embeds --- */
+.post .body .ed-embed { position: relative; }
+.post .body .ed-embed .ed-embed-media { position: relative; border-radius: 12px; line-height: 0; cursor: default; }
+.post .body .ed-embed.is-selected .ed-embed-media::after,
+.post .body .ed-embed .ed-embed-media:focus-within::after {
+  content: ''; position: absolute; inset: -4px; border-radius: 14px; pointer-events: none; box-shadow: 0 0 0 2px var(--link, #2f6b45);
+}
+.post .body .ed-embed-stage { position: relative; }
+.post .body .ed-embed-stage.is-playing iframe { width: 100%; height: 100%; border: 0; display: block; }
+.ed-embed-poster { position: absolute; inset: 0; display: grid; place-items: center; background: var(--tile, #f4f1ea); }
+.ed-embed-poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; margin: 0; border-radius: 0; }
+.ed-embed-play {
+  position: relative; width: 58px; height: 58px; border-radius: 50%; border: 0; cursor: pointer; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--bg, #f8f6f1) 92%, transparent); color: var(--ink, #22211e); box-shadow: var(--ed-shadow);
+  transition: transform 0.15s, background 0.15s;
+}
+.ed-embed-play svg { margin-left: 3px; }
+.ed-embed-play:hover { transform: scale(1.05); background: var(--ed-surface); }
+.ed-embed-play:focus-visible { outline: 2px solid var(--ed-ring); outline-offset: 2px; }
+.ed-embed-label {
+  position: absolute; left: 10px; bottom: 10px; padding: 4px 9px; border-radius: 999px; line-height: 1.2;
+  background: color-mix(in srgb, var(--bg, #f8f6f1) 92%, transparent); color: var(--muted, #67625a); font: 12px/1.2 var(--sans);
+}
+.post .body .ed-embed .ed-embed-cap { cursor: text; }
+.post .body .ed-embed .ed-embed-cap[hidden] { display: none; }
+.ed-embed:hover .ed-embed-bar, .ed-embed.is-selected .ed-embed-bar, .ed-embed-bar:focus-within { opacity: 1; transform: none; pointer-events: auto; }
+.ed-embed.is-alt-open .ed-embed-bar { opacity: 0; pointer-events: none; }
+.ed-embed-field { z-index: 70; width: min(380px, calc(100vw - 32px)); padding: 6px; box-sizing: border-box; }
+.ed-embed-row { display: flex; gap: 6px; }
+.ed-embed-input { flex: 1; min-width: 0; }
+.ed-embed-err { padding: 7px 4px 2px; color: var(--tag, #b5452f); font-size: 12px; line-height: 1.35; }
+.ed-embed-err[hidden] { display: none; }
+@media (max-width: 640px), (pointer: coarse) {
+  .ed-embed:not(.is-selected) .ed-embed-bar { opacity: 0; pointer-events: none; }
+}
+/* --- /embeds --- */

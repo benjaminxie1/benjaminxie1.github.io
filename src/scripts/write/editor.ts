@@ -14,6 +14,7 @@ import '../../styles/write-editor.css';
 import { Figure, Uploads, insertFiles, pickFiles, stripPending, IMAGE_TYPES } from './editor/figure';
 import { EdCodeBlock } from './editor/codeblock';
 import { Dashes, SmartPaste } from './editor/typing';
+import { Embed, EmbedPaste, withVideo } from './editor/embed';
 import { SlashMenu, slashItems, openSlash } from './editor/slash';
 import { FakeSelection, createLinkUI, normalizeUrl } from './editor/link';
 import { createBubble, createMobileBar, createPlus, formatCommands, shouldShowBubble, shouldShowPlus } from './editor/menus';
@@ -93,6 +94,8 @@ export function createEditor(opts: {
       }),
       EdCodeBlock,
       Figure.configure({ uploads }),
+      Embed,
+      EmbedPaste,
       Typography.configure({
         // Only the typographer's essentials: smart quotes, em dash, ellipsis.
         multiplication: false, oneHalf: false, oneQuarter: false, threeQuarters: false,
@@ -114,7 +117,7 @@ export function createEditor(opts: {
       }),
       CharacterCount,
       FakeSelection,
-      SlashMenu.configure({ items: slashItems((ed) => chooseImages(ed)) }),
+      SlashMenu.configure({ items: withVideo(slashItems((ed) => chooseImages(ed))) }),
       FileHandler.configure({
         allowedMimeTypes: IMAGE_TYPES,
         onPaste: (ed, files) => insertFiles(ed, uploads, files),
