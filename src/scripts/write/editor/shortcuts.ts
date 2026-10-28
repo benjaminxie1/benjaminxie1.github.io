@@ -18,6 +18,11 @@ const KEYS: Array<[string, string]> = [
   ['Shift-Enter', 'Line break'],
   ['Mod-z', 'Undo'],
   ['Mod-Shift-z', 'Redo'],
+  ['Mod-s', 'Save draft'],
+  ['Mod-f', 'Find and replace'],
+  ['Mod-g', 'Next match (with Shift: previous)'],
+  ['Mod-o', 'Open a post'],
+  ['Mod-.', 'Focus mode'],
   ['Mod-/', 'This sheet'],
   ['Alt-F10', 'Jump to the format menu'],
 ];

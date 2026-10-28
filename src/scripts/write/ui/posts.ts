@@ -4,7 +4,7 @@ import { listPosts, token } from '../github';
 import { listLocal } from '../local';
 import { h, icon } from './dom';
 import { openDialog } from './dialog';
-import { relDate } from './format';
+import { relDate, ago } from './format';
 
 export type PostRow = {
   key: string;
@@ -16,6 +16,8 @@ export type PostRow = {
   draft: boolean;
   inRepo: boolean;
   localDirty: boolean;
+  /** when this device last saved its copy (ms) */
+  edited?: number;
   error?: string;
 };
 export type PostsHost = {
@@ -40,6 +42,7 @@ function localRows(): PostRow[] {
     draft: !e.doc.published,
     inRepo: !!e.doc.path,
     localDirty: e.dirty,
+    edited: e.savedAt,
   }));
 }
 
@@ -75,7 +78,7 @@ export function openPosts(host: PostsHost) {
     const byPath = new Map(local.filter((r) => r.path).map((r) => [r.path!, r]));
     const out: PostRow[] = remote.map((p) => {
       const l = byPath.get(p.path);
-      return { key: p.path, path: p.path, sha: p.sha, title: p.title, date: p.date, description: p.description, draft: p.draft, inRepo: true, localDirty: !!l?.localDirty, error: (p as { error?: string }).error };
+      return { key: p.path, path: p.path, sha: p.sha, title: p.title, date: p.date, description: p.description, draft: p.draft, inRepo: true, localDirty: !!l?.localDirty, edited: l?.localDirty ? l.edited : undefined, error: (p as { error?: string }).error };
     });
     const seen = new Set(out.map((r) => r.key));
     for (const l of local) {
@@ -131,7 +134,8 @@ export function openPosts(host: PostsHost) {
       );
       const openBtn = h('button', { type: 'button', class: 'prow-open' },
         h('span', { class: 'ptitle', text: r.title.trim() || 'Untitled' }),
-        h('span', { class: 'pmeta' }, h('span', { class: 'pdate', text: relDate(r.date) }), badges),
+        h('span', { class: 'pmeta' }, h('span', { class: 'pdate', text: relDate(r.date) }), badges,
+          (r.localDirty || !r.inRepo) && r.edited ? h('span', { class: 'pedited', text: `edited ${ago(r.edited)}` }) : null),
       );
       openBtn.addEventListener('click', async () => {
         openBtn.classList.add('opening');

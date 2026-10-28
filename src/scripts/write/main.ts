@@ -7,9 +7,9 @@ import { $, type Doc, blank, today, toDisplay, slugify, slugOf, store, OWNER, RE
 import { createEditor } from './editor';
 import { smartPunctuation } from './editor/typing';
 import { ConflictError, token, savePost, loadPost, deletePost, uploadImage, deployStatus } from './github';
-import { saveLocal, loadLocal, keyOf, clearLocal, lastOpened, setLastOpened } from './local';
-import { toMarkdown, unsupportedIn } from './markdown';
-import { h, download } from './ui/dom';
+import { saveLocal, loadLocal, keyOf, clearLocal, lastOpened, setLastOpened, type LocalEntry } from './local';
+import { toMarkdown, unsupportedIn, parseMarkdown, splitFrontmatter } from './markdown';
+import { h, download, pickFile } from './ui/dom';
 import { openDialog, confirmDialog, choose } from './ui/dialog';
 import { toast, announce } from './ui/toast';
 import { connect } from './ui/connect';
@@ -18,10 +18,17 @@ import { openPosts, type PostRow } from './ui/posts';
 import { openHistory } from './ui/history';
 import { conflictDialog } from './ui/conflict';
 import { attachMenu, type MenuItem } from './ui/menu';
-import { fmtDate, fmtTime, liveUrl, previewUrl, prettyUrl } from './ui/format';
+import { fmtDate, fmtWhen, liveUrl, previewUrl, prettyUrl } from './ui/format';
+import { createFindBar } from './editor/find';
+import { createOutline, headings, jumpTo } from './editor/outline';
+import { createFocus } from './editor/focus';
+import { keyLabel } from './editor/ui';
+import { watchPresence } from './ui/presence';
 
 const ACTIONS_URL = `https://github.com/${OWNER}/${REPO}/actions`;
 const ONBOARD_KEY = 'bx-write:onboard-dismissed';
+const OUTLINE_KEY = 'bx-write:outline'; // '0' hides the margin outline
+const TYPEWRITER_KEY = 'bx-write:typewriter';
 
 // ---------- state ----------
 let doc: Doc = blank();
@@ -42,6 +49,13 @@ let holdUntil = 0; // keep an important status visible for a moment before autos
 let holdTimer = 0;
 let uploads = 0;
 let coverPreview: string | null = null;
+let presence: ReturnType<typeof watchPresence> | null = null;
+let revAtShow = 0;
+// Version ids for this device's copy, so two tabs on one post can tell whether the other
+// tab's save builds on theirs (adopt quietly) or ran in parallel (ask).
+let myV = '';
+const newV = () => Math.random().toString(36).slice(2, 10); // rev when this post was loaded: no edits in this tab since → another tab's copy can be adopted
+const sessionBase = new Map<string, number>(); // words per post when first opened in this tab
 
 // ---------- elements ----------
 const titleIn = $<HTMLTextAreaElement>('.title-in');
@@ -58,6 +72,8 @@ const postsBtn = $<HTMLButtonElement>('[data-act="posts"]');
 const moreBtn = $<HTMLButtonElement>('[data-act="more"]');
 const onboard = $('.onboard');
 const remoteNote = $('.note.remote');
+const offlineNote = $('.note.offline');
+const tabsNote = $('.note.tabs');
 const banner = mountBanner($('.post-banner'), { seed: 'new-post' });
 const narrow = matchMedia('(max-width: 640px)');
 
@@ -82,6 +98,16 @@ const ed = createEditor({
   onMessage: (msg, kind) => toast(msg, { kind: kind === 'error' ? 'error' : 'info' }),
   onSelectionChange: () => paintStats(),
 });
+const find = createFindBar(ed.editor);
+const outline = createOutline(ed.editor, { enabled: () => store.get(OUTLINE_KEY) !== '0' });
+const focusMode = createFocus(ed.editor);
+if (store.get(TYPEWRITER_KEY) === '1') focusMode.setTypewriter(true);
+/** Replace the body (new post, restore…): also refresh what reads it. */
+function setBody(html: string) {
+  find.hide(false);
+  ed.setHTML(html);
+  outline.refresh();
+}
 
 // ---------- derived ----------
 function currentSlug() {
@@ -110,10 +136,15 @@ function show(d: Doc, isDirty: boolean, savedAt = 0) {
   titleIn.value = doc.title;
   dekIn.value = doc.description;
   dateIn.value = doc.date || today();
-  ed.setHTML(doc.html || '');
+  setBody(doc.html || '');
   grow(titleIn); grow(dekIn);
   remoteNote.hidden = true;
+  tabsNote.hidden = true;
+  revAtShow = rev;
+  myV = (doc as { _v?: string })._v || '';
+  if (!sessionBase.has(key)) sessionBase.set(key, ed.stats().words);
   setLastOpened(key);
+  presence?.moved();
   paintAll();
   if (doc.lossy?.length) toast(`Heads up: this post has ${doc.lossy.join(', ')}, which the editor can’t keep. Saving here will remove it, so edit this one on GitHub instead.`, { kind: 'error' });
 }
@@ -132,6 +163,9 @@ function flushLocal() {
   clearTimeout(localTimer);
   if (!localPending) return;
   collect();
+  const v = newV();
+  Object.assign(doc, { _base: myV, _v: v });
+  myV = v;
   localOk = saveLocal(doc, dirty);
   localAt = Date.now();
   localPending = false;
@@ -185,8 +219,8 @@ function pillState(): Pill {
   if (uploads) return { text: uploads > 1 ? `Uploading ${uploads} images…` : 'Uploading image…', kind: 'busy' };
   if (dirty) {
     if (localPending) return { text: 'Unsaved changes', kind: 'local', local: true };
-    if (doc.published) return { text: 'Edits not live yet', kind: 'warn', local: true, title: `Saved on this device at ${fmtTime(localAt)}. Use Update to publish them.` };
-    return { text: `Saved on this device · ${fmtTime(localAt)}`, kind: 'local', local: true, title: token() ? 'Save draft (⌘S) to keep it on GitHub too' : 'Connect GitHub to save it online and publish' };
+    if (doc.published) return { text: 'Edits not live yet', kind: 'warn', local: true, title: `Saved on this device (${fmtWhen(localAt)}). Use Update to publish them.` };
+    return { text: `Saved on this device · ${fmtWhen(localAt)}`, kind: 'local', local: true, title: token() ? 'Save draft (⌘S) to keep it on GitHub too' : 'Connect GitHub to save it online and publish' };
   }
   if (deploy) {
     const { kind, state } = deploy;
@@ -327,6 +361,11 @@ function startDeploy(kind: 'draft' | 'live', afterIso: string, commitSha?: strin
 type Result = { ok: true } | { ok: false; message?: string; handled?: boolean };
 async function commit(mode: 'draft' | 'publish' | 'unpublish', o: { force?: boolean } = {}): Promise<Result> {
   if (busy) return { ok: false, message: 'Still saving, one moment.' };
+  if (navigator.onLine === false) {
+    const m = 'You’re offline. Your writing is safe on this device; save to GitHub once you’re back online.';
+    toast(m);
+    return { ok: false, message: m };
+  }
   if (!token()) {
     const ok = await connect({ reason: 'To save online and publish, connect GitHub once. Your writing is safe on this device meanwhile.' });
     if (!ok) return { ok: false, handled: true };
@@ -421,7 +460,8 @@ async function commit(mode: 'draft' | 'publish' | 'unpublish', o: { force?: bool
 
 function downloadMine() {
   collect();
-  download(`${currentSlug() || 'post'}.md`, toMarkdown(doc));
+  try { download(`${currentSlug() || 'post'}.md`, toMarkdown(doc)); }
+  catch (e) { toast((e as Error).message || 'Couldn’t export this post', { kind: 'error' }); }
 }
 async function resolveConflict(mode: 'draft' | 'publish' | 'unpublish', err: ConflictError) {
   const choice = await conflictDialog({ title: doc.title, download: downloadMine });
@@ -476,6 +516,7 @@ const sheetHost: SheetHost = {
 
 async function openPublish() {
   if (busy) return;
+  if (navigator.onLine === false) { toast('You’re offline. Publish once you’re back online; your writing is safe on this device.'); return; }
   if (!token()) {
     const ok = await connect({ reason: 'To publish, connect GitHub once. Your writing is safe on this device meanwhile.' });
     if (!ok) return;
@@ -610,7 +651,8 @@ function newPost() {
   show(fresh(), false);
   titleIn.focus();
 }
-postsBtn.addEventListener('click', () => {
+function postsCmd() {
+  if (document.querySelector('dialog[open]')) return;
   flushLocal();
   openPosts({
     currentKey: () => key,
@@ -619,27 +661,180 @@ postsBtn.addEventListener('click', () => {
     remove: (r) => removePost({ key: r.key, path: r.path, sha: r.sha, title: r.title, inRepo: r.inRepo, published: !r.draft }),
     connect: () => connect().then((ok) => { paint(); return ok; }),
   });
-});
+}
+postsBtn.addEventListener('click', postsCmd);
 
 // ---------- top bar ----------
 primaryBtn.addEventListener('click', openPublish);
 previewBtn.addEventListener('click', openPreview);
+const wideOutline = matchMedia('(min-width: 1180px)');
 attachMenu(moreBtn, () => {
+  const hs = headings(ed.editor);
+  const outlineOn = store.get(OUTLINE_KEY) !== '0';
   const items: (MenuItem | null)[] = [
-    narrow.matches && statsText() ? { info: statsText() } : null,
+    narrow.matches && statsText() ? { label: 'Word count', note: statsText(), run: statsCmd } : null,
     narrow.matches ? { label: 'Preview', run: openPreview, disabled: !previewTarget(), note: previewTarget() ? undefined : 'Save a draft first' } : null,
-    !doc.published ? { label: 'Save draft', hint: '⌘S', run: saveDraftCmd, note: token() ? undefined : 'Saves on this device until you connect' } : null,
+    !doc.published ? { label: 'Save draft', hint: keyLabel('Mod-s'), run: saveDraftCmd, note: token() ? undefined : 'Saves on this device until you connect' } : null,
+    { sep: true },
+    { label: 'Find and replace', hint: keyLabel('Mod-f'), run: () => find.show() },
+    wideOutline.matches
+      ? { label: 'Outline in the margin', checked: outlineOn, run: () => { store.set(OUTLINE_KEY, outlineOn ? '0' : '1'); outline.refresh(); }, note: hs.length < 2 ? 'Appears once there are two headings' : undefined }
+      : { label: 'Outline…', run: outlineCmd, disabled: !hs.length, note: hs.length ? `${hs.length} heading${hs.length > 1 ? 's' : ''}` : 'Add a heading (##) to see it here' },
+    { label: 'Focus mode', checked: focusMode.focus, hint: keyLabel('Mod-.'), run: () => toggleFocus() },
+    { label: 'Typewriter scrolling', checked: focusMode.typewriter, run: () => { focusMode.setTypewriter(!focusMode.typewriter); store.set(TYPEWRITER_KEY, focusMode.typewriter ? '1' : '0'); } },
+    { sep: true },
     { label: doc.cover ? 'Cover image…' : 'Add a cover image…', run: coverCmd },
     { label: 'Version history', run: () => doc.path && openHistory(doc.path, restoreVersion), disabled: !doc.path || !token(), note: doc.path ? undefined : 'Available after the first save' },
+    { label: 'Duplicate post', run: duplicateCmd, disabled: !titleIn.value.trim() && !ed.stats().words },
+    { label: 'Import a Markdown file…', run: importCmd },
+    { label: 'Export as Markdown', run: downloadMine, disabled: !titleIn.value.trim() && !ed.stats().words },
     { sep: true },
     doc.published ? { label: 'Unpublish…', run: unpublishCmd, danger: true } : null,
     { label: 'Delete post…', run: deleteCurrent, danger: true, disabled: !doc.path && !titleIn.value.trim() && !ed.stats().words },
     { sep: true },
-    { label: 'Keyboard shortcuts', hint: '⌘/', run: () => ed.openShortcuts() },
+    { label: 'Keyboard shortcuts', hint: keyLabel('Mod-/'), run: () => ed.openShortcuts() },
     { label: 'GitHub connection', note: token() ? 'Connected' : 'Not connected', run: () => connect().then(() => paint()) },
   ];
-  return items.filter(Boolean) as MenuItem[];
+  // no leading, trailing or doubled separators
+  return (items.filter(Boolean) as MenuItem[]).filter((it, i, a) => !('sep' in it) || (i > 0 && !('sep' in a[i - 1]) && i < a.length - 1));
 });
+
+// ---------- writing tools: focus, outline, word count, import/export, duplicate ----------
+function toggleFocus() {
+  focusMode.toggleFocus();
+  if (focusMode.focus) toast(`Focus mode. The bar fades while you type; ${keyLabel('Mod-.')} to leave.`, { ms: 2600 });
+  else toast('Focus mode off', { ms: 1400 });
+}
+function outlineCmd() {
+  const hs = headings(ed.editor);
+  if (!hs.length) { toast('Add a heading (type ## and a space) to build an outline.'); return; }
+  const list = h('ol', { class: 'outline-list' });
+  const { ctl } = openDialog({ title: 'Outline', size: 'sm', className: 'outline-dlg', body: list });
+  hs.forEach((x) => list.append(h('li', { class: 'lv' + x.level },
+    h('button', { type: 'button', class: 'outline-item', text: x.text || 'Untitled heading', on: { click: () => { ctl.close('go'); setTimeout(() => jumpTo(ed.editor, x.pos), 0); } } }))));
+  (list.querySelector('button') as HTMLButtonElement | null)?.focus();
+}
+function statsCmd() {
+  const s = ed.stats();
+  const d = ed.editor.state.doc;
+  const text = d.textBetween(0, d.content.size, '\n', '');
+  let paras = 0, heads = 0, images = 0, links = 0;
+  d.descendants((n) => {
+    if (n.type.name === 'paragraph' && n.textContent.trim()) paras++;
+    else if (n.type.name === 'heading') heads++;
+    else if (n.type.name === 'figure') images++;
+    if (n.isText && n.marks.some((m) => m.type.name === 'link')) links++;
+    return true;
+  });
+  const base = sessionBase.get(key) ?? s.words;
+  const delta = s.words - base;
+  const n = (x: number) => x.toLocaleString();
+  const rows: [string, string][] = [
+    ['Words', n(s.words)],
+    ...(s.selected ? [['Selected', `${n(s.selected)} words`] as [string, string]] : []),
+    ['Characters', n(text.replace(/\n/g, '').length)],
+    ['Characters without spaces', n(text.replace(/\s/g, '').length)],
+    ['Paragraphs', n(paras)],
+    ['Headings', n(heads)],
+    ['Images', n(images)],
+    ['Reading time', s.words ? `about ${s.minutes} min` : '–'],
+    ['Written this session', `${delta > 0 ? '+' : delta < 0 ? '−' : ''}${n(Math.abs(delta))} words`],
+  ];
+  if (dirty || doc.path) rows.push(['Last saved on this device', fmtWhen(localAt)]);
+  openDialog({
+    title: 'Word count', size: 'sm', className: 'stats-dlg',
+    body: h('dl', { class: 'stats-grid' }, ...rows.flatMap(([k, v]) => [h('dt', { text: k }), h('dd', { text: v })])),
+    actions: [{ label: 'Done', value: 'ok', kind: 'ghost' }],
+  });
+}
+statsEl.addEventListener('click', statsCmd);
+
+function duplicateCmd() {
+  if (!canSwitch()) return;
+  collect();
+  flushLocal();
+  const copy: Doc = { ...fresh(), title: doc.title.trim() ? `Copy of ${doc.title.trim()}` : '', description: doc.description, cover: doc.cover, html: doc.html, extra: doc.extra ? { ...doc.extra } : undefined };
+  show(copy, true);
+  localPending = true;
+  flushLocal();
+  toast('Duplicated. The copy is a new draft on this device.');
+}
+async function importCmd() {
+  if (!canSwitch()) return;
+  const f = await pickFile('.md,.markdown,.mdx,.txt,text/markdown,text/plain');
+  if (!f) return;
+  if (f.size > 3e6) { toast('That file is too large to import (3 MB max).', { kind: 'error' }); return; }
+  let d: Doc;
+  try {
+    let text = await f.text();
+    // no title in the frontmatter but the file starts with "# Title": use that as the post title
+    const { fm, body } = splitFrontmatter(text);
+    let title = '';
+    if (!fm || !/^title\s*:/m.test(fm)) {
+      const m = body.match(/^\s*#\s+(.+?)\s*#*\s*(?:\r?\n|$)/);
+      if (m) { title = m[1]; text = (fm != null ? `---\n${fm}\n---\n` : '') + body.slice(m[0].length); }
+    }
+    d = parseMarkdown(text, null, null);
+    if (!d.title) d.title = title || f.name.replace(/\.(md|markdown|mdx|txt)$/i, '').replace(/[-_]+/g, ' ').trim();
+  } catch (e) {
+    toast(`Couldn’t import ${f.name}: ${(e as Error).message}`, { kind: 'error' });
+    return;
+  }
+  flushLocal();
+  const n = fresh();
+  show({ ...d, path: null, sha: null, published: false, draft: true, localId: n.localId, ...({ _localId: n.localId } as object) } as Doc, true);
+  localPending = true;
+  flushLocal();
+  if (!doc.lossy?.length) toast(`Imported “${doc.title}” as a new draft on this device.`);
+}
+
+// ---------- other tabs & the network ----------
+function paintOffline() {
+  const off = navigator.onLine === false;
+  offlineNote.hidden = !off;
+  if (off) offlineNote.replaceChildren(h('p', {}, h('b', { text: 'You’re offline.' }), ' Your writing keeps saving on this device. Saving to GitHub and publishing will work again once you’re back online.'));
+}
+function onOtherTab(e: LocalEntry) {
+  const theirs = e.doc;
+  const mine = theirs.path ? theirs.path === doc.path : !doc.path && !!theirs.localId && theirs.localId === doc.localId;
+  // a new post the other tab just saved to GitHub: it moved from new:<id> to its file path
+  const moved = !!theirs.path && !doc.path && !!theirs.localId && theirs.localId === doc.localId;
+  if (!(mine || moved) || busy) return;
+  if (theirs.html === ed.getHTML() && theirs.title === titleIn.value && theirs.description === dekIn.value && theirs.sha === doc.sha && theirs.path === doc.path) return;
+  const tv = theirs as { _v?: string; _base?: string };
+  const quiet = !localPending && (rev === revAtShow || (!!myV && (tv._base === myV || tv._v === myV)));
+  if (quiet) {
+    const y = window.scrollY;
+    const hadFocus = ed.editor.isFocused;
+    const sel = ed.editor.state.selection.head;
+    show(theirs, e.dirty, e.savedAt);
+    window.scrollTo(0, y);
+    if (hadFocus) { try { ed.editor.commands.focus(Math.min(sel, ed.editor.state.doc.content.size - 1), { scrollIntoView: false }); } catch {} }
+    if (document.visibilityState === 'visible' && Date.now() - tabToastAt > 60e3) { tabToastAt = Date.now(); toast('Updated with changes from your other tab.'); }
+    return;
+  }
+  tabsNote.dataset.kind = 'change';
+  tabsNote.replaceChildren(
+    h('p', {}, h('b', { text: 'This post was also changed in another tab.' }), ' If you keep typing here, this tab’s version replaces it.'),
+    h('div', { class: 'note-btns' },
+      h('button', { type: 'button', class: 'btn btn-ghost', text: 'Use the other tab’s version', on: { click: () => { show(theirs, e.dirty, e.savedAt); toast('Loaded the other tab’s version.'); } } }),
+      h('button', { type: 'button', class: 'btn btn-quiet', text: 'Keep this one', on: { click: () => { tabsNote.hidden = true; changed(); } } }),
+    ),
+  );
+  tabsNote.hidden = false;
+}
+let peerNoteDismissed = '';
+let tabToastAt = 0;
+function onPeers(n: number) {
+  if (!n) { if (tabsNote.dataset.kind === 'peer') tabsNote.hidden = true; return; }
+  if (!tabsNote.hidden || peerNoteDismissed === key) return;
+  tabsNote.dataset.kind = 'peer';
+  tabsNote.replaceChildren(
+    h('p', {}, h('b', { text: 'Also open in another tab.' }), ' Changes made there show up here. Editing in one tab at a time is safest.'),
+    h('div', { class: 'note-btns' }, h('button', { type: 'button', class: 'btn btn-quiet', text: 'Got it', on: { click: () => { peerNoteDismissed = key; tabsNote.hidden = true; } } })),
+  );
+  tabsNote.hidden = false;
+}
 
 function restoreVersion(d: Doc) {
   if (!canSwitch()) return;
@@ -648,7 +843,7 @@ function restoreVersion(d: Doc) {
   dateIn.value = d.date || today();
   doc.cover = d.cover;
   coverPreview = null;
-  ed.setHTML(d.html || '');
+  setBody(d.html || '');
   grow(titleIn); grow(dekIn);
   changed();
   paintMeta(); paintBanner();
@@ -657,10 +852,27 @@ function restoreVersion(d: Doc) {
 
 window.addEventListener('keydown', (e) => {
   const mod = e.metaKey || e.ctrlKey;
-  if (mod && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 's') {
+  if (!mod || e.altKey) return;
+  const k = e.key.toLowerCase();
+  const modal = !!document.querySelector('dialog[open]');
+  if (k === 's' && !e.shiftKey) {
     e.preventDefault();
-    if (document.querySelector('dialog[open]')) return;
+    if (modal) return;
     saveDraftCmd();
+  } else if (k === 'f' && !e.shiftKey) {
+    if (modal) return; // inside a dialog, let the browser find
+    e.preventDefault();
+    find.show();
+  } else if (k === 'g' && find.isOpen() && !modal) {
+    e.preventDefault();
+    if (e.shiftKey) find.prev(); else find.next();
+  } else if (k === 'o' && !e.shiftKey) {
+    e.preventDefault();
+    postsCmd();
+  } else if (e.key === '.' && !e.shiftKey) {
+    if (modal) return;
+    e.preventDefault();
+    toggleFocus();
   }
 });
 
@@ -692,6 +904,8 @@ async function checkRemote() {
 
 // ---------- start ----------
 {
+  presence = watchPresence({ key: () => key, onPeers, onLocalChange: onOtherTab, onNetwork: (on) => { paintOffline(); if (on) toast('Back online.'); } });
+  paintOffline();
   const lk = lastOpened();
   const entry = lk ? loadLocal(lk) : null;
   if (entry) show({ ...blank(), ...entry.doc }, entry.dirty, entry.savedAt);
