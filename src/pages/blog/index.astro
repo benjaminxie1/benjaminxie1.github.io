@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+---
+
+<Base title="Blog" description="Writing by Ben Xie.">
+  <main class="narrow">
+    <h1>Blog</h1>
+    {posts.length === 0 ? (
+      <p class="muted">Nothing here yet. Soon.</p>
+    ) : (
+      <ul class="posts">
+        {posts.map((p) => (
+          <li>
+            <a class="title" href={`/blog/${p.id}/`}>{p.data.title}</a>
+            <span class="date">{fmt(p.data.date)}</span>
+            {p.data.description && <p class="muted desc">{p.data.description}</p>}
+          </li>
+        ))}
+      </ul>
+    )}
+    <p class="small muted rss"><a href="/rss.xml">RSS</a></p>
+  </main>
+</Base>
+
+<style>
+  .posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .posts li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .title {
+    font-size: 18px;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--muted);
+    text-underline-offset: 5px;
+  }
+  .title:hover {
+    color: var(--link);
+  }
+  .date {
+    color: var(--muted);
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .desc {
+    grid-column: 1 / -1;
+    margin: 6px 0 0;
+  }
+  .rss {
+    margin-top: 32px;
+  }
+  .rss a {
+    color: var(--muted);
+  }
+</style>
