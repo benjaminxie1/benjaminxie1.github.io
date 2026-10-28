@@ -8,20 +8,20 @@
     margin: 8px 0 56px;
   }
   .post .head h1 {
-    font-size: clamp(32px, 4.2vw, 42px);
-    line-height: 1.15;
-    margin: 0 0 22px;
+    font-size: clamp(26px, 3vw, 30px);
+    line-height: 1.25;
+    margin: 0 0 26px;
   }
   .post .dek {
     max-width: 560px;
     margin: 0 auto;
     color: var(--muted);
-    font-size: 16px;
-    line-height: 1.75;
+    font-size: 14px;
+    line-height: 1.7;
   }
   .post .published {
     color: var(--muted);
-    font-size: 14px;
+    font-size: 13px;
     margin: 0 0 28px;
   }
   .post .body {
