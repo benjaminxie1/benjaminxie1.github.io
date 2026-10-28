@@ -1,0 +1,51 @@
+---
+// "All · energy 3 · hackathons 2": links between /blog and its tag pages.
+import type { Tag } from '../data/posts';
+interface Props { tags: Tag[]; current?: string; total: number }
+const { tags, current, total } = Astro.props;
+---
+
+{tags.length > 0 && (
+  <nav class="tagbar" aria-label="Filter posts by tag">
+    <a href="/blog/" aria-current={current ? undefined : 'page'}>All <span class="n">{total}</span></a>
+    {tags.map((t) => (
+      <a href={`/blog/tags/${t.slug}/`} aria-current={t.slug === current ? 'page' : undefined}>
+        {t.name} <span class="n">{t.posts.length}</span>
+      </a>
+    ))}
+  </nav>
+)}
+
+<style>
+  .tagbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: -6px 0 20px;
+  }
+  .tagbar a {
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 2px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--ink);
+  }
+  .tagbar a:hover {
+    text-decoration: none;
+    border-color: color-mix(in srgb, var(--ink) 35%, transparent);
+  }
+  .tagbar a[aria-current='page'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .n {
+    color: var(--muted);
+    font-size: 12px;
+    margin-left: 2px;
+  }
+  .tagbar a[aria-current='page'] .n {
+    color: color-mix(in srgb, var(--bg) 70%, transparent);
+  }
+</style>

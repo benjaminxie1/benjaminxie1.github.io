@@ -7,6 +7,8 @@ export const site = {
   github: 'https://github.com/benjaminxie1',
   linkedin: 'https://www.linkedin.com/in/xie-benjamin',
   x: 'https://x.com/_benjaminxie',
+  /** A post dated in the future goes live on that day in this time zone (see src/data/posts.ts). */
+  timeZone: 'America/Los_Angeles',
 };
 
 export const nav = [
