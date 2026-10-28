@@ -1,0 +1,41 @@
+# Pages CMS (https://app.pagescms.org) — online editor for the blog.
+media:
+  input: public/blog
+  output: /blog
+
+content:
+  - name: blog
+    label: Blog posts
+    type: collection
+    path: src/content/blog
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      fields: [title, date, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Short description (shows on the list and in link previews)
+        type: string
+      - name: date
+        label: Date
+        type: date
+        required: true
+      - name: cover
+        label: Cover image (optional)
+        type: image
+      - name: draft
+        label: Draft (hidden from the site)
+        type: boolean
+        default: true
+      - name: body
+        label: Post
+        type: rich-text

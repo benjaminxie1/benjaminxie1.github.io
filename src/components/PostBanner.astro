@@ -1,0 +1,177 @@
+---
+// Header art for a blog post: a field of small ink triangles on paper that
+// dissolves into the page along a ragged edge. Seeded by the post slug, so each
+// post gets its own (stable) pattern. If a cover image is set, its tones drive
+// the density instead. A few cells slowly flicker so it feels alive.
+interface Props {
+  seed: string;
+  cover?: string;
+}
+const { seed, cover } = Astro.props;
+---
+
+<div class="post-banner" data-seed={seed} data-cover={cover ?? ''} aria-hidden="true">
+  <canvas></canvas>
+</div>
+
+<script>
+  const roots = document.querySelectorAll<HTMLElement>('.post-banner');
+  roots.forEach((root) => {
+    const canvas = root.querySelector('canvas')!;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // seeded randomness
+    let h = 2166136261;
+    for (const ch of root.dataset.seed || 'post') h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+    const seed = h >>> 0;
+    const hash = (x: number, y: number) => {
+      let n = Math.imul(x, 374761393) + Math.imul(y, 668265263) + seed;
+      n = Math.imul(n ^ (n >>> 13), 1274126177);
+      return ((n ^ (n >>> 16)) >>> 0) / 4294967295;
+    };
+    const smooth = (t: number) => t * t * (3 - 2 * t);
+    const noise = (x: number, y: number) => {
+      const xi = Math.floor(x), yi = Math.floor(y);
+      const fx = smooth(x - xi), fy = smooth(y - yi);
+      const a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
+      return a + (b - a) * fx + (c - a) * fy + (a - b - c + d) * fx * fy;
+    };
+
+    const css = getComputedStyle(document.documentElement);
+    const ink = css.getPropertyValue('--ink').trim() || '#22211e';
+    const accent = css.getPropertyValue('--tag').trim() || '#b5452f';
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let tones: Float32Array | null = null; // optional cover-driven density
+    let cols = 0, rows = 0, cell = 12, dpr = 1, w = 0, hgt = 0;
+
+    const coverSrc = root.dataset.cover;
+    let coverImg: HTMLImageElement | null = null;
+    if (coverSrc) {
+      coverImg = new Image();
+      coverImg.decoding = 'async';
+      coverImg.src = coverSrc;
+      coverImg.addEventListener('load', () => { sampleCover(); draw(); }, { once: true });
+    }
+    function sampleCover() {
+      if (!coverImg || !coverImg.naturalWidth || !cols) return;
+      const off = document.createElement('canvas');
+      off.width = cols; off.height = rows;
+      const o = off.getContext('2d', { willReadFrequently: true })!;
+      const ia = coverImg.naturalWidth / coverImg.naturalHeight, ba = cols / rows;
+      let sw = coverImg.naturalWidth, sh = coverImg.naturalHeight, sx = 0, sy = 0;
+      if (ia > ba) { sw = sh * ba; sx = (coverImg.naturalWidth - sw) / 2; }
+      else { sh = sw / ba; sy = (coverImg.naturalHeight - sh) / 2; }
+      o.drawImage(coverImg, sx, sy, sw, sh, 0, 0, cols, rows);
+      const px = o.getImageData(0, 0, cols, rows).data;
+      tones = new Float32Array(cols * rows);
+      for (let i = 0; i < cols * rows; i++) {
+        const l = (0.299 * px[i * 4] + 0.587 * px[i * 4 + 1] + 0.114 * px[i * 4 + 2]) / 255;
+        tones[i] = 1 - l;
+      }
+    }
+
+    // probability that a cell is inked
+    const density = (cx: number, cy: number) => {
+      const y = cy / rows;
+      const edge = 0.5 + 0.32 * (noise(cx * 0.045, 7.3) - 0.5) * 2 + 0.08 * (noise(cx * 0.2, 3.1) - 0.5);
+      const fall = 1 - smooth(Math.min(1, Math.max(0, (y - (edge - 0.22)) / 0.3)));
+      const base = tones ? 0.15 + 0.85 * tones[cy * cols + cx] : 0.5 + 0.5 * noise(cx * 0.12, cy * 0.12);
+      return fall * base * 0.95;
+    };
+
+    function drawCell(cx: number, cy: number, r: number) {
+      const x = cx * cell, y = cy * cell, s = cell;
+      ctx!.clearRect(x, y, s, s);
+      if (r > density(cx, cy)) return;
+      const pick = hash(cx * 7 + 1, cy * 13 + Math.floor(r * 1000));
+      const isAccent = hash(cx + 911, cy + 577) < 0.012;
+      ctx!.fillStyle = ctx!.strokeStyle = isAccent ? accent : ink;
+      const shade = isAccent ? 0.85 : 0.14 + 0.56 * hash(cx + 31, cy + 17) * (1 - cy / rows * 0.4);
+      ctx!.globalAlpha = shade;
+      const g = Math.max(1, Math.round(dpr)); // gap between tiles
+      const x0 = x + g, y0 = y + g, x1 = x + s - g, y1 = y + s - g;
+      const o = Math.floor(pick * 4);
+      const tri = [
+        [x0, y0, x1, y0, x0, y1],
+        [x0, y0, x1, y0, x1, y1],
+        [x1, y0, x1, y1, x0, y1],
+        [x0, y0, x1, y1, x0, y1],
+      ][o];
+      ctx!.beginPath();
+      ctx!.moveTo(tri[0], tri[1]); ctx!.lineTo(tri[2], tri[3]); ctx!.lineTo(tri[4], tri[5]); ctx!.closePath();
+      if (pick * 10 % 1 < 0.28) { ctx!.lineWidth = Math.max(1, dpr * 0.9); ctx!.stroke(); }
+      else ctx!.fill();
+      ctx!.globalAlpha = 1;
+    }
+
+    let state: Float32Array = new Float32Array(0);
+    function draw() {
+      ctx!.clearRect(0, 0, w, hgt);
+      for (let cy = 0; cy < rows; cy++)
+        for (let cx = 0; cx < cols; cx++) drawCell(cx, cy, state[cy * cols + cx]);
+    }
+    function resize() {
+      const r = root.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cell = Math.round((r.width < 640 ? 10 : 13) * dpr);
+      w = canvas.width = Math.round(r.width * dpr);
+      hgt = canvas.height = Math.round(r.height * dpr);
+      cols = Math.ceil(w / cell); rows = Math.ceil(hgt / cell);
+      state = new Float32Array(cols * rows);
+      for (let i = 0; i < state.length; i++) state[i] = hash(i % cols, Math.floor(i / cols) + 4099);
+      sampleCover();
+      draw();
+    }
+    new ResizeObserver(resize).observe(root);
+
+    // slow flicker: a handful of cells re-roll every so often
+    if (!reduced) {
+      let visible = true;
+      new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(root);
+      let k = 0;
+      setInterval(() => {
+        if (!visible || document.hidden || !cols) return;
+        for (let n = 0; n < Math.max(3, (cols * rows) / 400); n++) {
+          const cx = Math.floor(Math.random() * cols), cy = Math.floor(Math.random() * rows);
+          state[cy * cols + cx] = Math.random();
+          drawCell(cx, cy, state[cy * cols + cx]);
+        }
+        k++;
+      }, 180);
+    }
+    root.classList.add('live');
+  });
+</script>
+
+<style>
+  .post-banner {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    height: 300px;
+    margin-top: -40px; /* tuck under the nav spacing */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22%),
+      linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to bottom, transparent 0, #000 22%),
+      linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    mask-composite: intersect;
+  }
+  .post-banner canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+  .post-banner:global(.live) canvas {
+    opacity: 1;
+  }
+  @media (max-width: 640px) {
+    .post-banner { height: 190px; margin-top: -16px; }
+  }
+</style>
