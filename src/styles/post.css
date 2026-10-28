@@ -58,6 +58,15 @@
     margin: 8px 0;
   }
   /* Image figures: same markup on the post page (rehype-figure) and in the editor */
+  .post .body figure,
+  .post .body pre,
+  .post .body blockquote,
+  .post .body ul,
+  .post .body ol,
+  .post .body h2,
+  .post .body h3 {
+    clear: both; /* never wrap around the drop cap */
+  }
   .post .body figure {
     margin: 36px 0;
     text-align: center;
