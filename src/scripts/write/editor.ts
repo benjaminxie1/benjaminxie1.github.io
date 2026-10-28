@@ -15,6 +15,7 @@ import { Figure, Uploads, insertFiles, pickFiles, stripPending, IMAGE_TYPES } fr
 import { EdCodeBlock } from './editor/codeblock';
 import { Dashes, SmartPaste } from './editor/typing';
 import { Embed, EmbedPaste, withVideo } from './editor/embed';
+import { QuoteBlocks } from './editor/blocks';
 import { SlashMenu, slashItems, openSlash } from './editor/slash';
 import { FakeSelection, createLinkUI, normalizeUrl } from './editor/link';
 import { createBubble, createMobileBar, createPlus, formatCommands, shouldShowBubble, shouldShowPlus } from './editor/menus';
@@ -96,6 +97,7 @@ export function createEditor(opts: {
       Figure.configure({ uploads }),
       Embed,
       EmbedPaste,
+      ...QuoteBlocks,
       Typography.configure({
         // Only the typographer's essentials: smart quotes, em dash, ellipsis.
         multiplication: false, oneHalf: false, oneQuarter: false, threeQuarters: false,
