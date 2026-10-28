@@ -2,6 +2,7 @@
 import type { Editor } from '@tiptap/core';
 import { NodeSelection } from '@tiptap/pm/state';
 import { h, icons, iconButton, isCompact, keepFocus } from './ui';
+import { FOOTNOTE_KEY, footnoteIcon } from './footnote';
 
 type Cmd = { id: string; icon: string; label: string; shortcut?: string; run: () => void; active?: () => boolean };
 
@@ -19,6 +20,7 @@ export function formatCommands(ed: () => Editor, link: () => void, image: () => 
     quote: { id: 'quote', icon: icons.quote, label: 'Quote', shortcut: 'Mod-Shift-b', run: () => c().toggleBlockquote().run(), active: () => editor.isActive('blockquote') },
     ul: { id: 'ul', icon: icons.ul, label: 'Bulleted list', shortcut: 'Mod-Shift-8', run: () => c().toggleBulletList().run(), active: () => editor.isActive('bulletList') },
     image: { id: 'image', icon: icons.image, label: 'Add image', run: image },
+    footnote: { id: 'footnote', icon: footnoteIcon, label: 'Footnote', shortcut: FOOTNOTE_KEY, run: () => c().insertFootnote().run() },
   };
 }
 
@@ -46,8 +48,8 @@ function toolbar(cmds: Cmd[], cls: string, label: string, groups: number[] = [])
 }
 
 export function createBubble(ed: () => Editor, cmds: Record<string, Cmd>) {
-  const order = [cmds.bold, cmds.italic, cmds.strike, cmds.code, cmds.link, cmds.h2, cmds.h3, cmds.quote];
-  const tb = toolbar(order, 'ed-pop ed-bubble', 'Format text', [4, 5]);
+  const order = [cmds.bold, cmds.italic, cmds.strike, cmds.code, cmds.link, cmds.h2, cmds.h3, cmds.quote, cmds.footnote];
+  const tb = toolbar(order, 'ed-pop ed-bubble', 'Format text', [4, 5, 8]);
   tb.el.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); ed().commands.focus(); } });
   return tb;
 }

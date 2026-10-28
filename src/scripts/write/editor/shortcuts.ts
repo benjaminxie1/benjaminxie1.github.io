@@ -14,6 +14,7 @@ const KEYS: Array<[string, string]> = [
   ['Mod-Shift-8', 'Bulleted list'],
   ['Mod-Shift-7', 'Numbered list'],
   ['Mod-Alt-c', 'Code block'],
+  ['Mod-Alt-f', 'Footnote / citation'],
   ['Shift-Enter', 'Line break'],
   ['Mod-z', 'Undo'],
   ['Mod-Shift-z', 'Redo'],
