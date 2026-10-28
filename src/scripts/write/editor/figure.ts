@@ -163,6 +163,15 @@ export const Figure = Node.create<{ uploads: Uploads | null }>({
           },
           handleKeyDown(view, e) {
             const sel = view.state.selection;
+            // Enter in a caption finishes it and continues writing below the image.
+            if (e.key === 'Enter' && !e.shiftKey && !e.metaKey && !e.ctrlKey && !e.isComposing && sel instanceof TextSelection && sel.$from.parent.type === type) {
+              const after = sel.$from.after();
+              const next = view.state.doc.nodeAt(after);
+              let tr = view.state.tr;
+              if (!(next && next.type.name === 'paragraph' && next.content.size === 0)) tr = tr.insert(after, view.state.schema.nodes.paragraph.create());
+              view.dispatch(tr.setSelection(TextSelection.create(tr.doc, after + 1)).scrollIntoView());
+              return true;
+            }
             if (!(sel instanceof NodeSelection) || sel.node.type !== type) return false;
             if (e.key === 'Enter' && !e.shiftKey && !e.metaKey && !e.ctrlKey) {
               const after = sel.to;

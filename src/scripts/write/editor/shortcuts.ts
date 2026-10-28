@@ -23,7 +23,7 @@ const KEYS: Array<[string, string]> = [
 ];
 const MD: Array<[string, string]> = [
   ['/', 'Insert menu'],
-  ['## ', 'Heading'],
+  ['# or ## ', 'Heading'],
   ['### ', 'Subheading'],
   ['> ', 'Quote'],
   ['- ', 'Bulleted list'],
@@ -31,12 +31,15 @@ const MD: Array<[string, string]> = [
   ['```', 'Code block'],
   ['---', 'Divider (on an empty line)'],
   ['-- or ---', 'Em dash — (in a sentence)'],
+  ['2019--2020', 'En dash – between numbers'],
+  ['->', 'Arrow →'],
   ['...', 'Ellipsis …'],
   ['"quotes"', 'Curly “quotes”'],
   ['**bold**', 'Bold'],
   ['*italic*', 'Italic'],
   ['~~strike~~', 'Strikethrough'],
   ['`code`', 'Inline code'],
+  ['[text](url)', 'Link'],
 ];
 
 let dialog: HTMLDialogElement | null = null;

@@ -80,6 +80,7 @@ const ed = createEditor({
   upload,
   onUploadsChange: (n) => { uploads = n; paint(); },
   onMessage: (msg, kind) => toast(msg, { kind: kind === 'error' ? 'error' : 'info' }),
+  onSelectionChange: () => paintStats(),
 });
 
 // ---------- derived ----------
@@ -137,10 +138,24 @@ function flushLocal() {
   setLastOpened(key);
   paint();
 }
-for (const el of [titleIn, dekIn]) el.addEventListener('input', () => { grow(el); changed(); });
+// Title/summary typing: any DOM change elsewhere on the page (status pill, URL line, tab
+// title) makes Chrome end the field's undo group, so ⌘Z would undo one letter at a time.
+// Record the change now, repaint once typing pauses.
+let fieldPaintTimer = 0;
+const fieldPaint = () => { clearTimeout(fieldPaintTimer); paint(); paintStats(); paintMeta(); seedSoon(); };
+for (const el of [titleIn, dekIn]) {
+  el.addEventListener('input', () => {
+    grow(el);
+    rev++; dirty = true; localPending = true;
+    clearTimeout(localTimer);
+    localTimer = window.setTimeout(flushLocal, 400);
+    clearTimeout(fieldPaintTimer);
+    fieldPaintTimer = window.setTimeout(fieldPaint, 350);
+  });
+  el.addEventListener('blur', () => { if (fieldPaintTimer) fieldPaint(); });
+}
 smartPunctuation(titleIn);
 smartPunctuation(dekIn);
-titleIn.addEventListener('input', () => { paintMeta(); seedSoon(); });
 titleIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); dekIn.focus(); } });
 dekIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); ed.focusStart(); } });
 dateIn.addEventListener('input', () => { changed(); paintMeta(); });
@@ -251,6 +266,7 @@ function openPreview() {
 function statsText() {
   const s = ed.stats();
   if (!s.words) return '';
+  if (s.selected) return `${s.selected.toLocaleString()} of ${s.words.toLocaleString()} words`;
   return `${s.words.toLocaleString()} ${s.words === 1 ? 'word' : 'words'} · ${s.minutes} min read`;
 }
 let statsRaf = 0;

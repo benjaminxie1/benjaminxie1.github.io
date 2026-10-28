@@ -7,6 +7,7 @@ import type { NodeView } from '@tiptap/pm/view';
 import type { Node as PMNode } from '@tiptap/pm/model';
 import { h, icons, Floater } from './ui';
 import type { SlashItem } from './slash';
+import { smartPunctuation } from './typing';
 import {
   type EmbedAttrs, cleanAttrs, parseVideoUrl, parseEmbedElement, embedSrc, posterUrl, pageUrl, providerName, EMBED_ALLOW,
 } from '../markdown-embed';
@@ -201,6 +202,7 @@ class EmbedView implements NodeView {
     const remove = h('button', { type: 'button', class: 'ed-btn ed-icon-only', 'aria-label': 'Remove video', 'data-tip': 'Remove video', html: icons.trash });
     this.bar = h('div', { class: 'ed-pop ed-fig-bar ed-embed-bar', role: 'toolbar', 'aria-label': 'Video' }, this.capBtn, replace, remove);
     this.capInput = h('input', { type: 'text', class: 'ed-alt-input', placeholder: 'Caption (optional)…', 'aria-label': 'Caption', enterkeyhint: 'done', maxlength: '300' });
+    smartPunctuation(this.capInput);
     this.capForm = h('form', { class: 'ed-pop ed-alt-form', hidden: true }, this.capInput, h('button', { type: 'submit', class: 'ed-btn ed-text-btn ed-primary' }, 'Save'));
     this.media = h('div', { class: 'ed-embed-media', contenteditable: 'false', 'data-drag-handle': '' }, this.stage, this.bar, this.capForm);
     this.cap = h('figcaption', { class: 'ed-embed-cap', contenteditable: 'false' });

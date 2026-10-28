@@ -58,6 +58,8 @@
     font-weight: 500;
     color: var(--tag);
   }
+  /* a short opening paragraph still holds the whole drop cap: the next block never wraps around it */
+  .post .body > p:first-child { display: flow-root; }
   .post .body > p:first-child::first-line {
     font-weight: 600;
     color: var(--ink);
@@ -114,6 +116,9 @@
     background: color-mix(in srgb, var(--ink) 6%, transparent);
     color: var(--ink);
     overflow-wrap: anywhere;
+    /* a chip that wraps keeps its padding and corners on both lines */
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
   .post .body pre,
   .post .body pre.astro-code {

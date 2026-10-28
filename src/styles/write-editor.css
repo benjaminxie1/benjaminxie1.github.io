@@ -56,7 +56,8 @@
   box-shadow: 0 0 0 2px var(--link, #2f6b45);
 }
 .post .body :where(.ed-figure) figcaption {
-  margin-top: 10px; text-align: center; color: var(--muted, #67625a); font-size: 14px; line-height: 1.6; min-height: 1.6em; outline: none;
+  /* size, italics and color come from post.css, so captions match the live post */
+  margin-top: 10px; text-align: center; min-height: 1.5em; outline: none;
 }
 .post .body .ed-figure figcaption.is-empty::before { content: attr(data-placeholder); color: color-mix(in srgb, var(--muted) 55%, transparent); pointer-events: none; }
 

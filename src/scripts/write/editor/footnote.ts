@@ -9,6 +9,7 @@ import { Decoration, DecorationSet, type EditorView } from '@tiptap/pm/view';
 import { Marked } from 'marked';
 import { Floater, h, keepFocus } from './ui';
 import type { SlashItem } from './slash';
+import { smartPunctuation } from './typing';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -90,6 +91,7 @@ class FootnoteUI {
 
   constructor(private editor: Editor) {
     keepFocus(this.remove); keepFocus(this.done);
+    smartPunctuation(this.input, { markdown: true }); // notes are inline markdown
     this.done.addEventListener('click', () => this.commit(true));
     this.remove.addEventListener('click', () => this.commit(true, true));
     this.input.addEventListener('keydown', (e) => {
