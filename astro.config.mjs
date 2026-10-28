@@ -2,7 +2,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 // Astro 7's default Markdown processor. It ships with astro (exact-pinned
-// dependency, hoisted to node_modules/@astrojs/markdown-satteri in the lockfile).
 import { satteri } from '@astrojs/markdown-satteri';
 import { figurePlugin } from './src/plugins/figure.mjs';
 
