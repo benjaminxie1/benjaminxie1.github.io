@@ -65,7 +65,7 @@ export class Uploads {
 
 const resolveKey = new PluginKey('edFigureResolve');
 
-export const IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/gif', 'image/webp', 'image/avif', 'image/svg+xml', 'image/heic', 'image/heif'];
+export const IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/gif', 'image/webp', 'image/avif', 'image/heic', 'image/heif'];
 
 export function insertFiles(editor: Editor, uploads: Uploads, files: File[], pos?: number) {
   const imgs = files.filter((f) => f.type.startsWith('image/'));
@@ -94,7 +94,7 @@ export const Figure = Node.create<{ uploads: Uploads | null }>({
   name: 'figure',
   group: 'block',
   content: 'inline*',
-  marks: 'bold italic strike code link',
+  marks: '', // captions are plain text in markdown (![alt](src "caption"))
   draggable: true,
   selectable: true,
   isolating: true,

@@ -7,7 +7,7 @@ import { $, type Doc, blank, today, toDisplay, slugify, slugOf, store, OWNER, RE
 import { createEditor } from './editor';
 import { ConflictError, token, savePost, loadPost, deletePost, uploadImage, deployStatus } from './github';
 import { saveLocal, loadLocal, keyOf, clearLocal, lastOpened, setLastOpened } from './local';
-import { toMarkdown } from './markdown';
+import { toMarkdown, unsupportedIn } from './markdown';
 import { h, download } from './ui/dom';
 import { openDialog, confirmDialog, choose } from './ui/dialog';
 import { toast, announce } from './ui/toast';
@@ -100,6 +100,7 @@ function show(d: Doc, isDirty: boolean, savedAt = 0) {
   failure = null; holdUntil = 0;
   clearTimeout(localTimer); localPending = false; localOk = true;
   doc = { ...d };
+  if (doc.lossy === undefined) doc.lossy = unsupportedIn(doc.html || '');
   dirty = isDirty;
   localAt = savedAt || Date.now();
   key = keyOf(doc);
@@ -112,6 +113,7 @@ function show(d: Doc, isDirty: boolean, savedAt = 0) {
   remoteNote.hidden = true;
   setLastOpened(key);
   paintAll();
+  if (doc.lossy?.length) toast(`Heads up: this post has ${doc.lossy.join(', ')}, which the editor can’t keep. Saving here will remove it, so edit this one on GitHub instead.`, { kind: 'error' });
 }
 
 // ---------- local autosave (per post) ----------
@@ -321,6 +323,14 @@ async function commit(mode: 'draft' | 'publish' | 'unpublish', o: { force?: bool
     titleIn.focus();
     return { ok: false, message: 'Give the post a title first.' };
   }
+  if (doc.lossy?.length) {
+    const c = await choose({
+      title: 'Saving will change this post',
+      message: `This post has ${doc.lossy.join(', ')}, which the editor can’t keep. If you save, ${doc.lossy.length > 1 ? 'they' : 'it'} will be removed${doc.published ? ' from the live post' : ''}.`,
+      options: [{ label: 'Cancel', value: 'cancel' }, { label: 'Save and remove it', value: 'go', kind: 'danger' }],
+    });
+    if (c !== 'go') return { ok: false, handled: true };
+  }
   flushLocal();
   const snap = rev;
   const oldKey = key;
@@ -339,8 +349,19 @@ async function commit(mode: 'draft' | 'publish' | 'unpublish', o: { force?: bool
     if (!base.path) base.slug = doc.slug || slugify(doc.title) || 'post';
     const saved = await savePost(base, { draft, force: o.force });
     if (renamedFrom) await deletePost(renamedFrom).catch(() => toast('Saved, but the old draft file couldn’t be removed.', { kind: 'error' }));
+    if (key !== oldKey) {
+      // the editor moved to another post during the save: record the result for the saved post only
+      const savedDoc: Doc = { ...base, path: saved.path, sha: saved.sha, draft: saved.draft, published: saved.published, extra: saved.extra ?? base.extra };
+      delete savedDoc.slug;
+      clearLocal(oldKey);
+      saveLocal(savedDoc, false);
+      busy = null;
+      paintAll();
+      return { ok: true };
+    }
     doc = { ...doc, path: saved.path, sha: saved.sha, draft: saved.draft, published: saved.published, extra: saved.extra ?? doc.extra };
     delete doc.slug;
+    doc.lossy = [];
     collect();
     dirty = rev !== snap; // typed during the save? keep it dirty
     key = keyOf(doc);
@@ -520,8 +541,14 @@ async function removePost(t: { key: string; path: string | null; sha: string | n
 const deleteCurrent = () => removePost({ key, path: doc.path, sha: doc.sha, title: titleIn.value, inRepo: !!doc.path, published: doc.published });
 
 // ---------- posts panel ----------
-async function openRow(r: PostRow): Promise<boolean> {
+/** Switching documents mid-save or mid-upload would bind results to the wrong post or drop images. */
+function canSwitch(): boolean {
   if (busy) { toast('Wait for the save to finish.'); return false; }
+  if (ed.isUploading()) { toast('Wait for images to finish uploading.'); return false; }
+  return true;
+}
+async function openRow(r: PostRow): Promise<boolean> {
+  if (!canSwitch()) return false;
   if (r.key === key) return true;
   flushLocal();
   const local = loadLocal(r.key);
@@ -559,6 +586,7 @@ async function openRow(r: PostRow): Promise<boolean> {
   }
 }
 function newPost() {
+  if (!canSwitch()) return;
   flushLocal();
   show(fresh(), false);
   titleIn.focus();
@@ -595,6 +623,7 @@ attachMenu(moreBtn, () => {
 });
 
 function restoreVersion(d: Doc) {
+  if (!canSwitch()) return;
   titleIn.value = d.title;
   dekIn.value = d.description;
   dateIn.value = d.date || today();

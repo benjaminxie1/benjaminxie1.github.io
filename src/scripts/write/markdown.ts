@@ -263,7 +263,8 @@ export function parseMarkdown(text: string, path: string | null, sha: string | n
   for (const k of Object.keys(meta)) if (!KNOWN.includes(k)) extra[k] = meta[k];
   const str = (v: unknown) => (v == null ? '' : typeof v === 'string' ? v : String(v));
   const rawDate = meta.date == null || meta.date === '' ? undefined : meta.date instanceof Date ? meta.date.toISOString() : String(meta.date);
-  const draft = meta.draft === true;
+  // match the site's schema: absent → published; anything other than literal false → draft
+  const draft = meta.draft == null ? false : meta.draft !== false;
   const doc: Doc = {
     path, sha,
     title: str(meta.title),

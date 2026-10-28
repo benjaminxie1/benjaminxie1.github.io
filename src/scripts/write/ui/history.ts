@@ -35,7 +35,7 @@ export function openHistory(path: string, restore: (d: Doc) => void) {
       picked = d;
       ctl.buttons.restore.disabled = false;
       const body = h('div', { class: 'body' });
-      body.innerHTML = d.html; // repo content, read-only preview
+      body.append(...safeNodes(d.html)); // repo content, read-only preview (sanitised: this origin holds the GitHub key)
       body.querySelectorAll('img').forEach((img) => img.setAttribute('loading', 'lazy'));
       pane.replaceChildren(h('div', { class: 'post hpost' },
         h('p', { class: 'hmeta', text: `${c.message} · ${relDate(c.date, true)}` }),
@@ -65,4 +65,29 @@ export function openHistory(path: string, restore: (d: Doc) => void) {
   }).catch((e) => {
     list.replaceChildren(h('li', { class: 'pnote bad', text: (e as Error).message || 'Couldn’t load history' }));
   });
+}
+
+/** Parse untrusted post HTML in an inert document and keep only harmless markup. */
+const ALLOWED = new Set(['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'BLOCKQUOTE', 'UL', 'OL', 'LI', 'HR', 'BR', 'STRONG', 'B', 'EM', 'I', 'S', 'DEL', 'CODE', 'PRE', 'A', 'IMG', 'FIGURE', 'FIGCAPTION', 'TABLE', 'THEAD', 'TBODY', 'TR', 'TH', 'TD', 'SUP', 'SUB']);
+const ATTRS: Record<string, string[]> = { A: ['href', 'title'], IMG: ['src', 'alt', 'title'], CODE: ['class'], OL: ['start'] };
+function safeNodes(html: string): Node[] {
+  const doc = new DOMParser().parseFromString(`<body>${html}</body>`, 'text/html');
+  const clean = (el: Element) => {
+    for (const child of [...el.children]) {
+      if (!ALLOWED.has(child.tagName)) {
+        // keep the text of unknown wrappers, drop scripts/styles/embeds entirely
+        if (/^(SCRIPT|STYLE|IFRAME|OBJECT|EMBED|TEMPLATE|SVG|MATH|NOSCRIPT|LINK|META)$/.test(child.tagName)) child.remove();
+        else { clean(child); child.replaceWith(...child.childNodes); }
+        continue;
+      }
+      const keep = ATTRS[child.tagName] || [];
+      for (const a of [...child.attributes]) {
+        const v = a.value.trim().toLowerCase();
+        if (!keep.includes(a.name) || ((a.name === 'href' || a.name === 'src') && /^(javascript|data|vbscript):/.test(v))) child.removeAttribute(a.name);
+      }
+      clean(child);
+    }
+  };
+  clean(doc.body);
+  return [...doc.body.childNodes].map((n) => document.importNode(n, true));
 }

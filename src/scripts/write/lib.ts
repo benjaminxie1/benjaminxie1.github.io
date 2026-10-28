@@ -26,6 +26,7 @@ export type Doc = {
   draft: boolean; // status in the repo
   published: boolean; // whether the repo copy is live
   html: string;
+  lossy?: string[]; // things in the repo copy the editor can't keep (tables, raw HTML…); saving would drop them
   slug?: string; // desired slug for a not-yet-saved post
   extra?: Record<string, unknown>; // unknown frontmatter keys, preserved on save
   localId?: string; // stable id for a never-saved doc (local draft key 'new:<localId>'), set by local.keyOf

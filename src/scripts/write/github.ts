@@ -328,10 +328,8 @@ export async function prepareImage(file: File): Promise<{ blob: Blob; ext: strin
     if (file.size > MAX_GIF) throw new Error(`This GIF is ${mb(file.size)}; the limit is 8 MB. Try a shorter or smaller GIF.`);
     return { blob: file, ext: 'gif' };
   }
-  if (type === 'image/svg+xml' || name.endsWith('.svg')) {
-    if (file.size > MAX_BYTES) throw new Error('This SVG is too large (max 1.5 MB).');
-    return { blob: file, ext: 'svg' };
-  }
+  // SVGs can carry scripts that would run on this site's origin (where the GitHub key lives), so they're not uploaded.
+  if (type === 'image/svg+xml' || name.endsWith('.svg')) throw new Error('SVG files aren’t supported. Export it as PNG and try again.');
   const heic = /hei[cf]/.test(type) || /\.hei[cf]$/.test(name);
   if (type && !type.startsWith('image/')) throw new Error('That file isn’t an image.');
   let src;
