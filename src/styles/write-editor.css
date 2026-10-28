@@ -240,3 +240,23 @@ html.ed-mbar-on .post .body.ProseMirror { padding-bottom: 72px; }
   .ed-sheet[open] { animation: none; }
   .ed-figure[data-state='uploading'] .ed-fig-status > span:last-child::before { animation-duration: 2.4s; }
 }
+
+/* --- quotes & callouts --- */
+/* Quote source placeholder: an untouched "— " line */
+.post .body blockquote .quote-source.is-source-empty::after {
+  content: attr(data-source-placeholder);
+  pointer-events: none;
+  color: color-mix(in srgb, var(--muted, #67625a) 62%, transparent);
+}
+/* Toggle: open while writing; the ▸ marker folds it */
+.post .body .ed-summary.is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--muted, #67625a) 62%, transparent);
+  font-weight: 400;
+}
+.post .body .ed-summary { cursor: text; }
+.post .body .ed-summary::after { cursor: pointer; pointer-events: none; }
+.post .body .ed-details:not(.is-open) > :not(.ed-summary) { display: none; }

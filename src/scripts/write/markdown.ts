@@ -10,6 +10,7 @@ import { strikethrough } from 'turndown-plugin-gfm';
 import { Marked, type Tokens } from 'marked';
 import YAML from 'yaml';
 import { type Doc, today, toSite } from './lib';
+import { addBlockRules, withoutKnownBlocks } from './markdown-blocks';
 
 /** Thrown by toMarkdown when the HTML still references a local (blob:/data:) image. */
 export class UnsavedImageError extends Error {
@@ -134,6 +135,7 @@ td.addRule('listItem', {
   },
 });
 td.keep(['sub', 'sup']);
+addBlockRules(td); // pull quote, callout, toggle
 
 /** HTML → markdown body (no frontmatter). Throws UnsavedImageError on blob:/data: images. */
 export function htmlToMarkdown(html: string): string {
@@ -194,7 +196,8 @@ export function unsupportedIn(html: string): string[] {
     [/<h1[\s>]/i, 'a top-level heading (# …)'], [/<(h4|h5|h6)[\s>]/i, 'a small heading (#### …)'],
     [/<input[^>]+checkbox/i, 'a task list'], [/<(sup|sub)[\s>]/i, 'super/subscript'],
   ];
-  for (const [re, label] of checks) if (re.test(html)) found.add(label);
+  const rest = withoutKnownBlocks(html); // pull quotes, callouts and toggles are fine
+  for (const [re, label] of checks) if (re.test(rest)) found.add(label);
   return [...found];
 }
 
