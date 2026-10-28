@@ -29,7 +29,7 @@
     line-height: 1.85;
     color: #3a3833;
   }
-  /* Handwritten drop cap */
+  /* Handwritten drop cap + a slightly heavier opening line */
   .post .body > p:first-child::first-letter {
     float: left;
     font-family: var(--hand);
@@ -38,6 +38,10 @@
     padding: 0.06em 0.06em 0 0;
     margin-right: 0.22em;
     color: var(--tag);
+  }
+  .post .body > p:first-child::first-line {
+    font-weight: 600;
+    color: var(--ink);
   }
   .post .body p {
     margin: 0 0 1.25em;
