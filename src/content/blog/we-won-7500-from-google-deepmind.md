@@ -13,91 +13,106 @@ It feels surreal as to what even happened at the hackathon: from meeting Google 
 
 ## At Cal Hacks 13.0
 
-Originally, since we were Berkeley students, the team had planned to only participate in the *other* hackathon that weekend, namely [Cal Hacks 13.0](https://www.calhacks.io). Dhilen, Jonathan, and I had arrived at the Palace of Fine Arts at ~5pm that Friday after taking the BART across the Bay, only to discover the Cal Hacks venue was a harsh, flickering, fluorescent, thick, humid, choking, industrial warehouse. Agh. I can still hear the buzzing of the floodlights. Regardless, we’d still planned on building .
+Originally, since we were Berkeley students, the team had planned to only participate in the *other* hackathon that weekend, namely [Cal Hacks 13.0](https://www.calhacks.io). Dhilen, Jonathan, and I had arrived at the Palace of Fine Arts at ~5pm that Friday after taking the BART across the Bay, only to discover the Cal Hacks venue was a harsh, flickering, fluorescent, thick, humid, choking, industrial warehouse. Ugh. I can still hear the buzzing of the floodlights. Regardless, we’d still planned on building .
 
-### Scrabblebot
+### Ideating
 
-After nabbing a tray of burritos and hoarding some energy drinks, we couldn’t agree on an idea. Each of us had brought one, and each of us thought the other two were wrong.
+After nabbing a tray of burritos and hoarding some energy drinks, we couldn’t agree on an idea. Dhilen wanted to create something based on the finance work he’d done in the past—a reconciliation agent that receives trades in a simulated trading environment and acts as the uniform source of truth for resolving transactions. I suggested a real-estate claims disputer, and Jonathan wanted an energy management tool for servicing fleets.
 
-Dhilen wanted to build something on top of the finance work he’d been doing: an agent that reads earnings calls and flags when what executives say doesn’t match their numbers. Jonathan liked it. I wanted to build Scrabblebot, which would watch a live Scrabble game through a phone camera and tell you the best move. My argument was that it was fun. Their argument was that it was useless. They were both right.
+Unable to pin down an idea, we soon were distracted by the many Cal Hacks events going on. A notable one was a game-theory optimal Scrabble bot competition with thousands in prizes. So I split from the team (sorry! my fault…) to work on [Scrabblebot](https://scrabblebot.spacetimedb.com/), which would bet on drawn tiles in a live Scrabble game against other bots to earn the most points.
 
-The problem with all three ideas was the same: none of us actually needed them. We’d have been building them to win a hackathon, and you can usually tell when a project was built for that reason. By 9pm we had a whiteboard full of half-ideas and nothing we believed in, so we did what any reasonable team does when it can’t pick an idea. We went to play poker.
+![](/blog/we-won-7500-from-google-deepmind-0v4j3z2.webp "ScrabbleBot placed top three for about 3 hours!")
 
 ### Jane Street Poker
 
-Jane Street, one of the Cal Hacks sponsors, was running a poker tournament in a side room. About eighty people signed up. I’m not a good poker player, but I am a patient one, and in a tournament full of tired hackers, patience goes surprisingly far. I folded almost everything for two hours and watched other people knock each other out.
+At around 12am, Jane Street, one of the Cal Hacks sponsors, was running a poker tournament in a side room. About eighty people signed up. I’m not a good poker player, but I am patient, which does pretty well when its 12am. I played only a few hands and watched other people knock each other out.
 
-At around 2am, with ten of us left, I looked down at ace-king offsuit. AK is one of the best hands you can be dealt before the flop, so I pushed all in. The player to my left called with a pair of sevens. The board came out with no ace and no king, and that was that.
+At around 2am, with ten of us left, I looked down at ace-nine offsuit. In poker, ace-nine is a solid hand to be dealt before the flop, especially if you have a short stack, so I pushed all in. The player to my left called with a pair of sevens. The board came out with no ace and no nine, and that was that.
 
 I finished 10th, which earned me a $15 Amazon gift card and a deck of Jane Street playing cards. It also earned me a problem. BART stops running [around midnight](https://www.bart.gov/schedules), so by the time the tournament ended, the last train back across the Bay was long gone.
 
+![](/blog/we-won-7500-from-google-deepmind-4t16300.webp#small "Jane Street cards!")
+
 ![Ben standing beneath the lit dome of the Palace of Fine Arts rotunda at night](/blog/palace-of-fine-arts-3am.webp#small "3:43am at the Palace of Fine Arts. The last BART was long gone.")
 
-So I wandered around the Palace of Fine Arts, which is a much better building at 3am than a hackathon venue is at 5pm, and eventually split an Uber back to Berkeley with two other stranded hackers. I got to bed a little after 5.
+So Jonathan and I wandered around the Palace of Fine Arts (Dhilen had went back to his apartment to sleep), which had much better architecture than the hackathon venue, and eventually took the BART back to Berkeley. I went to bed a little after 7am.
 
-We spent most of Saturday recovering and halfheartedly poking at Scrabblebot. It wasn’t going anywhere. Then Jonathan sent us a link to a different hackathon happening the next day: Google DeepMind was launching a new model, and Cerebral Valley was running a one-day hackathon to show it off. We decided to drop Cal Hacks and go.
+We spent most of Saturday recovering and halfheartedly poking at Scrabblebot, which had fallen to ~25th place since Friday. We didn’t have much hope for Cal Hacks. Then Jonathan sent us a link to a different hackathon happening the next day: Google DeepMind was launching a new model, and Cerebral Valley was running [a one-day hackathon](https://cerebralvalley.ai/e/gemini-4-argon-sf) to show it off. We decided to drop Cal Hacks and go.
 
 ## At Argon Hacks
 
-The [Gemini 4 Argon Hackathon](https://cerebralvalley.ai/e/gemini-4-argon-sf) ran from 9am to 10pm that Sunday, built around Google DeepMind’s new model, [Gemini 4 Argon](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/). We had one day, no idea, and a BART ride to think of one.
+The [Gemini 4 Argon Hackathon](https://cerebralvalley.ai/e/gemini-4-argon-sf) ran from 9am to 10pm that Sunday, centered around Google DeepMind’s new model, [Gemini 4 Argon](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/).
 
 ### The idea
 
-The idea came from Dhilen. He’d spent the summer doing bioengineering research at Lawrence Livermore National Laboratory, and on the train he told us about the part of lab work nobody writes papers about: the protocols.
+The idea had come from Dhilen. He’d spent the summer doing bio-engineering research at Lawrence Livermore National Laboratory, and on the train he told us about the grueling repetition of wet lab protocols to find data.
 
-A protocol is the recipe for an experiment. In theory it’s a precise, numbered list of steps. In practice it lives in someone’s notebook, half crossed out, with notes like “ask when to add this” in the margin. Everyone in the lab knows the protocol is a little wrong, and everyone knows which parts. And when someone gets one of those parts wrong, say by reusing a pipette tip that should have been changed or skipping a mixing step, nothing visibly happens. You only find out a week later, when the results make no sense and the experiment has to be run again.
+A lab protocol is the set of instructions for an experiment. In theory, it’s a precise list of steps. In practice, it’s usually quite informal, with steps skipped or half crossed out. It’s an unspoken rule that everyone in the lab knows which parts are wrong. However, when someone gets one of those parts wrong, say by skipping a mixing step, nothing visibly happens. You only find out a week later, when the results are inaccurate, and the experiment has to be run again.
 
-![A handwritten lab notebook page with a bone-marrow cell protocol, steps crossed out and margin notes](/blog/we-won-7500-from-google-deepmind-4z5q1t3.webp#small "What a real protocol looks like. Note “ask when to add this” at the bottom.")
+![A handwritten lab notebook page with a bone-marrow cell protocol, steps crossed out and margin notes](/blog/we-won-7500-from-google-deepmind-4z5q1t3.webp#small "A lipid nanoparticle protocol we ran live on LabTwin!")
 
-That morning I’d been reading Anthropic’s write-up on [how Claude designed protein binders against scorpion neurotoxins](https://www.anthropic.com/research/claude-scorpion-toxin-binder-design). Of 211 designs Claude proposed, 17 bound their targets when tested in a real lab. Put that next to Dhilen’s story and the shape of the problem gets clear. Models are getting good at the thinking part of biology: deciding what to make. They can’t help much yet with the doing part, which is still a person at a bench following a fragile recipe. As the thinking gets faster, the doing becomes the bottleneck.
+That morning I’d also been reading Anthropic’s write-up on [how Claude designed protein binders against scorpion neurotoxins](https://www.anthropic.com/research/claude-scorpion-toxin-binder-design). Of 211 designs Claude proposed, 17 bound their targets when tested in a real lab. Currently, models are good at the thinking and planning part of biology. They can’t help much yet with the doing part, which hopefully will be [solved by robotics in the near future](https://ai-2027.com/). As the thinking gets faster, the doing becomes the bottleneck.
 
-So the question we asked was: what if you could run an experiment before you run the experiment? Build a simulated copy of a real lab bench, load a real protocol into it, and let an agent find the mistakes before a person makes them. Reinforcement learning for biolabs.
+So I also agreed the idea was good. What if you could run an experiment *before* you run the experiment? Have a swarm of agents create a simulated copy of a real lab, implement a real protocol into it, and let an agent find the mistakes before a person makes them. Call it, ‘reinforcement learning for biolabs’.
 
-We all knew within a few minutes that this was the one. It was a real problem, one of us had lived it, and it was exactly the kind of thing a model like Argon, which is good at reading images and long documents, was built for.[^1]
+It was the kind of thing a model like Argon 4, which is [state-of-the-art](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/#workingharder) at creating high-fidelity procedural worlds and understanding long documents was built for.[^1]
 
 ### LabTwin
 
-We called it [LabTwin](https://github.com/benjaminxie1/argon-hacks). You give it three things: a lab protocol (PDF or Markdown), a photo or video of the bench, and what each well should end up containing. Gemini 4 Argon reads all three and builds a digital twin of the bench. To get the scale right, it uses the standard 96-well plate in the photo as a ruler: every plate is exactly the same size, so if it can find the plate, it can measure everything else.
+We called it LabTwin. It takes three inputs: a lab protocol (PDF or Markdown), a photo or video of the lab, and what the result of the experiment should end up being. A Gemini 4 Argon orchestrator agent then fans out five Antigravity Managed Agents in parallel sandboxes, and with long decode they write the whole-room 3D twin, using the standard 96-well plate in the photo. The twin then executes your protocol in physics, identifying and fixing every failed step before a human wastes time performing live experiments.
 
-![A real lab bench photo next to LabTwin's 3D reconstruction of the same bench](/blog/real-vs-twin.webp#wide "Left: a real bench. Right: the bench LabTwin rebuilt from that photo.")
+![A real lab bench photo next to LabTwin's 3D reconstruction of the same bench](/blog/real-vs-twin.webp#wide)
 
-Under the hood, five Gemini agents work in parallel. One builds the 3D scene, one tracks what’s in every tube and well, one writes the reward function, one builds the reinforcement-learning environment, and one generates variations of the protocol to test. Together they produce a physics simulation in [MuJoCo](https://ieeexplore.ieee.org/document/6386109) and a [Gymnasium](https://gymnasium.farama.org) environment where an RL agent can pick up tips, aspirate, dispense, mix, and eject them, just like a person at the bench.
+Under the hood, the agents builds the 3D scene, track what’s in every tube and well, write the reward function, build the reinforcement-learning environment, and generate variations of the protocol to test. Together they produce a physics simulation in [MuJoCo](https://ieeexplore.ieee.org/document/6386109) and a [Gymnasium](https://gymnasium.farama.org) environment where an RL agent can pick up tips, aspirate, dispense, mix, and eject them, just like a person in the lab.
 
-The most important design decision was that Argon never grades its own homework. Models are good at producing plausible answers and bad at noticing when a plausible answer is wrong, which is exactly the failure mode we were trying to catch in people. So every step is checked by a plain, deterministic validator: did the tip hit anything, did it stay inside the well, did every well end up with exactly the right volume and concentration? When a check fails, the failure goes back to the agent responsible for it, Argon rewrites that step of the protocol, and the simulation runs again to prove the fix works.
+Notably, LabTwin never uses LLM-as-a-judge to verify output, which [has been known to lead to inaccurate results](https://arxiv.org/abs/2306.05685). Models are good at producing plausible answers and bad at noticing when a plausible answer is wrong. Therefore, we checked results with deterministic validator. Did the tip stay inside the well? Did every well end up with the right volume and concentration? When checks fail, Argon rewrites that step of the protocol, and the simulation runs again to prove the fix works.
 
-For the demo, we wrote a simple serial dilution and planted one mistake in it: the protocol tells you to keep the same pipette tip between two transfers. It’s an easy mistake to make, and it quietly contaminates every well after it. LabTwin caught it, explained why it mattered, and rewrote the step.
+For the demo, we used a serial dilution protocol and planted one mistake in it: the protocol tells you to keep the same pipette tip between two transfers. It’s an easy mistake to make, but it contaminates every well after it.
 
-![A serial dilution protocol with the planted error highlighted: the same pipette tip is reused between transfers 3 and 4](/blog/demo-protocol-planted-error.webp "The demo protocol. Spot the error.")
+![A serial dilution protocol with the planted error highlighted: the same pipette tip is reused between transfers 3 and 4](/blog/demo-protocol-planted-error.webp "Demo protocol")
 
-<div class="embed embed-youtube"><iframe src="https://www.youtube-nocookie.com/embed/dGreES9C6a0" title="YouTube video" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+<figure class="embed embed-youtube"><iframe src="https://www.youtube-nocookie.com/embed/dGreES9C6a0" title="1-minute walkthrough demo" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe><figcaption>1-minute walkthrough demo</figcaption></figure>
 
 ### The rest of the day
 
-Building all of that in thirteen hours took more compute than I had. Around 4pm, in the middle of debugging the validator, I hit my Claude usage limit. I had the choice between waiting five hours and paying $200 for [Claude Max 20x](https://support.claude.com/en/articles/11049741-what-is-the-max-plan) right then, which, with six hours left, was not really a choice.[^1]
+Around 4pm, in the middle of debugging, I hit my Claude usage limit. I had the choice between waiting five hours and paying $200 for [Claude Max 20x](https://support.claude.com/en/articles/11049741-what-is-the-max-plan) right then, which, with six hours left, was not really a choice. Luckily it was a good investment![^1]
 
-At lunch we ended up at a table with a few Google DeepMind engineers. One of them worked on recursive self-improvement: using models to help do the research that produces the next model. He talked about it the way you’d talk about any engineering project, which was the scariest part. It was also the best conversation I had all weekend.
+Around dinner we ended up chatting with some ambitious high schoolers working on the (Instinct, Muse, Dots, etc.) for teenagers and also some Google DeepMind engineers who had worked on Gemini for personal shopping.
 
-We demoed at 8pm. The judges asked two questions: whether it worked on protocols we hadn’t prepared, and whether a real lab would use it. We showed it a protocol Dhilen had brought from Livermore, and it found a step that was ambiguous enough that two people could reasonably do it two different ways. For the second question, Dhilen just said yes.
+We demoed at 8pm. The judges asked some standard questions: how we collaborated our swarm of agents together, and whether a real lab would use it.
 
-At 9:40, they announced [1st place: LabTwin](https://cerebralvalley.ai/e/gemini-4-argon-sf/hackathon/gallery/67).
+At 9:40, they announced [1st place: LabTwin](https://cerebralvalley.ai/e/gemini-4-argon-sf/hackathon/gallery/67). Go polar bears!
 
 ### The port
 
-Which brings me to the San Francisco Port. Winning a hackathon at 10pm on a Sunday leaves you with a lot of adrenaline and nowhere to put it, so the three of us walked down to the water to celebrate. What happened next involved a pier, a dare, and a decision that made a lot of sense at the time. The water in San Francisco Bay in late October is about 60 degrees. I can confirm this.
+Which brings me to the San Francisco Port. At the start of the hackathon, our team had made a bet that if we won, we would jump into the Port. I can confirm that the water in San Francisco Bay in late October is about 60 degrees.
 
-We took the last BART home soaking wet, with $7,500 and a story we’ll be telling for a long time.
+![](/blog/we-won-7500-from-google-deepmind-030a0i3.webp "polars in the bay")
+
+We took the last BART home soaking wet, with $7,500.
 
 ## Takeaways
 
-I have the AK offsuit.
+So, what you might be wondering is, how do I go out and win some hackathons for myself? The honest answer is that none of it is the code. Claude Code (or Codex, or Cursor) writes most of that now, and probably will continue to do so. What wins hackathons are two human things[^2]:
 
-I lost that poker tournament holding the second-best starting hand in the game, and I think that hand explains more about hackathons than anything else from the weekend. AK offsuit is strong, but it isn’t a made hand. It’s a good start that still needs the board to cooperate. Most people who lose with it didn’t play it wrong. They just treated a good start as if it were a finished result.
+- A novel idea, and
+- Making the room *feel* something during the demo.
 
-A good idea at a hackathon is the same. Scrabblebot was a fine start, and so were the other two ideas we argued about on Friday. What made LabTwin different wasn’t that it was clever. It was that one of us had personally experienced the problem, which meant we knew what the solution had to do, and we could tell when we were building the wrong thing. Ideas that come from your own life come with a built-in judge.
+The first part has been spoken about enough. Paul Graham wrote that the best startup ideas come from [living in the future and building what’s missing](https://paulgraham.com/startupideas.html), and that holds for a hackathon too. One reason LabTwin worked is because Dhilen had spent a summer at Lawrence Livermore watching time being wasted on repeated experiments.
 
-The other thing I learned is to trust the feeling. On that BART ride, before we’d written a line of code, I “had a feeling” about this idea. I didn’t have that feeling about anything on Friday. I think the feeling is mostly your brain noticing that an idea is real before you can explain why. You can’t make it happen. But you can notice when it isn’t there, and you should take that as a sign to keep looking, even if that means walking out of one hackathon and into another.
+The second part is where most teams lose. Pick one feature and one demo. Make the frontend aesthetically pleasing, because judges see your project for three minutes and humans like pretty things. Then practice the pitch out loud with a timer. Eight hours of code and ten minutes of pitch prep is how you lose!
 
-Two days after we won, Anthropic published [early results on accelerating drug development with Claude](https://www.anthropic.com/research/early-progress-drug-development), including changes to how wet-lab work and protocols get done. The doing part of biology is about to get much faster, and I’m glad we got to build a small piece of it.
+Another differentiator is also the team. Find awesome, ambitious people to work with! Dhilen, Jonathan, and I have experience doing hackathons together ever since the Ventura County Hackathon by the Sea in high school. Find people who are better than you at the things you’re bad at, and keep working with them. You’ll inevitably get stuck and frustrated if you work alone.
+
+### LET’S KEEP GAMBLING
+
+In poker, ace-nine (nicknamed ‘rounders’ or the ‘orthogonal polar bear’) still loses all the time, and you don’t stop playing it. You make the best of what you have.
+
+See you at the next one.
+
+---
+
+Side note: two days after we won, Anthropic published [early results on accelerating drug development with Claude](https://www.anthropic.com/research/early-progress-drug-development), including changes to how wet-lab work gets done. The doing part of biology is about to get much faster, and I’m glad we got to emulate a small piece of it.
 
 ## Further reading
 
@@ -108,12 +123,13 @@ If you want to go deeper on the ideas behind LabTwin:
 - [LAB-Bench](https://arxiv.org/abs/2407.10362) (FutureHouse, 2024) and [BioProBench](https://arxiv.org/abs/2505.07889) (2025): benchmarks for protocol understanding and reasoning.
 - [ExpVid](https://arxiv.org/abs/2510.11606) (2025): how well multimodal models understand lab videos.
 - [Self-driving laboratories for chemistry and materials science](https://chemrxiv.org/engage/chemrxiv/article-details/66708e2e5101a2ffa8cbd354) (*Chemical Reviews*, 2024): a survey of autonomous labs.
-- [Invalid action masking in policy gradient algorithms](https://arxiv.org/abs/2006.14171) (Huang & Ontañón): the idea behind the masked PPO we trained.
+- [Invalid action masking in policy gradient algorithms](https://arxiv.org/abs/2006.14171) (Huang & Ontañón): the idea behind the masked PPO were trained.
 
 **Links:**
 
 - The GitHub repositree: [benjaminxie1/argon-hacks](https://github.com/benjaminxie1/argon-hacks)
-- The demo videeyo: [youtu.be/dGreES9C6a0](https://youtu.be/dGreES9C6a0)
+- The demo video: [youtu.be/dGreES9C6a0](https://youtu.be/dGreES9C6a0)
 - The project page: [Cerebral Valley gallery](https://cerebralvalley.ai/e/gemini-4-argon-sf/hackathon/gallery/67)
 
-[^1]: We may also have put the hackathon’s Gemini 4 Argon API key to work on a few personal projects afterward. Allegedly.
+[^1]: We may also have put the hackathon’s Gemini 4 Argon API key to work on a few personal projects afterward…
+[^2]: This advice is also generalizable to daily life as well!
