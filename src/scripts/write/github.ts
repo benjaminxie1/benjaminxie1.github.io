@@ -320,8 +320,12 @@ async function decode(file: File): Promise<{ img: CanvasImageSource; w: number; 
   }
 }
 const toBlob = (c: HTMLCanvasElement, type: string, q: number) => new Promise<Blob | null>((r) => c.toBlob(r, type, q));
-/** Resize/re-encode a photo: longest side ≤ 2000px, ≤ ~1.5MB, webp if the browser can encode it, else jpeg. Strips EXIF. */
-export async function prepareImage(file: File): Promise<{ blob: Blob; ext: string }> {
+/**
+ * Resize/re-encode a photo: longest side ≤ 2000px, ≤ ~1.5MB, webp if the browser can encode it, else jpeg. Strips EXIF.
+ * `keepAlpha` (logos): transparency is kept — never flattened onto white — as webp with alpha, else PNG.
+ */
+export async function prepareImage(file: File, opts: { keepAlpha?: boolean } = {}): Promise<{ blob: Blob; ext: string }> {
+  const keepAlpha = !!opts.keepAlpha;
   const type = (file.type || '').toLowerCase();
   const name = (file.name || '').toLowerCase();
   if (type === 'image/gif' || name.endsWith('.gif')) {
@@ -342,13 +346,20 @@ export async function prepareImage(file: File): Promise<{ blob: Blob; ext: strin
     for (let round = 0; round < 6; round++) {
       c.width = Math.max(1, Math.round(src.w * scale)); c.height = Math.max(1, Math.round(src.h * scale));
       const ctx = c.getContext('2d')!;
-      ctx.fillStyle = '#ffffff'; // jpeg has no alpha
-      ctx.fillRect(0, 0, c.width, c.height);
+      ctx.clearRect(0, 0, c.width, c.height);
+      if (!keepAlpha) {
+        ctx.fillStyle = '#ffffff'; // jpeg has no alpha
+        ctx.fillRect(0, 0, c.width, c.height);
+      }
       ctx.drawImage(src.img, 0, 0, c.width, c.height);
       for (const q of [0.86, 0.76, 0.66]) {
         let blob = await toBlob(c, 'image/webp', q);
         let ext = 'webp';
-        if (!blob || blob.type !== 'image/webp') { blob = await toBlob(c, 'image/jpeg', q); ext = 'jpg'; } // Safari < 17 can't encode webp
+        if (!blob || blob.type !== 'image/webp') {
+          // Safari < 17 can't encode webp: jpeg for photos, PNG (keeps alpha) for logos
+          if (keepAlpha) { blob = await toBlob(c, 'image/png', 1); ext = 'png'; }
+          else { blob = await toBlob(c, 'image/jpeg', q); ext = 'jpg'; }
+        }
         if (!blob) throw new Error('Couldn’t process this image.');
         if (blob.size <= MAX_BYTES) return { blob, ext };
       }
@@ -359,18 +370,32 @@ export async function prepareImage(file: File): Promise<{ blob: Blob; ext: strin
 }
 const blobB64 = async (b: Blob) => bytesB64(new Uint8Array(await b.arrayBuffer()));
 const rand = () => Array.from(crypto.getRandomValues(new Uint8Array(4)), (x) => x.toString(36).padStart(2, '0')).join('').slice(0, 7);
-export async function uploadImage(file: File, baseName: string): Promise<{ src: string; preview: string }> {
-  const { blob, ext } = await prepareImage(file);
+/** Repo folders uploads may go to: `public/<segment>[/<segment>…]` (e.g. public/blog, public/site). */
+const UPLOAD_DIR_RE = /^public(?:\/[a-z0-9][a-z0-9_-]*)+$/i;
+/**
+ * Upload an image to the repo and return its site path. Default folder: public/blog (posts), so
+ * existing callers are unchanged. `dir: 'public/site'` for site images (logos, project shots);
+ * `keepAlpha` keeps transparency (logos). `keepPng` is accepted as an alias of `keepAlpha`.
+ */
+export async function uploadImage(
+  file: File,
+  baseName: string,
+  opts: { dir?: string; keepAlpha?: boolean; keepPng?: boolean } = {},
+): Promise<{ src: string; preview: string }> {
+  const dir = (opts.dir ?? MEDIA_DIR).replace(/\/+$/, '');
+  if (!UPLOAD_DIR_RE.test(dir)) throw new Error(`Can’t upload images to “${dir}”.`);
+  const urlBase = dir.slice('public'.length); // "/blog", "/site"
+  const { blob, ext } = await prepareImage(file, { keepAlpha: !!(opts.keepAlpha || opts.keepPng) });
   const data = await blobB64(blob);
   const stem = slugify(baseName || '', 'image').slice(0, 40).replace(/-+$/, '') || 'image';
   let name = `${stem}-${rand()}.${ext}`;
   let tries = 0;
-  await enqueue(() => putRaw(() => `${MEDIA_DIR}/${name}`, data, `Image: ${stem}`, null, async () => {
+  await enqueue(() => putRaw(() => `${dir}/${name}`, data, `Image: ${stem}`, null, async () => {
     if (++tries > 3) return 'abort';
     name = `${stem}-${rand()}.${ext}`; // name collision (astronomically unlikely): pick another
     return null;
   }));
-  return { src: `/blog/${name}`, preview: URL.createObjectURL(blob) };
+  return { src: `${urlBase}/${name}`, preview: URL.createObjectURL(blob) };
 }
 
 // ---------- legacy helpers (used by the pre-contract main.ts; keep until APP drops them) ----------

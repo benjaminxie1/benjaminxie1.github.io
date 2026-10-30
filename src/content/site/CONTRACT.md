@@ -58,10 +58,37 @@ Pages call `coerceFile` on load (build never fails because of a bad value; it lo
 - Empty lists must render cleanly (the list element still exists, possibly empty).
 - No visual change to the live pages vs today (verify with screenshots).
 
+**As implemented (CONTENT, v2)** — rules the editor can rely on:
+- A list element contains **only** its items (wrappers like `.paras` / `.rc-rows` use
+  `display: contents`). Insert new items as its children. Each list's template is the list
+  element's **next sibling** (`list.parentElement.querySelector(':scope > template[data-edit-template="…"]')`).
+- Tokens: top-level lists use `__i__`; lists nested in an item (`/projects/N/links`,
+  `/projects/N/mock/rows`) use `__j__`, also in real items' inner templates. Instantiate by
+  string-replacing the token in `template.innerHTML` (an outer replace of `__i__` also fixes the
+  inner template). Item root may itself carry `data-edit` (nav link, paragraph, home/contact link).
+- `data-edit-optional` is on the element that shows/hides; it is `hidden` iff the key is **absent**
+  (`undefined`); it never carries `data-edit` itself. Hidden parts render the field's default
+  (`defaultAt(file, pointer)` in schema.ts), so switching on = set value to `defaultAt(...)`.
+  `[data-edit-optional][hidden]{display:none!important}` is in global.css. Project image wins
+  over mock by CSS when both exist.
+- Detail bindings (live preview without re-rendering), all values `<file>:<pointer>`,
+  space-separated bindings:
+  - `data-edit-attr="attr=<ptr>[|<ptr>…]"` – set attr to the first non-empty value (for `href`,
+    pass through `hrefOf`); remove when none. (nav href, project-link title, project image link.)
+  - `data-edit-class="cls=<ptr>"` / `cls=!<ptr>` – toggle class on truthy / falsy value.
+  - `data-edit-style="prop=<ptr>"` – numbers get `px` (sponsor logo height).
+  - `data-edit-icon="<ptr>"` on an SVG `<path>` – `d = iconPath(value)`.
+  - `data-edit-sitelink="<ptr-to-item>"` (home/contact links) – `href` and `data-edit-href` come
+    from `resolveSiteLink(item, siteData, ptr)`: custom `href` wins, else the shared site link
+    (`site:/github` …), `email` → `mailto:` with no `data-edit-href`.
+  - `aria-label` / `aria-current` are not live-updated.
+- `tests/site-templates.test.mjs` is a reference implementation of "fill a subtree from data"
+  using only these markers, and checks every template against the real items.
+
 ## 3. Images (owned by CONTENT + EDITOR)
 
 - Site images live in `public/site/` (new uploads) — existing paths (`/logos/…`, `/sponsors/…`,
-  `/projects/…`) stay valid. `github.ts` `uploadImage(file, baseName, opts?: { dir?: string; keepPng?: boolean })`
+  `/projects/…`) stay valid. `github.ts` `uploadImage(file, baseName, opts?: { dir?: string; keepAlpha?: boolean })` (`keepPng` = alias)
   gains a `dir` option (default stays `public/blog`); logos keep transparency (PNG/SVG input →
   PNG/webp with alpha; never flatten onto white).
 

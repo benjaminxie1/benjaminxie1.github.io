@@ -1,9 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import VillaScene from '../components/VillaScene.astro';
-import { site, siteLink } from '../data/site';
+import { site, linkTarget } from '../data/site';
 import { renderInline } from '../lib/inline';
-import contact from '../content/site/contact.json';
+import { loadSiteFile } from '../lib/site-content';
+import { newItemFor, type SiteLink } from '../content/site/schema';
+import raw from '../content/site/contact.json';
+
+const contact = loadSiteFile('contact', raw);
+const newLink = newItemFor('contact', '/links') as SiteLink;
 ---
 
 <Base title={contact.heading} fit>
@@ -11,11 +16,28 @@ import contact from '../content/site/contact.json';
     <section class="contact">
       <h1 data-edit="contact:/heading" data-edit-kind="plain">{contact.heading}</h1>
       <p><span data-edit="contact:/lead" data-edit-kind="inline" set:html={renderInline(contact.lead)} /> <a href={`mailto:${site.email}`} data-edit="site:/email" data-edit-kind="plain">{site.email}</a>.</p>
-      <p class="links">
-        {contact.links.map((l, i) => (
-          <a href={siteLink(l.site)} data-edit={`contact:/links/${i}/label`} data-edit-kind="plain" data-edit-href={`site:/${l.site}`}>{l.label}</a>
-        ))}
-      </p>
+      {(() => {
+        // one link; also rendered from the schema's newItem into the editor's <template>
+        const Link = (l: SiteLink, i: number | string) => {
+          const t = linkTarget(l, `contact:/links/${i}`);
+          return (
+            <a
+              href={t.href}
+              data-edit-item={`contact:/links/${i}`}
+              data-edit-sitelink={`contact:/links/${i}`}
+              data-edit={`contact:/links/${i}/label`}
+              data-edit-kind="plain"
+              data-edit-href={t.editHref}
+            >{l.label}</a>
+          );
+        };
+        return (
+          <>
+            <p class="links" data-edit-list="contact:/links">{contact.links.map((l, i) => Link(l, i))}</p>
+            <template data-edit-template="contact:/links">{Link(newLink, '__i__')}</template>
+          </>
+        );
+      })()}
     </section>
     <section class="footer-art">
       <VillaScene />
@@ -36,8 +58,12 @@ import contact from '../content/site/contact.json';
   .contact a:hover {
     color: var(--link);
   }
+  .contact p {
+    overflow-wrap: break-word;
+  }
   .links {
     display: flex;
+    flex-wrap: wrap;
     gap: 22px;
   }
   .footer-art {
