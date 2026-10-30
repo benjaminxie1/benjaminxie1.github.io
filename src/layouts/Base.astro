@@ -83,7 +83,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
   </head>
   <body class={fit ? 'fit' : undefined}>
     <header class="site-header">
-      <a class="wordmark" href="/">{site.short}</a>
+      <a class={path === '/' ? 'wordmark hand' : 'wordmark'} href="/">{site.short}</a>
       <nav>
         {nav.map((n) => (
           <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
