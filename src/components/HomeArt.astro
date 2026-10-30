@@ -122,7 +122,8 @@
         const srcA = 528 / 880;
         if (boxA > srcA) { cover[0] = boxA / srcA; cover[1] = 1; }
         else { cover[0] = 1; cover[1] = srcA / boxA; }
-        shift[0] = (1 - cover[0]) * 1.0;
+        // anchored right on wide screens, centered on phones (matches the <img> CSS)
+        shift[0] = (1 - cover[0]) * (innerWidth <= 640 ? 0.5 : 1.0);
         shift[1] = (1 - cover[1]) * 0.55;
         if (ready) frame(performance.now());
       };
@@ -178,6 +179,9 @@
   .homeart img {
     object-fit: contain;
     object-position: 100% 55%;
+  }
+  @media (max-width: 640px) {
+    .homeart img { object-position: 50% 55%; }
   }
   .homeart canvas {
     opacity: 0;

@@ -57,6 +57,10 @@ import { site } from '../data/site';
     }
     .intro { min-height: auto; padding-top: 24px; }
   }
+  @media (max-width: 640px) {
+    /* phones: the bust sits right under the links, inside the page (no sideways scroll) */
+    .art { height: 100vw; max-height: 480px; margin: -88px -20px -24px; }
+  }
   .intro {
     position: relative;
     z-index: 1;

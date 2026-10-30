@@ -1,5 +1,6 @@
 @import '@fontsource-variable/comfortaa';
 @import '@fontsource/caveat/500.css';
+@import '@fontsource-variable/source-serif-4/opsz.css';
 
 :root {
   --bg: #f8f6f1;
@@ -11,12 +12,14 @@
   --tile: #f4f1ea;
   --sans: 'Comfortaa Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --hand: 'Caveat', 'Bradley Hand', cursive;
+  --serif: 'Source Serif 4 Variable', 'Source Serif 4', Charter, 'Iowan Old Style', Georgia, serif;
   --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   color-scheme: light;
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body { overflow-x: clip; }
 body { margin: 0; min-height: 100dvh; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); font: 16px/1.65 var(--sans); }
 a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -31,7 +34,8 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 40px 0; }
 img { max-width: 100%; height: auto; }
 
 .site-header { width: 100%; max-width: 1040px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 28px; }
-.wordmark { font-family: var(--hand); font-size: 30px; color: var(--ink); line-height: 1; }
+/* Wordmark in the same serif as the blog posts */
+.wordmark { font-family: var(--serif); font-weight: 600; font-size: 23px; letter-spacing: -0.01em; color: var(--ink); line-height: 1; }
 .wordmark:hover { text-decoration: none; }
 .site-header nav { display: flex; align-items: center; gap: 22px; font-size: 15px; }
 .site-header nav a { color: var(--ink); }
@@ -57,12 +61,19 @@ section { margin-bottom: 56px; }
 .site-footer { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 28px 40px; color: var(--muted); font-size: 13px; }
 
 @media (max-width: 640px) {
-  .site-header { padding: 16px 20px; }
-  .site-header nav { gap: 12px; font-size: 14px; }
+  .site-header { padding: 14px 20px; gap: 12px; }
+  .wordmark { font-size: 20px; }
+  .site-header nav { gap: 14px; font-size: 14px; }
+  .site-header nav a { padding: 8px 0; } /* taller tap targets */
   main { padding: 16px 20px 56px; }
   .site-footer { padding: 0 20px 32px; }
-  h1 { font-size: 48px; }
+  h1 { font-size: 44px; }
   .row { flex-direction: column; gap: 0; }
+}
+
+@media (max-width: 370px) {
+  .site-header nav { gap: 10px; font-size: 13px; }
+  .wordmark { font-size: 18px; }
 }
 
 /* One-screen pages (Home, Contact): no scrolling on desktop-sized windows. */
