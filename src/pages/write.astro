@@ -40,6 +40,18 @@ const today = new Date().toISOString().slice(0, 10);
         <svg class="ico" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </button>
       <button type="button" class="wb-btn wb-primary" data-act="primary" data-for="posts">Publish…</button>
+      <div class="s-hist" data-for="site" role="group" aria-label="History">
+        <button type="button" class="wb-btn wb-icon" data-act="site-undo" aria-label="Undo" disabled>
+          <svg class="ico" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M9 14L4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <button type="button" class="wb-btn wb-icon" data-act="site-redo" aria-label="Redo" disabled>
+          <svg class="ico" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M15 14l5-5-5-5M20 9H10a6 6 0 0 0 0 12h3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+      </div>
+      <button type="button" class="wb-btn wb-details" data-act="site-details" data-for="site" aria-pressed="false" aria-controls="site-panel" title="Every detail of the selected item or page">
+        <svg class="ico" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8M14 4v6M8 14v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>
+        <span class="lbl">Details</span>
+      </button>
       <button type="button" class="wb-btn wb-primary" data-act="site-publish" data-for="site">Publish…</button>
       <div class="wb-more-wrap" data-for="site">
         <button type="button" class="wb-btn wb-more" data-act="site-more" aria-label="More site actions" aria-haspopup="menu" aria-expanded="false" title="More">
@@ -61,10 +73,13 @@ const today = new Date().toISOString().slice(0, 10);
         <button type="button" data-page="experience">Experience</button>
         <button type="button" data-page="contact">Contact</button>
       </nav>
-      <span class="s-hint" hidden>Click any text to edit it · click a link to change where it goes</span>
+      <span class="s-hint" hidden>Click text to edit · hover an item to move, copy or delete it</span>
     </div>
     <aside class="note s-note" aria-label="Site editing" hidden></aside>
-    <div class="s-stage"><iframe class="s-frame" title="Page being edited"></iframe></div>
+    <div class="s-body">
+      <div class="s-stage"><iframe class="s-frame" title="Page being edited"></iframe></div>
+      <aside class="s-panel" id="site-panel" aria-label="Details" hidden></aside>
+    </div>
   </main>
 
   <main class="post-main write" data-for="posts">

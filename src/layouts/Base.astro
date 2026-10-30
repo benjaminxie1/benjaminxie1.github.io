@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { site, nav } from '../data/site';
+import { newItemFor, type NavItem } from '../content/site/schema';
 
 interface Props {
   title?: string;
@@ -43,6 +44,7 @@ const jsonLd = article && {
 };
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const newNav = newItemFor('site', '/nav') as NavItem;
 ---
 
 <!doctype html>
@@ -84,11 +86,25 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
   <body class={fit ? 'fit' : undefined}>
     <header class="site-header">
       <a class={path === '/' ? 'wordmark hand' : 'wordmark'} href="/" data-edit="site:/short" data-edit-kind="plain">{site.short}</a>
-      <nav>
-        {nav.map((n, i) => (
-          <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined} data-edit={`site:/nav/${i}/label`} data-edit-kind="plain">{n.label}</a>
-        ))}
-      </nav>
+      {(() => {
+        // one nav link; also rendered from the schema's newItem into the editor's <template>
+        const Nav = (n: NavItem, i: number | string, current = false) => (
+          <a
+            href={n.href}
+            aria-current={current ? 'page' : undefined}
+            data-edit-item={`site:/nav/${i}`}
+            data-edit={`site:/nav/${i}/label`}
+            data-edit-kind="plain"
+            data-edit-attr={`href=site:/nav/${i}/href`}
+          >{n.label}</a>
+        );
+        return (
+          <>
+            <nav data-edit-list="site:/nav">{nav.map((n, i) => Nav(n, i, isCurrent(n.href)))}</nav>
+            <template data-edit-template="site:/nav">{Nav(newNav, '__i__')}</template>
+          </>
+        );
+      })()}
     </header>
     <slot />
     <footer class="site-footer">

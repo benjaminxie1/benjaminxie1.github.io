@@ -85,3 +85,6 @@ section { margin-bottom: 56px; }
   body.fit main { min-height: 0; display: flex; flex-direction: column; padding-top: 24px; padding-bottom: 16px; }
   body.fit .site-footer { padding-bottom: 24px; }
 }
+
+/* Optional parts of site pages are always in the markup (for the /write editor); `hidden` wins over component display rules. */
+[data-edit-optional][hidden] { display: none !important; }

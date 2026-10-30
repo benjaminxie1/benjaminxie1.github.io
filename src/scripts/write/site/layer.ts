@@ -4,12 +4,17 @@
 // editable via a popover, blocks navigation, and reports every change to the host.
 // Nodes here belong to the iframe's realm, so no `instanceof` checks against our globals.
 import { renderInline, inlineFromNode } from '../../../lib/inline';
-import { parseKey, type Key } from './pointer';
+import { parseKey, under, type Key } from './pointer';
+import { hrefOf } from '../../../content/site/schema';
 import { norm } from './state';
 
 export type FieldInfo = { key: Key; kind: 'plain' | 'inline' | 'href'; tag: string };
 export type LayerHost = {
   value(k: Key): string | undefined;
+  /** Any value (images, optional parts). */
+  get(k: Key): unknown;
+  /** What an image path shows as here (a just-uploaded image isn't deployed yet). */
+  imgSrc(path: string, key: Key): string;
   /** The file behind k has been loaded (or failed to): an undefined value then means the field is missing. */
   loaded(k: Key): boolean;
   changed(k: Key): boolean;
@@ -17,8 +22,8 @@ export type LayerHost = {
   beginEdit(k: Key): void;
   endEdit(): void;
   editable(): boolean;
-  /** Keyboard shortcuts that belong to the app (⌘S, ⌘Z outside a field). */
-  command(name: 'save' | 'undo'): void;
+  /** Keyboard shortcuts that belong to the app (⌘S, ⌘Z / ⇧⌘Z). */
+  command(name: 'save' | 'undo' | 'redo'): void;
   message(msg: string): void;
 };
 export type Layer = ReturnType<typeof attachLayer>;
@@ -45,7 +50,7 @@ html.bx-on [data-edit]:focus { outline: 2px solid rgba(47, 107, 69, .65); outlin
 html.bx-on [data-edit] { cursor: text; caret-color: #2f6b45; }
 html.bx-on [data-edit-href]:not([data-edit]) { cursor: pointer; }
 html.bx-on [data-edit-kind="inline"] a { cursor: pointer; }
-html.bx-on .bx-ch { background-color: rgba(181, 69, 47, .075); box-shadow: 0 0 0 3px rgba(181, 69, 47, .075); }
+html.bx-on .bx-ch { background-image: linear-gradient(rgba(181, 69, 47, .55), rgba(181, 69, 47, .55)); background-size: 100% 2px; background-position: 0 calc(100% + 1px); background-repeat: no-repeat; } /* an underline mark: never hides the element's own background */
 html.bx-on .bx-flash { animation: bx-flash 1.1s ease-out; }
 @keyframes bx-flash { 0%, 30% { background-color: rgba(47, 107, 69, .22); box-shadow: 0 0 0 4px rgba(47, 107, 69, .22); } }
 html.bx-on .bx-missing { opacity: .55; cursor: not-allowed; }
@@ -142,7 +147,8 @@ export function attachLayer(win: Window, host: LayerHost) {
     return f && f.isContentEditable ? f : null;
   };
   const kindOf = (el: Element) => (el.getAttribute('data-edit-kind') === 'inline' ? 'inline' : 'plain');
-  const all = () => [...doc.querySelectorAll<HTMLElement>('[data-edit], [data-edit-href]')];
+  const all = () => [...doc.querySelectorAll<HTMLElement>('[data-edit], [data-edit-href], [data-edit-img], [data-edit-alt], [data-edit-optional]')];
+  const KEYS = ['data-edit', 'data-edit-href', 'data-edit-img', 'data-edit-alt', 'data-edit-optional'];
   // mailto: links carry no URL marker; their address is site:/email, so they follow its edits
   const EMAIL: Key = 'site:/email';
   const mailtos = () => [...doc.querySelectorAll<HTMLAnchorElement>('a[href^="mailto:" i]:not([data-edit-href])')];
@@ -182,9 +188,22 @@ export function attachLayer(win: Window, host: LayerHost) {
     if (hk) {
       const v = host.value(hk);
       if (v === undefined) missing = missing || (!k && host.loaded(hk));
-      else if (el.getAttribute('href') !== v) el.setAttribute('href', v);
+      else if (el.getAttribute('href') !== hrefOf(v)) el.setAttribute('href', hrefOf(v)); // never put an unsafe URL in the DOM
     }
-    el.classList.toggle('bx-missing', missing);
+    const ik = el.getAttribute('data-edit-img');
+    if (ik) {
+      const v = host.get(ik);
+      if (typeof v === 'string' && v) { const src = host.imgSrc(v, ik); if (el.getAttribute('src') !== src) { el.setAttribute('src', src); el.removeAttribute('srcset'); } }
+    }
+    const ak = el.getAttribute('data-edit-alt');
+    if (ak) { const v = host.get(ak); if (typeof v === 'string' && el.getAttribute('alt') !== v) el.setAttribute('alt', v); }
+    const ok = el.getAttribute('data-edit-optional');
+    if (ok && host.loaded(ok)) {
+      const v = host.get(ok);
+      const on = v !== undefined && v !== null && v !== false;
+      if (el.hidden === on) el.hidden = !on;
+    }
+    if (k || hk) el.classList.toggle('bx-missing', missing);
     paintMark(el);
   }
   function paintMark(el: HTMLElement) {
@@ -198,7 +217,9 @@ export function attachLayer(win: Window, host: LayerHost) {
       if (!k) continue;
       const ok = on && !!parseKey(k) && host.value(k) !== undefined;
       if (ok) {
-        el.contentEditable = kindOf(el) === 'plain' && supportsPlain ? 'plaintext-only' : 'true';
+        const want = kindOf(el) === 'plain' && supportsPlain ? 'plaintext-only' : 'true';
+        if (el.getAttribute('contenteditable') === want) continue; // (re-setting it moves the caret)
+        el.contentEditable = want;
         el.spellcheck = true;
         el.setAttribute('role', 'textbox');
         el.setAttribute('aria-multiline', 'false');
@@ -214,14 +235,13 @@ export function attachLayer(win: Window, host: LayerHost) {
     paintMailtos();
     setEditable(host.editable());
   }
-  /** Repaint everything showing `keys` (other copies of the same field, markers), never the element being typed in. */
+  /** Repaint everything showing `keys` or inside them (other copies of the same field, markers), never the element being typed in. */
   function update(keys: Key[], except?: HTMLElement) {
     if (!keys.length) { refresh(); return; }
-    const set = new Set(keys);
-    if (set.has(EMAIL)) paintMailtos();
+    if (keys.includes(EMAIL)) paintMailtos();
+    const hit = (v: string | null) => !!v && keys.some((k) => under(v, k) || under(k, v));
     for (const el of all()) {
-      const k = el.getAttribute('data-edit'), hk = el.getAttribute('data-edit-href');
-      if ((k && set.has(k)) || (hk && set.has(hk))) { if (el !== except) render(el); else paintMark(el); }
+      if (KEYS.some((a) => hit(el.getAttribute(a)))) { if (el !== except) render(el); else paintMark(el); }
     }
   }
 
@@ -460,8 +480,14 @@ export function attachLayer(win: Window, host: LayerHost) {
     const k = e.key.toLowerCase();
     const f = fieldOf(e.target as Node);
     if (mod && !e.altKey && k === 's') { e.preventDefault(); host.command('save'); return; }
+    // undo/redo belong to the app, in and out of fields: every edit (text, structure, details) is one history
+    if (mod && !e.altKey && ((k === 'z') || (k === 'y' && !e.shiftKey))) {
+      e.preventDefault();
+      if (f) commit(f);
+      host.command(k === 'y' || e.shiftKey ? 'redo' : 'undo');
+      return;
+    }
     if (!f) {
-      if (mod && !e.altKey && k === 'z' && !e.shiftKey) { e.preventDefault(); host.command('undo'); }
       if (e.key === 'Escape') hidePop();
       return;
     }

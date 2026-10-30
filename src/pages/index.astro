@@ -1,28 +1,48 @@
 ---
 import Base from '../layouts/Base.astro';
 import HomeArt from '../components/HomeArt.astro';
-import { siteLink } from '../data/site';
+import { linkTarget } from '../data/site';
 import { renderInline } from '../lib/inline';
-import home from '../content/site/home.json';
+import { loadSiteFile } from '../lib/site-content';
+import { newItemFor, type SiteLink } from '../content/site/schema';
+import raw from '../content/site/home.json';
+
+const home = loadSiteFile('home', raw);
+const newPara = newItemFor('home', '/paragraphs') as string;
+const newLink = newItemFor('home', '/links') as SiteLink;
 ---
 
 <Base fit>
   <main class="home">
     <section class="intro">
       <h1 data-edit="home:/heading" data-edit-kind="plain">{home.heading}</h1>
-      {home.paragraphs.map((p, i) => (
-        <p data-edit={`home:/paragraphs/${i}`} data-edit-kind="inline" set:html={renderInline(p)} />
-      ))}
-      <p class="links">
-        {home.links.map((l, i) => (
-          <a
-            href={siteLink(l.site)}
-            data-edit={`home:/links/${i}/label`}
-            data-edit-kind="plain"
-            data-edit-href={l.site === 'email' ? undefined : `site:/${l.site}`}
-          >{l.label}</a>
-        ))}
-      </p>
+      {(() => {
+        // list items; each is also rendered from the schema's newItem into the editor's <template>
+        const Para = (p: string, i: number | string) => (
+          <p data-edit-item={`home:/paragraphs/${i}`} data-edit={`home:/paragraphs/${i}`} data-edit-kind="inline" set:html={renderInline(p)} />
+        );
+        const Link = (l: SiteLink, i: number | string) => {
+          const t = linkTarget(l, `home:/links/${i}`);
+          return (
+            <a
+              href={t.href}
+              data-edit-item={`home:/links/${i}`}
+              data-edit-sitelink={`home:/links/${i}`}
+              data-edit={`home:/links/${i}/label`}
+              data-edit-kind="plain"
+              data-edit-href={t.editHref}
+            >{l.label}</a>
+          );
+        };
+        return (
+          <>
+            <div class="paras" data-edit-list="home:/paragraphs">{home.paragraphs.map((p, i) => Para(p, i))}</div>
+            <template data-edit-template="home:/paragraphs">{Para(newPara, '__i__')}</template>
+            <p class="links" data-edit-list="home:/links">{home.links.map((l, i) => Link(l, i))}</p>
+            <template data-edit-template="home:/links">{Link(newLink, '__i__')}</template>
+          </>
+        );
+      })()}
     </section>
     <div class="art"><HomeArt /></div>
   </main>
@@ -82,6 +102,11 @@ import home from '../content/site/home.json';
   }
   .intro p {
     margin: 0 0 16px;
+    overflow-wrap: break-word;
+  }
+  /* the paragraph list wrapper doesn't take part in layout */
+  .paras {
+    display: contents;
   }
   .links {
     display: flex;
@@ -90,6 +115,8 @@ import home from '../content/site/home.json';
     margin-top: 24px !important;
   }
   .links a {
+    min-width: 0;
+    overflow-wrap: anywhere;
     color: var(--ink);
     text-decoration: underline;
     text-decoration-color: var(--muted);
