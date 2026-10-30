@@ -5,6 +5,7 @@
 // Nodes here belong to the iframe's realm, so no `instanceof` checks against our globals.
 import { renderInline, inlineFromNode } from '../../../lib/inline';
 import { parseKey, under, type Key } from './pointer';
+import { hrefOf } from '../../../content/site/schema';
 import { norm } from './state';
 
 export type FieldInfo = { key: Key; kind: 'plain' | 'inline' | 'href'; tag: string };
@@ -187,7 +188,7 @@ export function attachLayer(win: Window, host: LayerHost) {
     if (hk) {
       const v = host.value(hk);
       if (v === undefined) missing = missing || (!k && host.loaded(hk));
-      else if (el.getAttribute('href') !== v) el.setAttribute('href', v);
+      else if (el.getAttribute('href') !== hrefOf(v)) el.setAttribute('href', hrefOf(v)); // never put an unsafe URL in the DOM
     }
     const ik = el.getAttribute('data-edit-img');
     if (ik) {

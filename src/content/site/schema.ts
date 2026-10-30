@@ -557,6 +557,16 @@ export function validateFile(file: string, data: unknown): { path: string; messa
     if (!s) return [{ path: '', message: `Unknown site file “${file}”.` }];
     if (!isObj(data)) return [{ path: '', message: `${s.label}: the file isn’t a JSON object.` }];
     for (const [k, f] of Object.entries(s.fields)) validateField(f, data[k], `/${ptrSeg(k)}`, out);
+    // Placeholder text/images from "Add" templates must be replaced before going live.
+    const PLACEHOLDER_TEXT = new Set(['New role', 'Organization', 'City, State, Country', 'Event name', 'One-sentence pitch.', 'New paragraph.']); // short generic words (Link, Label, Host…) are allowed
+    const walk = (v: unknown, path: string) => {
+      if (typeof v === 'string') {
+        if (PLACEHOLDER_TEXT.has(v.trim())) out.push({ path, message: `“${v.trim()}” is placeholder text. Replace it or remove the item.` });
+        else if (v === PLACEHOLDER_LOGO || v === PLACEHOLDER_IMAGE) out.push({ path, message: 'This is the placeholder image. Upload a real one or remove it.' });
+      } else if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${path}/${i}`));
+      else if (isObj(v)) for (const [k, x] of Object.entries(v)) walk(x, `${path}/${ptrSeg(k)}`);
+    };
+    walk(data, '');
     if ((file === 'home' || file === 'contact') && Array.isArray(data.links)) {
       data.links.forEach((l, i) => {
         if (isObj(l) && !l.site && (typeof l.href !== 'string' || !l.href.trim()))

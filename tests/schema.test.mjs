@@ -62,15 +62,19 @@ for (const [f, p] of lists) {
     assert.ok(item !== undefined);
     arr.push(item);
     assert.equal(JSON.stringify(coerceFile(f, d)), JSON.stringify(d));
-    // the only problems a fresh item may have are unfinished URLs ("https://")
-    for (const e of validateFile(f, d)) assert.match(e.message, /URL/, `${e.path}: ${e.message}`);
+    // a fresh item is flagged only for what Ben must still fill in: URLs and placeholder text/images
+    for (const e of validateFile(f, d)) assert.match(e.message, /URL|placeholder/, `${e.path}: ${e.message}`);
   });
 }
 t('new job/project/link are flagged until their URLs are filled in', () => {
   const d = json('experience');
   d.jobs.push(newItemFor('experience', '/jobs'));
   const errs = validateFile('experience', d);
-  assert.deepEqual(errs.map((e) => e.path), ['/jobs/3/href']);
+  const paths = errs.map((e) => e.path);
+  assert.ok(paths.includes('/jobs/3/href'));
+  // placeholder text and the placeholder logo are flagged too, so nothing half-filled can go live
+  for (const k of ['role', 'org', 'place', 'logo']) assert.ok(paths.includes(`/jobs/3/${k}`), k);
+  assert.ok(errs.every((e) => e.path.startsWith('/jobs/3/')));
 });
 t('new project placeholder images exist', () => {
   for (const p of ['/site/placeholder-logo.svg', '/site/placeholder-project.svg']) readFileSync(join(root, 'public', p));
