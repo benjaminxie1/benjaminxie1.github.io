@@ -1,0 +1,18 @@
+{
+  "heading": "Contact",
+  "lead": "The best way to reach me is email:",
+  "links": [
+    {
+      "label": "GitHub",
+      "site": "github"
+    },
+    {
+      "label": "LinkedIn",
+      "site": "linkedin"
+    },
+    {
+      "label": "Twitter",
+      "site": "x"
+    }
+  ]
+}

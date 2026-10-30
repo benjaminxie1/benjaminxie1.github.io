@@ -1,0 +1,27 @@
+{
+  "heading": "Hi, I'm Ben.",
+  "paragraphs": [
+    "Currently building in energy.",
+    "I'm a student studying Electrical Engineering & Computer Sciences (EECS) and Business @ [UC Berkeley](https://www.berkeley.edu) in the [M.E.T. program](https://met.berkeley.edu).",
+    "Before that, I interned at the [Air Force Research Lab](https://www.afrl.af.mil) as a software engineering intern, and at AgentAI as a machine learning intern.",
+    "Recently, I won [Gemini 4 Argon Hacks](https://github.com/benjaminxie1/argon-hacks) @ Cerebral Valley and [a16z SpeedHacks](https://github.com/Will-code112223/Speedhacks)."
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "site": "github"
+    },
+    {
+      "label": "LinkedIn",
+      "site": "linkedin"
+    },
+    {
+      "label": "Twitter",
+      "site": "x"
+    },
+    {
+      "label": "Email",
+      "site": "email"
+    }
+  ]
+}

@@ -1,22 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
 import HomeArt from '../components/HomeArt.astro';
-import { site } from '../data/site';
+import { siteLink } from '../data/site';
+import { renderInline } from '../lib/inline';
+import home from '../content/site/home.json';
 ---
 
 <Base fit>
   <main class="home">
     <section class="intro">
-      <h1>Hi, I'm Ben.</h1>
-      <p>Currently building in energy.</p>
-      <p>I'm a student studying Electrical Engineering &amp; Computer Sciences (EECS) and Business @ <a href="https://www.berkeley.edu">UC Berkeley</a> in the <a href="https://met.berkeley.edu">M.E.T. program</a>.</p>
-      <p>Before that, I interned at the <a href="https://www.afrl.af.mil">Air Force Research Lab</a> as a software engineering intern, and at AgentAI as a machine learning intern.</p>
-      <p>Recently, I won <a href="https://github.com/benjaminxie1/argon-hacks">Gemini 4 Argon Hacks</a> @ Cerebral Valley and <a href="https://github.com/Will-code112223/Speedhacks">a16z SpeedHacks</a>.</p>
+      <h1 data-edit="home:/heading" data-edit-kind="plain">{home.heading}</h1>
+      {home.paragraphs.map((p, i) => (
+        <p data-edit={`home:/paragraphs/${i}`} data-edit-kind="inline" set:html={renderInline(p)} />
+      ))}
       <p class="links">
-        <a href={site.github}>GitHub</a>
-        <a href={site.linkedin}>LinkedIn</a>
-        <a href={site.x}>Twitter</a>
-        <a href={`mailto:${site.email}`}>Email</a>
+        {home.links.map((l, i) => (
+          <a
+            href={siteLink(l.site)}
+            data-edit={`home:/links/${i}/label`}
+            data-edit-kind="plain"
+            data-edit-href={l.site === 'email' ? undefined : `site:/${l.site}`}
+          >{l.label}</a>
+        ))}
       </p>
     </section>
     <div class="art"><HomeArt /></div>
