@@ -1,19 +1,21 @@
+// Shared site info. The text lives in src/content/site/site.json (editable from /write);
+// this module keeps the `site` and `nav` exports the rest of the code uses.
+import data from '../content/site/site.json';
+
 export const site = {
-  name: 'Benjamin Xie',
-  short: 'Ben Xie',
-  description:
-    'EECS & Business in the M.E.T. program at UC Berkeley. Currently building in energy.',
-  email: 'benx@berkeley.edu',
-  github: 'https://github.com/benjaminxie1',
-  linkedin: 'https://www.linkedin.com/in/xie-benjamin',
-  x: 'https://x.com/_benjaminxie',
+  name: data.name,
+  short: data.short,
+  description: data.description,
+  email: data.email,
+  github: data.github,
+  linkedin: data.linkedin,
+  x: data.x,
   /** A post dated in the future goes live on that day in this time zone (see src/data/posts.ts). */
   timeZone: 'America/Los_Angeles',
 };
 
-export const nav = [
-  { href: '/', label: 'Home' },
-  { href: '/experience', label: 'Experience' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/contact', label: 'Contact' },
-];
+export const nav: { href: string; label: string }[] = data.nav;
+
+/** URL for a shared link key used by the pages ("github", "linkedin", "x" or "email"). */
+export const siteLink = (key: string) =>
+  key === 'email' ? `mailto:${site.email}` : (site as Record<string, string>)[key];

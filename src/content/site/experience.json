@@ -1,0 +1,146 @@
+{
+  "heading": "Experience",
+  "jobs": [
+    {
+      "role": "Student",
+      "org": "UC Berkeley",
+      "href": "https://met.berkeley.edu",
+      "dates": "Aug. 2026 - Present",
+      "place": "Berkeley, California, United States",
+      "logo": "/logos/berkeley.svg"
+    },
+    {
+      "role": "Software Engineering Intern",
+      "org": "Air Force Research Laboratory",
+      "href": "https://www.afrl.af.mil",
+      "dates": "Jun. 2025 - Aug. 2025",
+      "span": "3 mo",
+      "place": "Wright-Patterson AFB, Ohio, United States",
+      "logo": "/logos/afrl.svg"
+    },
+    {
+      "role": "Machine Learning Intern",
+      "org": "AgentAI",
+      "href": "https://www.agentai.app",
+      "dates": "Jun. 2024 - Aug. 2024",
+      "span": "3 mo",
+      "place": "Woodland Hills, California, United States",
+      "logo": "/logos/agentai.svg"
+    }
+  ],
+  "projectsHeading": "Projects",
+  "projects": [
+    {
+      "event": "Gemini 4 Argon Hackathon",
+      "href": "https://cerebralvalley.ai/e/gemini-4-argon-sf",
+      "host": "Cerebral Valley",
+      "sponsor": {
+        "src": "/sponsors/google-deepmind.svg",
+        "alt": "Google DeepMind",
+        "h": 22
+      },
+      "place": "1st Place",
+      "project": "LabTwin",
+      "pitch": "Digital twin world models for the wet lab. Test your experiment virtually before you run it.",
+      "badge": "$7.5k prize",
+      "date": "2026",
+      "image": "/projects/labtwin.jpg",
+      "links": [
+        {
+          "label": "GitHub",
+          "icon": "github",
+          "href": "https://github.com/benjaminxie1/argon-hacks"
+        }
+      ]
+    },
+    {
+      "event": "a16z SpeedHacks",
+      "href": "https://www.tech-week.com/calendar/sf/events/speedhacks-the-official-speedrun-hackathon-30c239a4-638a-4bd6-8d51-e15259668f51",
+      "host": "a16z speedrun",
+      "sponsor": {
+        "src": "/sponsors/a16z.svg",
+        "alt": "Andreessen Horowitz",
+        "h": 24
+      },
+      "place": "1st Place",
+      "project": "Recourse",
+      "pitch": "An agent that preps refund and insurance claims, then makes the call.",
+      "badge": "$1k prize",
+      "date": "2026",
+      "mock": {
+        "message": "Ridgeline charged me twice but I lost the receipt",
+        "rows": [
+          {
+            "label": "Refund request",
+            "value": "$214.00"
+          },
+          {
+            "label": "Support line",
+            "value": "Ready",
+            "pill": true
+          }
+        ],
+        "button": "Approve this call"
+      },
+      "links": [
+        {
+          "label": "GitHub",
+          "icon": "github",
+          "href": "https://github.com/Will-code112223/Speedhacks"
+        }
+      ]
+    },
+    {
+      "event": "Congressional App Challenge",
+      "href": "https://www.congressionalappchallenge.us/24-CA26/",
+      "host": "Rep. Julia Brownley",
+      "sponsor": {
+        "src": "/sponsors/cac.png",
+        "alt": "Congressional App Challenge",
+        "h": 24,
+        "dark": true
+      },
+      "place": "1st Place",
+      "project": "Sentinel",
+      "pitch": "A YOLO wildfire-detection camera network, piloted in the Santa Monica Mountains.",
+      "badge": "Presented at U.S. Capitol",
+      "date": "2024",
+      "image": "/projects/sentinel.jpg",
+      "links": [
+        {
+          "label": "YouTube",
+          "icon": "youtube",
+          "href": "https://www.youtube.com/watch?v=MKWk8RUUmRI"
+        },
+        {
+          "label": "GitHub",
+          "icon": "github",
+          "href": "https://github.com/benjaminxie1/sentinel-app"
+        }
+      ]
+    },
+    {
+      "event": "Decision-Relevant Information in Generator Interconnection",
+      "href": "/papers/decision-relevant-interconnection.pdf",
+      "host": "with Jonathan Tsang",
+      "sponsor": {
+        "src": "/logos/berkeley.svg",
+        "alt": "UC Berkeley",
+        "h": 26
+      },
+      "place": "Paper",
+      "project": "Research",
+      "pitch": "When is a better interconnection cost estimate worth paying for? Value of information for generator developers, with a PJM data audit.",
+      "badge": "Under review",
+      "date": "2026",
+      "image": "/projects/paper.jpg",
+      "links": [
+        {
+          "label": "PDF",
+          "icon": "pdf",
+          "href": "/papers/decision-relevant-interconnection.pdf"
+        }
+      ]
+    }
+  ]
+}

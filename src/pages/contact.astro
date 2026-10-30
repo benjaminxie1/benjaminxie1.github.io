@@ -1,18 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
 import VillaScene from '../components/VillaScene.astro';
-import { site } from '../data/site';
+import { site, siteLink } from '../data/site';
+import { renderInline } from '../lib/inline';
+import contact from '../content/site/contact.json';
 ---
 
-<Base title="Contact" fit>
+<Base title={contact.heading} fit>
   <main>
     <section class="contact">
-      <h1>Contact</h1>
-      <p>The best way to reach me is email: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      <h1 data-edit="contact:/heading" data-edit-kind="plain">{contact.heading}</h1>
+      <p><span data-edit="contact:/lead" data-edit-kind="inline" set:html={renderInline(contact.lead)} /> <a href={`mailto:${site.email}`} data-edit="site:/email" data-edit-kind="plain">{site.email}</a>.</p>
       <p class="links">
-        <a href={site.github}>GitHub</a>
-        <a href={site.linkedin}>LinkedIn</a>
-        <a href={site.x}>Twitter</a>
+        {contact.links.map((l, i) => (
+          <a href={siteLink(l.site)} data-edit={`contact:/links/${i}/label`} data-edit-kind="plain" data-edit-href={`site:/${l.site}`}>{l.label}</a>
+        ))}
       </p>
     </section>
     <section class="footer-art">

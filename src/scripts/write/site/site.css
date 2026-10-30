@@ -1,0 +1,104 @@
+/* /write: the Posts | Site switch, and Site mode (page tabs + the page in an iframe). */
+
+html:not([data-mode='site']) [data-for='site'] { display: none !important; }
+html[data-mode='site'] [data-for='posts'] { display: none !important; }
+
+/* the "All posts" button keeps its name for screen readers; the switch already says Posts */
+.wb-posts .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wb-posts { padding: 0 9px; }
+
+.mode-sw {
+  flex: none; display: inline-flex; padding: 2px; gap: 2px; border: 1px solid var(--rule); border-radius: 10px; background: var(--tile);
+}
+.mode-sw button {
+  font: inherit; font-size: 13px; line-height: 1; color: var(--muted); background: none; border: 0; border-radius: 7px;
+  padding: 0 11px; min-height: 28px; cursor: pointer; transition: color .15s, background-color .15s;
+}
+.mode-sw button:hover { color: var(--ink); }
+.mode-sw button[aria-pressed='true'] { color: var(--ink); background: var(--bg); box-shadow: 0 1px 2px rgba(34, 33, 30, .08), 0 0 0 1px var(--rule); }
+.mode-sw button:focus-visible { outline: 2px solid var(--link); outline-offset: 1px; }
+
+/* ---------- Site mode: one screen, the page scrolls inside the frame ---------- */
+html[data-mode='site'] body { height: 100dvh; min-height: 0; overflow: hidden; }
+html[data-mode='site'] body > .site-header, html[data-mode='site'] body > .site-footer { display: none; }
+html[data-mode='site'] .wbar { flex: none; }
+html[data-mode='site'] .wb-state.ss-state { width: auto; flex: 0 1 auto; max-width: 440px; }
+html[data-mode='site'] .wb-primary, html[data-mode='site'] .wb-more { flex: none; }
+.wb-state .st-text:empty { display: none; }
+
+.site-main {
+  flex: 1; min-height: 0; max-width: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column;
+}
+.sbar {
+  flex: none; display: flex; align-items: center; gap: 16px; padding: 0 28px;
+  border-bottom: 1px solid var(--rule); background: var(--bg); min-height: 42px;
+}
+.spages { display: flex; gap: 4px; }
+.spages button {
+  position: relative; font: inherit; font-size: 13.5px; color: var(--muted); background: none; border: 0;
+  border-bottom: 2px solid transparent; padding: 10px 10px 9px; margin-bottom: -1px; cursor: pointer;
+}
+.spages button:hover { color: var(--ink); }
+.spages button[aria-current='page'] { color: var(--ink); border-bottom-color: var(--ink); }
+.spages button:focus-visible { outline: 2px solid var(--link); outline-offset: -2px; border-radius: 6px; }
+.spages button.has-ch::after {
+  content: ''; position: absolute; top: 8px; right: 2px; width: 6px; height: 6px; border-radius: 50%; background: var(--tag);
+}
+.s-hint { margin-left: auto; font-size: 12.5px; color: color-mix(in srgb, var(--muted) 85%, transparent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.s-note.note { flex: none; margin: 12px 28px 0; }
+.s-stage {
+  flex: 1; min-height: 0; position: relative; display: flex; justify-content: center;
+  background: var(--bg);
+}
+.s-frame { flex: 1; width: 100%; height: 100%; border: 0; display: block; background: var(--bg); transition: opacity .15s; }
+.s-stage.is-loading .s-frame { opacity: .35; }
+.s-stage.is-phone { background: var(--tile); padding: 18px 0; }
+.s-stage.is-phone .s-frame {
+  flex: none; width: 390px; max-width: 100%; border: 1px solid var(--rule); border-radius: 18px;
+  box-shadow: 0 12px 36px rgba(34, 33, 30, .1);
+}
+
+/* ---------- review dialog ---------- */
+.review-dlg .dlg-body { padding-top: 4px; }
+.rv-empty { color: var(--muted); }
+.rv-file { font-family: var(--sans); font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: var(--ink); letter-spacing: .01em; }
+.rv-file:first-child { margin-top: 2px; }
+.rv-path { font-weight: 400; color: var(--muted); }
+.rv-rows { list-style: none; margin: 0 0 6px; padding: 0; border-top: 1px solid var(--rule); }
+.rv-row { padding: 10px 0 11px; border-bottom: 1px solid var(--rule); }
+.rv-top { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; min-width: 0; }
+.rv-label { font-size: 13px; font-weight: 600; white-space: nowrap; }
+.rv-key { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.rv-gap { flex: 1; }
+.rv-act { font-size: 13px; flex: none; }
+.rv-v { margin: 2px 0 0; font-size: 14.5px; line-height: 1.55; overflow-wrap: anywhere; padding-left: 18px; position: relative; }
+.rv-v::before { position: absolute; left: 0; top: 0; font-weight: 700; }
+.rv-old { color: var(--muted); }
+.rv-old::before { content: '−'; color: var(--tag); }
+.rv-new { color: var(--ink); }
+.rv-new::before { content: '+'; color: var(--link); }
+.rv-v del { color: var(--tag); background: color-mix(in srgb, var(--tag) 10%, transparent); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--tag) 60%, transparent); border-radius: 3px; }
+.rv-v ins { color: var(--link); background: color-mix(in srgb, var(--link) 12%, transparent); text-decoration: none; border-radius: 3px; }
+.rv-none { color: var(--muted); }
+.rv-tag { font-size: 12px; font-weight: 600; color: var(--muted); }
+.rv-compact { margin-bottom: 12px; }
+.rv-compact .rv-v { font-size: 14px; }
+
+@media (max-width: 860px) {
+  .s-hint { display: none; }
+}
+@media (max-width: 640px) {
+  .mode-sw button { padding: 0 9px; min-height: 34px; font-size: 13px; }
+  .sbar { padding: 0 8px; min-height: 40px; }
+  .spages { gap: 0; }
+  .spages button { padding: 9px 9px 8px; font-size: 14px; }
+  .s-note.note { margin: 10px 12px 0; }
+  html[data-mode='site'] .wb-state.ss-state { flex: 1 1 auto; }
+  html[data-mode='site'] .wb-state .st-act { display: none; }
+  .s-stage.is-phone { padding: 0; background: var(--bg); }
+  .s-stage.is-phone .s-frame { width: 100%; border: 0; border-radius: 0; box-shadow: none; }
+  .rv-top { flex-wrap: wrap; }
+  .rv-key { flex-basis: 100%; order: 3; }
+}

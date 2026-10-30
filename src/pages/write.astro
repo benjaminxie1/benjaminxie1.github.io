@@ -9,28 +9,44 @@ import Base from '../layouts/Base.astro';
 import PostBanner from '../components/PostBanner.astro';
 import '../styles/post.css';
 import '../scripts/write/ui/app.css';
+import '../scripts/write/site/site.css';
 const today = new Date().toISOString().slice(0, 10);
 ---
 
 <Base title="Write" noindex>
-  <div class="wbar" role="region" aria-label="Post actions">
+  <script is:inline>
+    // Posts | Site mode before first paint (see scripts/write/mode.ts)
+    try { var m = location.hash === '#site' ? 'site' : !location.hash && localStorage.getItem('bx-write:mode') === 'site' ? 'site' : 'posts'; document.documentElement.dataset.mode = m; } catch (e) {}
+  </script>
+  <div class="wbar" role="region" aria-label="Editor actions">
     <div class="wbar-in">
-      <button type="button" class="wb-btn wb-posts" data-act="posts" title="All posts">
+      <div class="mode-sw" role="group" aria-label="What to edit">
+        <button type="button" data-mode="posts" aria-pressed="true">Posts</button>
+        <button type="button" data-mode="site" aria-pressed="false">Site</button>
+      </div>
+      <button type="button" class="wb-btn wb-posts" data-act="posts" data-for="posts" title="All posts">
         <svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>
         <span class="lbl">Posts</span>
       </button>
-      <div class="wb-state" data-kind="idle">
+      <div class="wb-state" data-kind="idle" data-for="posts">
         <span class="dot" aria-hidden="true"></span>
         <span class="st-text">New post</span>
       </div>
+      <div class="wb-state ss-state" data-kind="idle" data-for="site" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span class="st-text"></span></div>
       <span class="wb-gap"></span>
-      <button type="button" class="wb-stats" title="Word count details"></button>
-      <button type="button" class="wb-btn wb-preview" data-act="preview">
+      <button type="button" class="wb-stats" data-for="posts" title="Word count details"></button>
+      <button type="button" class="wb-btn wb-preview" data-act="preview" data-for="posts">
         Preview
         <svg class="ico" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </button>
-      <button type="button" class="wb-btn wb-primary" data-act="primary">Publish…</button>
-      <div class="wb-more-wrap">
+      <button type="button" class="wb-btn wb-primary" data-act="primary" data-for="posts">Publish…</button>
+      <button type="button" class="wb-btn wb-primary" data-act="site-publish" data-for="site">Publish…</button>
+      <div class="wb-more-wrap" data-for="site">
+        <button type="button" class="wb-btn wb-more" data-act="site-more" aria-label="More site actions" aria-haspopup="menu" aria-expanded="false" title="More">
+          <svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="6" cy="12" r="1.6" fill="currentColor"></circle><circle cx="12" cy="12" r="1.6" fill="currentColor"></circle><circle cx="18" cy="12" r="1.6" fill="currentColor"></circle></svg>
+        </button>
+      </div>
+      <div class="wb-more-wrap" data-for="posts">
         <button type="button" class="wb-btn wb-more" data-act="more" aria-label="More actions" aria-haspopup="menu" aria-expanded="false" title="More">
           <svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="6" cy="12" r="1.6" fill="currentColor"></circle><circle cx="12" cy="12" r="1.6" fill="currentColor"></circle><circle cx="18" cy="12" r="1.6" fill="currentColor"></circle></svg>
         </button>
@@ -38,7 +54,20 @@ const today = new Date().toISOString().slice(0, 10);
     </div>
   </div>
 
-  <main class="post-main write">
+  <main class="site-main" data-for="site" aria-label="Edit the site">
+    <div class="sbar">
+      <nav class="spages" aria-label="Pages">
+        <button type="button" data-page="home">Home</button>
+        <button type="button" data-page="experience">Experience</button>
+        <button type="button" data-page="contact">Contact</button>
+      </nav>
+      <span class="s-hint" hidden>Click any text to edit it · click a link to change where it goes</span>
+    </div>
+    <aside class="note s-note" aria-label="Site editing" hidden></aside>
+    <div class="s-stage"><iframe class="s-frame" title="Page being edited"></iframe></div>
+  </main>
+
+  <main class="post-main write" data-for="posts">
     <PostBanner seed="new-post" manual />
     <article class="post">
       <div class="notices">
@@ -72,4 +101,5 @@ const today = new Date().toISOString().slice(0, 10);
 
 <script>
   import '../scripts/write/main';
+  import '../scripts/write/mode';
 </script>

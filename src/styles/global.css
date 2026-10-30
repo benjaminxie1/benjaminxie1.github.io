@@ -37,6 +37,9 @@ img { max-width: 100%; height: auto; }
 /* Wordmark in the same serif as the blog posts */
 .wordmark { font-family: var(--serif); font-weight: 600; font-size: 23px; letter-spacing: -0.01em; color: var(--ink); line-height: 1; }
 .wordmark:hover { text-decoration: none; }
+/* On the Home page the wordmark keeps the handwritten font */
+.wordmark.hand { font-family: var(--hand); font-weight: 500; font-size: 30px; letter-spacing: 0; }
+@media (max-width: 640px) { .wordmark.hand { font-size: 26px; } }
 .site-header nav { display: flex; align-items: center; gap: 22px; font-size: 15px; }
 .site-header nav a { color: var(--ink); }
 .site-header nav a[aria-current='page'] { color: var(--link); }

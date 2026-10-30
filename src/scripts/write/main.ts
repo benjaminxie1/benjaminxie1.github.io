@@ -330,7 +330,7 @@ function paint() {
   renderPill();
   paintPrimary();
   paintPreview();
-  document.title = `${dirty ? '• ' : ''}${titleIn.value.trim() || 'New post'} · Write`;
+  if (document.documentElement.dataset.mode !== 'site') document.title = `${dirty ? '• ' : ''}${titleIn.value.trim() || 'New post'} · Write`;
 }
 function paintAll() { paint(); paintMeta(); paintBanner(); paintStats(); paintOnboard(); }
 
@@ -853,7 +853,9 @@ function restoreVersion(d: Doc) {
   toast(doc.published ? 'Version restored as unsaved edits. Use Update to make it live.' : 'Version restored as unsaved changes. Save draft to keep it.');
 }
 
+window.addEventListener('bx-mode-posts', () => { grow(titleIn); grow(dekIn); paint(); }); // sized while hidden in Site mode
 window.addEventListener('keydown', (e) => {
+  if (document.documentElement.dataset.mode === 'site') return; // Site mode has its own shortcuts
   const mod = e.metaKey || e.ctrlKey;
   if (!mod || e.altKey) return;
   const k = e.key.toLowerCase();
