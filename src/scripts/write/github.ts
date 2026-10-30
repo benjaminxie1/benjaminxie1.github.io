@@ -384,3 +384,42 @@ export async function putFile(path: string, base64: string, message: string, sha
   return enqueue(() => putRaw(path, base64, message, sha ?? null, async () => { throw new ConflictError(null); }));
 }
 export { slugOf };
+
+// ---------- generic JSON files (site text in src/content/site/*.json) ----------
+/** A file changed on GitHub since `expectSha` (or appeared/disappeared). */
+export class FileConflictError extends Error {
+  path: string; current: string | null;
+  constructor(path: string, current: string | null) {
+    super(`${path.split('/').pop()} was changed on GitHub since you opened it.`);
+    this.name = 'FileConflictError'; this.path = path; this.current = current;
+  }
+}
+/** Current JSON file on the branch: its blob sha, raw text and parsed value. null if it doesn't exist. */
+export async function loadJson<T = unknown>(path: string): Promise<{ sha: string; text: string; data: T } | null> {
+  const f = await readFile(path);
+  if (!f) return null;
+  let data: T;
+  try { data = JSON.parse(f.text) as T; }
+  catch { throw new GitHubError(`${path.split('/').pop()} on GitHub isn’t valid JSON, so it can’t be edited here.`, 'other'); }
+  return { sha: f.sha, text: f.text, data };
+}
+export type SavedFile = { path: string; sha: string; commit: { sha: string; date: string } };
+/**
+ * Commit text files one after another (serialized with every other repo write). Each
+ * write must be based on `expectSha` (null = must not exist yet): if GitHub has a
+ * different version, throws FileConflictError and stops; files written before it stay
+ * written (onSaved reports each one as it lands).
+ */
+export async function saveFiles(files: { path: string; content: string; expectSha: string | null }[], message: string, o: { onSaved?: (r: SavedFile) => void } = {}): Promise<SavedFile[]> {
+  return enqueue(async () => {
+    const out: SavedFile[] = [];
+    for (const f of files) {
+      const res = await putRaw(f.path, b64(f.content), message, f.expectSha, async (cur) => { throw new FileConflictError(f.path, cur); });
+      blobCache.set(res.content.sha, f.content);
+      const r: SavedFile = { path: f.path, sha: res.content.sha, commit: { sha: res.commit.sha, date: res.commit.committer?.date || res.commit.author?.date || new Date().toISOString() } };
+      out.push(r);
+      o.onSaved?.(r);
+    }
+    return out;
+  });
+}
